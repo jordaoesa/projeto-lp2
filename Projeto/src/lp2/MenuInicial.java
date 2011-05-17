@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 public class MenuInicial extends JFrame{
 
 	Container container = getContentPane();
@@ -19,6 +20,9 @@ public class MenuInicial extends JFrame{
 
 		super("Pitaqueiro das 12h");
 		setSize(800,600);
+		setVisible(true);
+		//pra parar o programa quando fechar.
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		container.setLayout(null);
 		
@@ -54,12 +58,19 @@ public class MenuInicial extends JFrame{
 				System.exit(0);
 			}
 		});
+		//evento do botao ver todos
+		botaoVerTodosLugares.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MenuVerTodos m = new MenuVerTodos();
+			}
+		});
 	}
-	public static void main(String args[]){
-		MenuInicial menu = new MenuInicial();
-		//pra parar o programa quando fechar.
-		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		menu.setVisible(true);
-
-	}
+//	public static void main(String args[]){
+//		MenuInicial menu = new MenuInicial();
+//		//pra parar o programa quando fechar.
+//		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		menu.setVisible(true);
+//
+//	}
 }
