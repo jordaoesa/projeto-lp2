@@ -77,7 +77,16 @@ public class MenuInicial extends JFrame{
 				MenuPopularidade menu = new MenuPopularidade();
 			}
 		});
-		
+		//evento do botao Ver Popularidade
+		botaoCadastrar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				NovoUsuario novoUsuario = new NovoUsuario();
+			}
+		});
+
+
+
 	}
 //	public static void main(String args[]){
 //		MenuInicial menu = new MenuInicial();
