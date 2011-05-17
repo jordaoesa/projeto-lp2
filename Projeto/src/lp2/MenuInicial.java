@@ -10,6 +10,7 @@ public class MenuInicial extends JFrame{
 	
 	JButton botaoVerTodosLugares;
 	JButton botaoCadastrar;
+	JButton botaoPopularidade;
 	JButton botaoGerarRecomendacao;
 	JButton botaoSair;
 	
@@ -32,22 +33,26 @@ public class MenuInicial extends JFrame{
 		imagemFundo.setBounds(-1, -2, 800, 600);
 		
 		//pra cada botao seta a sua posicao.
-		botaoVerTodosLugares = new JButton("Ver todos");
-		botaoVerTodosLugares.setBounds(600, 67, 100, 23);
-		
 		botaoCadastrar = new JButton("Novo Cadastro");
 		botaoCadastrar.setBounds(600, 26, 120, 23);
 		
+		botaoVerTodosLugares = new JButton("Ver todos");
+		botaoVerTodosLugares.setBounds(600, 67, 100, 23);
+		
+		botaoPopularidade = new JButton("Ver popularidade");
+		botaoPopularidade.setBounds(600,108,175,23);
+		
 		botaoGerarRecomendacao = new JButton("Gerar Recomendacoes");
-		botaoGerarRecomendacao.setBounds(600,108,175,23);
+		botaoGerarRecomendacao.setBounds(600,149,170,23);
 		
 		botaoSair = new JButton("Sair");
-		botaoSair.setBounds(600,149,100,23);
+		botaoSair.setBounds(600,190,100,23);
 		
 		
 		container.add(botaoVerTodosLugares);
 		container.add(botaoCadastrar);
 		container.add(botaoGerarRecomendacao);
+		container.add(botaoPopularidade);
 		container.add(botaoSair);
 		container.add(imagemFundo);
 		
@@ -62,9 +67,17 @@ public class MenuInicial extends JFrame{
 		botaoVerTodosLugares.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MenuVerTodos m = new MenuVerTodos();
+				MenuVerTodos menu = new MenuVerTodos();
 			}
 		});
+		//evento do botao Ver Popularidade
+		botaoPopularidade.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MenuPopularidade menu = new MenuPopularidade();
+			}
+		});
+		
 	}
 //	public static void main(String args[]){
 //		MenuInicial menu = new MenuInicial();
