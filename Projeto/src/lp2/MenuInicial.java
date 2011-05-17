@@ -84,6 +84,14 @@ public class MenuInicial extends JFrame{
 				NovoUsuario novoUsuario = new NovoUsuario();
 			}
 		});
+		//evento do botao Gerar Recomendacao
+		botaoGerarRecomendacao.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MenuGeraRecomendacao menu = new MenuGeraRecomendacao();
+			}
+		});
+
 
 
 
