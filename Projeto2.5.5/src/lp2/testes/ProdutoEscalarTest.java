@@ -58,6 +58,12 @@ public class ProdutoEscalarTest {
 		}
 
 		//testa retorno dos parametros do construtor
+		try {
+			user1.setDataHoraCadastro("12:12:12 12:12:12");
+			user2.setDataHoraCadastro("12:12:12 12:12:12");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Assert.assertEquals("Erro no construtor", user1,produto1.getUser1());
 		Assert.assertEquals("Erro no construtor", user2,produto1.getUser2());
 
@@ -71,6 +77,7 @@ public class ProdutoEscalarTest {
 		}catch(Exception ex){
 			Assert.assertEquals("Usuario null.", ex.getMessage());
 		}
+		user3.setDataHoraCadastro("12:12:12 12:12:12");
 		produto1.setUser1(user3);
 		Assert.assertEquals("Erro no metodo setUser1", user3,produto1.getUser1());
 
@@ -85,6 +92,7 @@ public class ProdutoEscalarTest {
 		}catch(Exception ex){
 			Assert.assertEquals("Usuario null.", ex.getMessage());
 		}
+		user3.setDataHoraCadastro("12:12:12 12:12:12");
 		produto1.setUser2(user3);
 		Assert.assertEquals("Erro no metodo setUser1", user3,produto1.getUser2());
 	}

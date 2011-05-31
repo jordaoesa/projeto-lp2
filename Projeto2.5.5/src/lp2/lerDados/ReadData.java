@@ -23,8 +23,6 @@ public class ReadData {
 	private static List<Usuario> usuarios;
 	private static List<Estabelecimento> estabelecimentos;
 	
-
-	
 	/**
 	 * Metodo que instancia um objeto da classe ReadData que eh responsavel
 	 * por ler e armazenar os dados contidos nos arquivos, que nos oferecem informacaoes 

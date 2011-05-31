@@ -128,13 +128,10 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 
 	private void preencheTabela(){
 		Object table[][] = new Object[ReadData.getUsuarios().size()][2];
-		try{
-			for(int i=0; i<ReadData.getUsuarios().size(); i++){
-				table[i][1] = ReadData.getUsuarios().get(i).getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1);
-				table[i][0] = ReadData.getUsuarios().get(i).getNome();
-			}
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Selecione um Estabelecimento", "ERRO", JOptionPane.ERROR_MESSAGE);
+
+		for(int i=0; i<ReadData.getUsuarios().size(); i++){
+			table[i][1] = ReadData.getUsuarios().get(i).getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1);
+			table[i][0] = ReadData.getUsuarios().get(i).getNome();
 		}
 
 		tabela.setModel(new DefaultTableModel(table,
@@ -148,40 +145,37 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 				"-4: Acho muito ruim","-5: Detesto" };
 
 		int notas[] = new int[11];
-		try{
-			for(Usuario user : ReadData.getUsuarios()){
-				if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 5){
-					notas[0] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 4){
-					notas[1] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 3){
-					notas[2] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 2){
-					notas[3] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 1){
-					notas[4] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == 0){
-					notas[5] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == -1){
-					notas[6] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == -2){
-					notas[7] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == -3){
-					notas[8] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == -4){
-					notas[9] += 1;
-				}else if(user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1) == -5){
-					notas[10] += 1;
-				}
-			}
 
-			for(int i=0; i<11; i++){
-				table[i][0] = avaliacao[i];
-				table[i][1] = notas[i];
+		for(Usuario user : ReadData.getUsuarios()){
+			int opiniao = user.getOpinioes().get(listaSuspensaDeEstabelecimentos.getSelectedIndex()-1);
+			if(opiniao == 5){
+				notas[0] += 1;
+			}else if(opiniao == 4){
+				notas[1] += 1;
+			}else if(opiniao == 3){
+				notas[2] += 1;
+			}else if(opiniao == 2){
+				notas[3] += 1;
+			}else if(opiniao == 1){
+				notas[4] += 1;
+			}else if(opiniao == 0){
+				notas[5] += 1;
+			}else if(opiniao == -1){
+				notas[6] += 1;
+			}else if(opiniao == -2){
+				notas[7] += 1;
+			}else if(opiniao == -3){
+				notas[8] += 1;
+			}else if(opiniao == -4){
+				notas[9] += 1;
+			}else if(opiniao == -5){
+				notas[10] += 1;
 			}
-			
-		}catch(Exception e){
-			JOptionPane.showMessageDialog(null, "Selecione um Estabelecimento", "ERRO", JOptionPane.ERROR_MESSAGE);
+		}
+
+		for(int i=0; i<11; i++){
+			table[i][0] = avaliacao[i];
+			table[i][1] = notas[i];
 		}
 
 		tabelaResultado.setModel(new DefaultTableModel(table,

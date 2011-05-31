@@ -30,12 +30,14 @@ public class MenuInicial extends JFrame implements ActionListener{
 	private JMenuItem menuItensSobre[];
 	public static String pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
 	public static String pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
-	protected static  JPanel panelCorpo;
+	protected static JPanel panelCorpo = new JPanel();
 	private Container container = getContentPane();
 	
 	public MenuInicial(){
 		super("Bom Conselho");
 		
+		//setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
+		//setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 		iniciaBarraFerramentas();
 		alteraTema();
 		
@@ -47,8 +49,6 @@ public class MenuInicial extends JFrame implements ActionListener{
 		setLocationRelativeTo(null);
 		//pra parar o programa quando fechar.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		panelCorpo = new JPanel();
 		
 		//seta o layout do JFrame/JPanel
 		container.setLayout(new BorderLayout());
@@ -150,6 +150,14 @@ public class MenuInicial extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(MenuInicial.this,"Bom Conselho" + "\n" + "Versao: 2.5.5" + "\n" +
 					           "Programa que recomenda lugares para almocar","Sobre Programa",JOptionPane.PLAIN_MESSAGE);
 		}
+	}
+	
+	public static void setPathEstabelecimentos(String path){
+		pathEstabelecimentos = path;
+	}
+	
+	public static void setPathOpinioes(String path){
+		pathOpinioes = path;
 	}
 
 }

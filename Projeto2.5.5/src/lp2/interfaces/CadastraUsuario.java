@@ -410,10 +410,13 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		//evento do botaoGravarUsuario
 		}if(event.getSource() == botaoGravarUsuario){
 			frameRecomendacoes.setVisible(false);
+			String nome = areaNomeUsuario.getText();
+			if(nome.replace(" ", "").equals(""))
+				nome = "";
 			Date data = new Date();
 			String armazenaUser = "";
 			armazenaUser += data.toLocaleString() + ";";
-			armazenaUser += areaNomeUsuario.getText() + ";";
+			armazenaUser += nome + ";";
 			for(String nota : notas)
 				armazenaUser += nota + ";";
 			armazenaUser = "\n"+armazenaUser;

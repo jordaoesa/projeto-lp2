@@ -23,14 +23,14 @@ public class ReadDataTest {
 	
 	@Before
 	public void ajeitaPathsAntes(){
-		MenuInicial.pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
-		MenuInicial.pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
+		MenuInicial.setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
+		MenuInicial.setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 	}
 	
 	@After
 	public void ajeitaPathsDepois(){
-		MenuInicial.pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
-		MenuInicial.pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
+		MenuInicial.setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
+		MenuInicial.setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class ReadDataTest {
 	
 	@Test
 	public void testaCarregaArquivoNaoExistenteEstabelecimentos(){
-		MenuInicial.pathEstabelecimentos = "";
+		MenuInicial.setPathEstabelecimentos("");
 		try {
 			ReadData.initLists();
 			Assert.fail("Erra pra ter dado erro.");
@@ -93,7 +93,7 @@ public class ReadDataTest {
 	
 	@Test
 	public void testaCarregaArquivoNaoExistenteOpinioes(){
-		MenuInicial.pathOpinioes = "";
+		MenuInicial.setPathOpinioes("");
 		try {
 			ReadData.initLists();
 			Assert.fail("Erra pra ter dado erro.");
@@ -104,7 +104,7 @@ public class ReadDataTest {
 	
 	@Test
 	public void testaNumberFormatError(){
-		MenuInicial.pathOpinioes = "./src/lp2/testes/opinioesNumberFormatError.txt";
+		MenuInicial.setPathOpinioes("./src/lp2/testes/opinioesNumberFormatError.txt");
 		try {
 			ReadData.initLists();
 			Assert.fail("Erra pra ter dado erro.");
@@ -115,7 +115,7 @@ public class ReadDataTest {
 	
 	@Test
 	public void testaFormatoInvalidoOpinioes(){
-		MenuInicial.pathOpinioes = "./src/lp2/testes/arquivoFormatoErrado.txt";
+		MenuInicial.setPathOpinioes("./src/lp2/testes/arquivoFormatoErrado.txt");
 		try {
 			ReadData.initLists();
 			Assert.fail("Erra pra ter dado erro.");
@@ -126,7 +126,7 @@ public class ReadDataTest {
 	
 	@Test
 	public void testaFormatoInvalidoEstabelecimentos(){
-		MenuInicial.pathEstabelecimentos = "./src/lp2/testes/arquivoFormatoErrado.txt";
+		MenuInicial.setPathEstabelecimentos("./src/lp2/testes/arquivoFormatoErrado.txt");
 		try {
 			ReadData.initLists();
 			Assert.fail("Erra pra ter dado erro.");

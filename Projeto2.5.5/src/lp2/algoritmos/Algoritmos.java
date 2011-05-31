@@ -26,9 +26,8 @@ public class Algoritmos {
 	 * e fazer comparacoes de performance de recomendacao desses algoritmos.
 	 */
 	public Algoritmos(){
-		
-		usuarios = ReadData.getUsuarios();
-		estabelecimentos = ReadData.getEstabelecimentos();
+		setEstabelecimentos(ReadData.getEstabelecimentos());
+		setUsuarios(ReadData.getUsuarios());
 	}
 	
 	/**
@@ -155,4 +154,11 @@ public class Algoritmos {
 		return estabelecimentosRecomendados;
 	}
 	
+	private static void setUsuarios(List<Usuario> lista){
+		usuarios = lista;
+	}
+	
+	private static void setEstabelecimentos(List<Estabelecimento> lista){
+		estabelecimentos = lista;
+	}
 }

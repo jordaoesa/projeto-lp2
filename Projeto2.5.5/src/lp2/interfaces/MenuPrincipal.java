@@ -136,15 +136,15 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 			//evento do botao loadFileOpinioes
 			if(event.getSource() == loadFileOpinioes){
 				try {
-					MenuInicial.pathOpinioes = escolheArquivo("opinioes");
+					MenuInicial.setPathOpinioes(escolheArquivo("opinioes"));
 					if (MenuInicial.pathOpinioes == null){
-						MenuInicial.pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
+						MenuInicial.setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 					} else {
 						ReadData.initLists();
 					}
 				} catch (Exception e){
-					MenuInicial.pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
-					MenuInicial.pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
+					MenuInicial.setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
+					MenuInicial.setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 					try {
 						ReadData.initLists();
 					} catch (Exception e1) {
@@ -157,15 +157,15 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 			//evento do botao loadFileEstabelecimentos
 			if(event.getSource() == loadFileEstabelecimentos){
 				try {
-					MenuInicial.pathEstabelecimentos = escolheArquivo("estabelecimentos");
+					MenuInicial.setPathEstabelecimentos(escolheArquivo("estabelecimentos"));
 					if(MenuInicial.pathEstabelecimentos == null){
-						MenuInicial.pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
+						MenuInicial.setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
 					} else {
 						ReadData.initLists();
 					}
 				} catch (Exception e){
-					MenuInicial.pathEstabelecimentos = "./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data";
-					MenuInicial.pathOpinioes = "./src/lp2/arquivos/opinioes-dos-usuarios-v2.data";
+					MenuInicial.setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
+					MenuInicial.setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
 					try {
 						ReadData.initLists();
 					} catch (Exception e1) {

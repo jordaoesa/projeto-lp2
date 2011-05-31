@@ -25,7 +25,7 @@ public class AlgoritmosTest {
 	Usuario user1;
 	
 	@Before
-	public void InstanciaAlgoritmo() throws Exception{
+	public void instanciaAlgoritmo() throws Exception{
 		ReadData.initLists();
 		algoritmo = new Algoritmos();
 		user1 = ReadData.getUsuarios().get(0);
