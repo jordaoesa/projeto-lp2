@@ -33,6 +33,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 	private JButton botaoSair;
 	private JButton loadFileOpinioes;
 	private JButton loadFileEstabelecimentos;
+	private JButton botaoComparaAlgoritmos;
 	private JLabel imagemFundo;
 	private ImageIcon image;
 
@@ -63,6 +64,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoSair = new JButton("Sair");		
 		loadFileOpinioes = new JButton("Novas Opinioes");			
 		loadFileEstabelecimentos = new JButton("Novos Estabelecimentos");
+		botaoComparaAlgoritmos = new JButton("Comparar Algoritmos");
 		
 		//Label
 		imagemFundo = new JLabel();
@@ -77,7 +79,8 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		add(botaoVerTodosLugares, new AbsoluteConstraints(570, 67, 210, 23));
 		add(botaoPopularidade, new AbsoluteConstraints(570,108,210,23));
 		add(botaoGerarRecomendacao, new AbsoluteConstraints(570,149,210,23));
-		add(botaoSair, new AbsoluteConstraints(570,272,210,23));
+		add(botaoComparaAlgoritmos, new AbsoluteConstraints(570, 272, 210, 23));
+		add(botaoSair, new AbsoluteConstraints(570,313,210,23));
 		add(imagemFundo, new AbsoluteConstraints(-1, -2, -1, -1));
 
 	}
@@ -86,6 +89,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoCadastrar.addActionListener(this);
 		botaoPopularidade.addActionListener(this);
 		botaoGerarRecomendacao.addActionListener(this);
+		botaoComparaAlgoritmos.addActionListener(this);
 		botaoVerTodosLugares.addActionListener(this);
 		botaoSair.addActionListener(this);
 		loadFileOpinioes.addActionListener(this);
@@ -99,6 +103,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoVerTodosLugares.setToolTipText("Clique para ver opinioes de todos os usuarios.");
 		botaoPopularidade.setToolTipText("Clique para ver popularidade dos estabelecimentos");
 		botaoGerarRecomendacao.setToolTipText("Clique para gerar recomendacoes para um usuario cadastrado.");
+		botaoComparaAlgoritmos.setToolTipText("Clique para comparar os algoritmos de recomendacao.");
 		botaoSair.setToolTipText("Clique para sair.");
 		loadFileOpinioes.setToolTipText("Clique para escolher um arquivo de opinioes sobre um estabalecimento.");
 		loadFileEstabelecimentos.setToolTipText("Clique para escolher um arquivo com informacoes de estabelecimentos.");
@@ -127,6 +132,12 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 			if(event.getSource() == botaoGerarRecomendacao){
 				MenuInicial.panelCorpo.removeAll();
 				MenuInicial.panelCorpo.add(new MenuGeraRecomendacao());
+				MenuInicial.panelCorpo.updateUI();
+			}
+			//evento do botao Comparar Algoritmos
+			if(event.getSource() == botaoComparaAlgoritmos){
+				MenuInicial.panelCorpo.removeAll();
+				MenuInicial.panelCorpo.add(new ComparaAlgoritmos());
 				MenuInicial.panelCorpo.updateUI();
 			}
 			//evento do botao Sair

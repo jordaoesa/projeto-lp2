@@ -104,6 +104,15 @@ public class Usuario {
 		}
 		this.dataHoraCadastro = dataHoraCadastro;
 	}
+	
+	/**
+	 * Compara a precedencia de nosmes dos usuarios.
+	 * @param user
+	 * @return
+	 */
+	public int comparaPorNome(Usuario user){
+		return this.getNome().compareToIgnoreCase(user.getNome());
+	}
 
 	@Override
 	public int hashCode() {

@@ -1,5 +1,6 @@
 package lp2.lerDados;
 
+
 /**
  * Classe que define um estabelecimento.
  * 
@@ -131,6 +132,18 @@ public class Estabelecimento implements Comparable<Estabelecimento> {
     @Override
     public int compareTo(Estabelecimento o) {
         return this.getNota() - o.getNota();
+    }
+
+	/**
+	 * Compara dois estabelecimentos pelos nomes. Utilizado para ordenacao dos
+	 * estabelecimentos em ordem alfabetica.
+	 * 
+	 * @param outro
+	 *            O outro estabelecimentos.
+	 * @return Um inteiro representando o nome que vem antes ou depois.
+	 */
+    public int comparePorNome(Estabelecimento outro){
+    	return this.getNome().compareTo(outro.getNome());
     }
 
 	@Override

@@ -142,7 +142,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 			type2 = true;
 			alteraTema();
 		}else if(event.getSource() == menuItensArquivo[0]){
-			System.exit(0);
+			System.exit(EXIT_ON_CLOSE);
 		}else if(event.getSource() == menuItensSobre[0]){
 			JOptionPane.showMessageDialog(MenuInicial.this, "Programa feito por:" + "\n" + "	Irvile Rodrigues"+ "\n"
 					                              + "	Jordao Ezequiel" + "\n" + "	Flavia Gangorra","Sobre Integrantes",JOptionPane.PLAIN_MESSAGE);

@@ -107,8 +107,8 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		//add no frame interno
 		frameRecomendacoes.getContentPane().add(scrollPaneRecomendacoes);
 
-		iniciaArrayNotasENomes();
 		iniciaComboBoxEstabelecimento();
+		iniciaArrayNotasENomes();
 		addNoContainer();
 		
 
@@ -186,20 +186,19 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	
 	private void iniciaComboBoxEstabelecimento(){
 		int i = 1;
-
 		estabelecimentosCadastrados[0] = ""; // so pra deixar vazio o primeiro campo, pra nao ficar como se ja tivesse um usuarios selecionado
 		for(Estabelecimento estabelecimento : ReadData.getEstabelecimentos()){
 			estabelecimentosCadastrados[i] = estabelecimento.getNome();
 			i ++;
 		}
 		listaSuspensaDeEstabelecimentos = new JComboBox(estabelecimentosCadastrados);
-		add(listaSuspensaDeEstabelecimentos, new AbsoluteConstraints(270,100,320,23));	
 	}
 
 	private void addNoContainer(){
 
 		//add no container do JPanel
 		add(frameRecomendacoes, new AbsoluteConstraints(70,250,650,180));
+		add(listaSuspensaDeEstabelecimentos, new AbsoluteConstraints(270,100,320,23));
 		add(iconNotificacaoRecomencadao, new AbsoluteConstraints(365,450,40,40));
 		add(iconNotificacaoNome, new AbsoluteConstraints(305,40,40,40));
 		add(nomeUsuario, new AbsoluteConstraints(50,50,50,23));
@@ -224,7 +223,6 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		for(int j=0; j<ReadData.getEstabelecimentos().size(); j++){
 			nomesEstabelecimentos.add(ReadData.getEstabelecimentos().get(j).getNome());
 			notas.add("0 : Nao conheco");
-
 		}
 	}
 	
@@ -287,7 +285,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 					}else{	
 						iconNotificacaoRecomencadao.setVisible(true);
 						recomendacao = Integer.parseInt(areaNumRecomendacoes.getText());
-						if(recomendacao < 0)
+						if(recomendacao <= 0)
 							iconNotificacaoRecomencadao.setIcon(imageErrado);
 						else
 							iconNotificacaoRecomencadao.setIcon(imageOk);
@@ -417,8 +415,12 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			String armazenaUser = "";
 			armazenaUser += data.toLocaleString() + ";";
 			armazenaUser += nome + ";";
+			
+			StringBuffer buf = new StringBuffer();
 			for(String nota : notas)
-				armazenaUser += nota + ";";
+				buf.append(nota + ";");
+			armazenaUser += buf.toString().substring(0, buf.toString().length()-1);
+			
 			armazenaUser = "\n"+armazenaUser;
 			BufferedWriter buffer = null;
 			try {

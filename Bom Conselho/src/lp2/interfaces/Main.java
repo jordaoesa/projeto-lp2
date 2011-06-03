@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JWindow;
+
 import lp2.lerDados.ReadData;
 
 
@@ -48,7 +49,7 @@ public class Main {
 					barra.setValue(progressBarra);
 					progressBarra++;
 					try{
-						sleep(30);
+						sleep(1);
 					}catch (InterruptedException e) {
 						e.printStackTrace();
 					}

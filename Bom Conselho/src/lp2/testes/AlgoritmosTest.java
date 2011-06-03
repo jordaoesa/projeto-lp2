@@ -64,9 +64,9 @@ public class AlgoritmosTest {
 		estab = algoritmo.executeGenericRecomendations(10);
 		Assert.assertTrue(estab.size() == 10);
 		
-		estab = algoritmo.executeGenericRecomendations(39);
-		// nao pode ser 39. nao ha estabelecimentos suficientes na soma total que mantenham a nota superior a 0.
-		Assert.assertFalse(estab.size() == 39);
+		estab = algoritmo.executeGenericRecomendations(40);
+		// nao pode ser 40. nao ha estabelecimentos suficientes na soma total.
+		Assert.assertFalse(estab.size() == 40);
 		
 		estab = algoritmo.executeGenericRecomendations(100);
 		Assert.assertFalse(estab.size() == 100);

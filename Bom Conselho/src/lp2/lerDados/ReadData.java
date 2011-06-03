@@ -38,7 +38,7 @@ public class ReadData {
 			buffer = new BufferedReader(new InputStreamReader(new FileInputStream(MenuInicial.pathEstabelecimentos), "UTF-8"));
 			List<Estabelecimento> listaTemporaria = new ArrayList<Estabelecimento>();
 			String testaPadraoDoArquivo = buffer.readLine(); //comendo linha inicial
-			if(!testaPadraoDoArquivo.equals("Nome;Endereço;\"Tipo de almoço (self service, prato feito, a la carte)\"") 
+			if((testaPadraoDoArquivo == null) || !testaPadraoDoArquivo.equals("Nome;Endereço;\"Tipo de almoço (self service, prato feito, a la carte)\"") 
 					&& !testaPadraoDoArquivo.equals("Nome;EndereÃ§o;\"Tipo de almoÃ§o (self service, prato feito, a la carte)\"")){
 				throw new Exception("Padrao de arquivo desconhecido.");
 			}
@@ -57,7 +57,7 @@ public class ReadData {
 
 			buffer = new BufferedReader(new InputStreamReader(new FileInputStream(MenuInicial.pathOpinioes), "UTF-8"));
 			testaPadraoDoArquivo = buffer.readLine();
-			if (!testaPadraoDoArquivo
+			if ((testaPadraoDoArquivo == null) || !testaPadraoDoArquivo
 					.equals("Indicação de data e hora;Seu nome;Bar do Cuscuz e Restaurante;Baixinho Bar e Restaurante;" +
 							"Bar do George;Bar do Santos;Bodão Bar e Restaurante;Bonaparte;Bongustaio;Cabana do Possidônio;" +
 							"Cantina da Sayonara;Cantina de Dona Inês;Cantina de Olavo;Cantina do Departamento de Meteorologia;" +
@@ -87,7 +87,16 @@ public class ReadData {
 				String dadosLinha[] = linha.split(";");
 				if(dadosLinha != null && dadosLinha.length > 1){
 					if(dadosLinha[1].equals("")){
-						dadosLinha[1] = "anonimo" + ++k;
+						k++;
+						if(k >= 1000){
+							dadosLinha[1] = "anonimo" + k;
+						}else if(k < 1000 && k >= 100){
+							dadosLinha[1] = "anonimo0" + k;
+						}else if(k < 100 && k >= 10){
+							dadosLinha[1] = "anonimo00" + k;
+						}else if(k < 10 && k >= 0){
+							dadosLinha[1] = "anonimo000" + k;
+						}
 					}
 					nome = dadosLinha[1];
 					for(int i=2; i<dadosLinha.length; i++){
@@ -109,6 +118,19 @@ public class ReadData {
 					usuarios.add(temp);
 				}
 			}
+			
+			//ordenando os usuarios
+			for(int i=0; i<usuarios.size(); i++){
+				for(int j=i+1; j<usuarios.size(); j++){
+					if(usuarios.get(i).comparaPorNome(usuarios.get(j)) > 0){
+						Usuario temp = usuarios.get(i);
+						usuarios.set(i, usuarios.get(j));
+						usuarios.set(j, temp);
+					}
+				}
+			}
+			
+			//ordenando os estabelecimentos
 			for(int i=2; i < ordemDosEstabelecimentos.length; i++){
 				for(Estabelecimento e : listaTemporaria){
 					if(ordemDosEstabelecimentos[i].equalsIgnoreCase(e.getNome())){
