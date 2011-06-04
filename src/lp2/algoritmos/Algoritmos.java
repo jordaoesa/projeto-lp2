@@ -575,6 +575,42 @@ public class Algoritmos {
 		return estabelecimentosRecomendados;
 	}
 	
+
+	//Metodo que remove as recomendacoes Popularidade selecionadas
+	public List<Estabelecimento> executePersonalizeRecomendationsRemove(int numRecomendacoes,String listaRemovidos,TipoAlgoritmoPersonalizado tipoDeAlgoritmo,int numberUser) {
+		
+		List<Estabelecimento> estabelecimentosAlgoritmo = null;
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+
+		
+		if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.COSSENO)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}else if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}else if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}else if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}else if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}else if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP)){
+			estabelecimentosAlgoritmo = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, ReadData.getUsuarios().get(numberUser-1)).get(0);
+		}
+
+		int i = 0;
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+			if(listaRemovidos.contains(estabelecimentosAlgoritmo.get(i).getNome())){
+				//continue;
+			}else{
+				estabelecimentosRecomendados.add(estabelecimentosAlgoritmo.get(i));
+			}
+			i++;
+
+		}
+		return estabelecimentosRecomendados;
+	}
+
+	
 	private static void setUsuarios(List<Usuario> lista){
 		usuarios = lista;
 	}

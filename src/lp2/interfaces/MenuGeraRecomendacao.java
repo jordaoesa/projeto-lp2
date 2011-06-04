@@ -1,5 +1,5 @@
 package lp2.interfaces;
-
+//code.google.
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -651,7 +651,21 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		
 		//evento do botaoRemoverRecomendacao do InternalFrame
 		if(event.getSource()==botaoRemoveRecomendacao){
-			removeRecomendacaoPopular(recomendacao,estabelecimentosRemovidos);
+			if(boolalgoritmoTipo1){
+				removeRecomendacaoPopular(recomendacao,estabelecimentosRemovidos);
+			}if(boolalgoritmoTipo2)
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, numUsuario);
+			if(boolalgoritmoTipo3){
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.COSSENO, numUsuario);
+			}if(boolalgoritmoTipo4){
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario);
+			}if(boolalgoritmoTipo5){
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario);
+			}if(boolalgoritmoTipo6){
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario);
+			}if(boolalgoritmoTipo7){
+				removeRecomendacaoPersonalizados(recomendacao, estabelecimentosRemovidos,TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario);
+			}
 		}
 		if(event.getSource() == tiposDeComida){
 			tipoDeComidaSelecionada = tiposDeComida.getSelectedItem().toString();
@@ -694,7 +708,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			
 		if(event.getSource() == listaSuspensaDeFiltros){
 			if(listaSuspensaDeFiltros.getSelectedItem().toString().equals("palavra-chave")){
-				System.out.println("Flavia 1");
 				
 				tipoFiltroPalavraChave = true;
 				tipoFiltroEstabelecimento = false;
@@ -708,7 +721,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 				
 			}if(listaSuspensaDeFiltros.getSelectedItem().toString().equals("tipo estabelecimento")){
 
-				System.out.println("Flavia 2");
 				tipoFiltroEstabelecimento = true;
 				tipoFiltroPalavraChave = false;
 				
@@ -722,7 +734,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 				
 			}if(listaSuspensaDeFiltros.getSelectedItem().toString().equals("localização")){
 
-				System.out.println("Flavia 3");
+				
 				tipoFiltroLocalizacao = true;
 				tipoFiltroEstabelecimento = false;
 				tipoFiltroPalavraChave = false;
@@ -761,14 +773,12 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 				if(boolalgoritmoTipo2){
 					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
-						System.out.println("Flavia 1 gerar");
 						frameRecomendacoes.setVisible(true);
 						scalarProductRecomendationsFilter(numUsuario, recomendacao, campoTextoPalavraChave.getText());
 					}else if(tipoFiltroEstabelecimento){
 						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
 							frameRecomendacoes.setVisible(true);
 							scalarProductRecomendationsType(numUsuario, recomendacao, "A la carte");
-							
 						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
 							frameRecomendacoes.setVisible(true);
 							scalarProductRecomendationsType(numUsuario, recomendacao, "Self-service");
@@ -783,14 +793,12 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 						
 					}else{
 						frameRecomendacoes.setVisible(true);
-						System.out.println("Flavia nao entrou nenhum gerar");
 						executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, numUsuario, recomendacao);
 						//scalarProductRecomendations(numUsuario, recomendacao);
 					}
 				}
 				if(boolalgoritmoTipo1){
 					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
-						System.out.println("Flavia algo 2 gerar");
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
 						
@@ -926,5 +934,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		preencheTabela(recomendacoes);
 
 	}
-
+	//quando remove uma recomendao, coma algoritmos personalizados
+	private void removeRecomendacaoPersonalizados(int numRecomendacao,String nomeEstabelecimentos, TipoAlgoritmoPersonalizado tipoAlgoritmo, int numUser){
+		List<Estabelecimento> recomendacoes = algoritmos.executePersonalizeRecomendationsRemove(numRecomendacao, nomeEstabelecimentos,tipoAlgoritmo,numUser);
+		preencheTabela(recomendacoes);
+	}
 }
