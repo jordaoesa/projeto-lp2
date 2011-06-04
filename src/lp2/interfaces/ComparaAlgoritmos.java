@@ -177,12 +177,12 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 	}
 
 	private void preencheTabelaComparacoesFinais(List<String> comparacoesFinais){
-		Object obj[][] = new Object[1][8];
+		Object obj[][] = new Object[1][9];
 		for(int i=0; i<comparacoesFinais.size(); i++){
 			obj[0][i] = comparacoesFinais.get(i);
 		}
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(obj,
-				new String[] { "Opinioes Positivas do Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+				new String[] { "Opinioes Positivas do Sistema", "Opinioes Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 	}
 
 	@Override

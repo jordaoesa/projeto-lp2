@@ -339,6 +339,7 @@ public class Algoritmos {
 			
 		}
 		comparacaoFinal.add(String.valueOf(getOpinioesPositivasSistema()));
+		comparacaoFinal.add(String.valueOf(getOpinioesCadastradasSistema()));
 //		comparacaoFinal.add(String.valueOf(totalAcertosGenericos));
 //		comparacaoFinal.add(String.valueOf(totalAcertosProdutoEscalar));
 //		comparacaoFinal.add(String.valueOf(totalAcertosCosseno));
@@ -382,6 +383,18 @@ public class Algoritmos {
 			}
 		}
 		return numOpinioesPositivas;
+	}
+	
+	private static int getOpinioesCadastradasSistema(){
+		int numOpinioesCadastradas = 0;
+		for(Usuario user : usuarios){
+			for(Integer opiniao : user.getOpinioes()){
+				if(opiniao != 0){
+					numOpinioesCadastradas++;
+				}
+			}
+		}
+		return numOpinioesCadastradas;
 	}
 
 	/**
