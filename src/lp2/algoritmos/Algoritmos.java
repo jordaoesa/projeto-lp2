@@ -211,6 +211,10 @@ public class Algoritmos {
 		int totalAcertosGenericos = 0;
 		int totalAcertosProdutoEscalar = 0;
 		int totalAcertosCosseno = 0;
+		int totalAcertosCossenoIntersecao = 0;
+		int totalAcertosSimilaridadeDice = 0;
+		int totalAcertosSimilaridadeJaccard = 0;
+		int totalAcertosSimilaridadeOverlap = 0;
 		
 		List<List> returnList = new ArrayList<List>();
 		List<List<String>> comparacoesUsuarios = new ArrayList<List<String>>();
@@ -224,6 +228,10 @@ public class Algoritmos {
 			int acertosGenericos = 0;
 			int acertosProdutoEscalar = 0;
 			int acertosCosseno = 0;
+			int acertosCossenoIntersecao = 0;
+			int acertosSimilaridadeDice = 0;
+			int acertosSimilaridadeJaccard = 0;
+			int acertosSimilaridadeOverlap = 0;
 			
 			for(int i=0; i<user.getOpinioes().size(); i++){
 				if(user.getOpinioes().get(i) > 0){
@@ -235,6 +243,10 @@ public class Algoritmos {
 					List<Estabelecimento> estabelecimentosGenericos = executeGenericRecomendations(numRecomendacoes);
 					List<Estabelecimento> estabelecimentosProdutoEscalar = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
 					List<Estabelecimento> estabelecimentosCosseno = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, user).get(0);
+					List<Estabelecimento> estabelecimentosCossenoIntersecao = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user).get(0);
+					List<Estabelecimento> estabelecimentosSimilaridadeDice = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user).get(0);
+					List<Estabelecimento> estabelecimentosSimilaridadeJaccard = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user).get(0);
+					List<Estabelecimento> estabelecimentosSimilaridadeOverlap = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user).get(0);
 					
 					user.getOpinioes().set(i, avaliacaoOriginal); // redefinindo a nota original do estabelecimento escondido
 					
@@ -259,27 +271,66 @@ public class Algoritmos {
 						}
 					}
 					
+					for(Estabelecimento estabelecimento : estabelecimentosCossenoIntersecao){
+						if(estabelecimento.getNome().equals(estabelecimentoEscondido.getNome())){
+							acertosCossenoIntersecao++;
+							break;
+						}
+					}
+					
+					for(Estabelecimento estabelecimento : estabelecimentosSimilaridadeDice){
+						if(estabelecimento.getNome().equals(estabelecimentoEscondido.getNome())){
+							acertosSimilaridadeDice++;
+							break;
+						}
+					}
+					
+					for(Estabelecimento estabelecimento : estabelecimentosSimilaridadeJaccard){
+						if(estabelecimento.getNome().equals(estabelecimentoEscondido.getNome())){
+							acertosSimilaridadeJaccard++;
+							break;
+						}
+					}
+					
+					for(Estabelecimento estabelecimento : estabelecimentosSimilaridadeOverlap){
+						if(estabelecimento.getNome().equals(estabelecimentoEscondido.getNome())){
+							acertosSimilaridadeOverlap++;
+							break;
+						}
+					}
+					
 				}
 			}
 			
 			totalAcertosGenericos += acertosGenericos;
 			totalAcertosProdutoEscalar += acertosProdutoEscalar;
 			totalAcertosCosseno += acertosCosseno;
+			totalAcertosCossenoIntersecao += acertosCossenoIntersecao;
+			totalAcertosSimilaridadeDice += acertosSimilaridadeDice;
+			totalAcertosSimilaridadeJaccard += acertosSimilaridadeJaccard;
+			totalAcertosSimilaridadeOverlap += acertosSimilaridadeOverlap;
 			
-			// Formatacao da lista: Nome | OpinioesPositivas | OpinioesCadastradas | AcertosGenerico | AcertosPersonalizado | AcertosCosseno | PorcentagemGenerico | PorcentagemPersonalizado | PorcentagemCosseno
 			List<String> comparacaoPorUsuario = new ArrayList<String>();
 			
 			comparacaoPorUsuario.add(user.getNome());
 			comparacaoPorUsuario.add(String.valueOf(getOpinioesPositivasUser(user)));
 			comparacaoPorUsuario.add(String.valueOf(getOpinioesCadastradasUser(user)));
-			comparacaoPorUsuario.add(String.valueOf(acertosGenericos));
-			comparacaoPorUsuario.add(String.valueOf(acertosProdutoEscalar));
-			comparacaoPorUsuario.add(String.valueOf(acertosCosseno));
+//			comparacaoPorUsuario.add(String.valueOf(acertosGenericos));
+//			comparacaoPorUsuario.add(String.valueOf(acertosProdutoEscalar));
+//			comparacaoPorUsuario.add(String.valueOf(acertosCosseno));
 			if(getOpinioesPositivasUser(user) > 0){
 				comparacaoPorUsuario.add(nfDouble.format((acertosGenericos / (double)getOpinioesPositivasUser(user))*100) + "%");
 				comparacaoPorUsuario.add(nfDouble.format((acertosProdutoEscalar / (double)getOpinioesPositivasUser(user))*100) + "%");
 				comparacaoPorUsuario.add(nfDouble.format((acertosCosseno / (double)getOpinioesPositivasUser(user))*100) + "%");
+				comparacaoPorUsuario.add(nfDouble.format((acertosCossenoIntersecao / (double)getOpinioesPositivasUser(user))*100) + "%");
+				comparacaoPorUsuario.add(nfDouble.format((acertosSimilaridadeDice / (double)getOpinioesPositivasUser(user))*100) + "%");
+				comparacaoPorUsuario.add(nfDouble.format((acertosSimilaridadeJaccard / (double)getOpinioesPositivasUser(user))*100) + "%");
+				comparacaoPorUsuario.add(nfDouble.format((acertosSimilaridadeOverlap / (double)getOpinioesPositivasUser(user))*100) + "%");
 			}else{
+				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
+				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
+				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
+				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
 				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
 				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
 				comparacaoPorUsuario.add(nfDouble.format(0) + "%");
@@ -288,14 +339,22 @@ public class Algoritmos {
 			
 		}
 		comparacaoFinal.add(String.valueOf(getOpinioesPositivasSistema()));
-		comparacaoFinal.add(String.valueOf(totalAcertosGenericos));
-		comparacaoFinal.add(String.valueOf(totalAcertosProdutoEscalar));
-		comparacaoFinal.add(String.valueOf(totalAcertosCosseno));
+//		comparacaoFinal.add(String.valueOf(totalAcertosGenericos));
+//		comparacaoFinal.add(String.valueOf(totalAcertosProdutoEscalar));
+//		comparacaoFinal.add(String.valueOf(totalAcertosCosseno));
 		if(getOpinioesPositivasSistema() > 0){
 			comparacaoFinal.add(nfDouble.format((totalAcertosGenericos / (double) getOpinioesPositivasSistema())*100) + "%");
 			comparacaoFinal.add(nfDouble.format((totalAcertosProdutoEscalar / (double) getOpinioesPositivasSistema())*100) + "%");
 			comparacaoFinal.add(nfDouble.format((totalAcertosCosseno / (double) getOpinioesPositivasSistema())*100) + "%");
+			comparacaoFinal.add(nfDouble.format((totalAcertosCossenoIntersecao / (double) getOpinioesPositivasSistema())*100) + "%");
+			comparacaoFinal.add(nfDouble.format((totalAcertosSimilaridadeDice / (double) getOpinioesPositivasSistema())*100) + "%");
+			comparacaoFinal.add(nfDouble.format((totalAcertosSimilaridadeJaccard / (double) getOpinioesPositivasSistema())*100) + "%");
+			comparacaoFinal.add(nfDouble.format((totalAcertosSimilaridadeOverlap / (double) getOpinioesPositivasSistema())*100) + "%");
 		}else{
+			comparacaoFinal.add(nfDouble.format(0) + "%");
+			comparacaoFinal.add(nfDouble.format(0) + "%");
+			comparacaoFinal.add(nfDouble.format(0) + "%");
+			comparacaoFinal.add(nfDouble.format(0) + "%");
 			comparacaoFinal.add(nfDouble.format(0) + "%");
 			comparacaoFinal.add(nfDouble.format(0) + "%");
 			comparacaoFinal.add(nfDouble.format(0) + "%");
