@@ -1,3 +1,4 @@
+//COMENTARIO
 package lp2.interfaces;
 
 import java.awt.BorderLayout;
