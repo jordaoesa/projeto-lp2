@@ -76,7 +76,7 @@ public class MenuPopularidade extends JPanel implements ActionListener{
 	//metodo que mostra os mais populares e preeche a tabela
 	private void popularityRecomendations(){
 		if(ReadData.getUsuarios().size() > 0 && ReadData.getEstabelecimentos().size() > 0){
-			List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(ReadData.getEstabelecimentos().size());
+			List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(ReadData.getEstabelecimentos().size()).get(0);
 			preencheTabela(recomendacoes);
 			
 		}else{

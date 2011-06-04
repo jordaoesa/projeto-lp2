@@ -63,14 +63,14 @@ public class AlgoritmosTest {
 	@Test
 	public void testExecuteGenericRecomendations() {
 		List<Estabelecimento> estab = null;
-		estab = algoritmo.executeGenericRecomendations(10);
+		estab = algoritmo.executeGenericRecomendations(10).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
-		estab = algoritmo.executeGenericRecomendations(40);
+		estab = algoritmo.executeGenericRecomendations(40).get(0);
 		// nao pode ser 40. nao ha estabelecimentos suficientes na soma total.
 		Assert.assertFalse(estab.size() == 40);
 		
-		estab = algoritmo.executeGenericRecomendations(100);
+		estab = algoritmo.executeGenericRecomendations(100).get(0);
 		Assert.assertFalse(estab.size() == 100);
 	}
 

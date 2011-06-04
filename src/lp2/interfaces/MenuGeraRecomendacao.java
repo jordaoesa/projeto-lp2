@@ -510,10 +510,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 //	}
 
 	private static void popularityRecomendations(int numRecomendacao){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao);
+		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabela(recomendacoes);
-//		List<Estabelecimento> naoRecomendados = algoritmos.executeAlgoritmo(qtdRecomendacoes, "Cosseno", ReadData.getUsuarios().get(numberUser-1), Estabelecimentos.NAO_RECOMENDADOS);
-//		preencheTabela2(naoRecomendados);
+		List<Estabelecimento> naoRecomendados = algoritmos.executeGenericRecomendations(numRecomendacao).get(1);
+		preencheTabela2(naoRecomendados);
 	}
 	
 //	private void cosineRecomendations(int numberUser, int qtdRecomendacoes) {
@@ -524,7 +524,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 //	}
 
 	private static void popularityRecomendationsOrderly(int numRecomendacao){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao);
+		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
 	}
 
@@ -535,7 +535,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	
 	//&&&&&&&&&&@@@@@@@@@@@@@@@@@@@
 	private static void popularityRecomendationsOrderlyTable(int numRecomendacao){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao);
+		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
 	}
 	
@@ -936,7 +936,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	}
 	//quando remove uma recomendao, coma algoritmos personalizados
 	private void removeRecomendacaoPersonalizados(int numRecomendacao,String nomeEstabelecimentos, TipoAlgoritmoPersonalizado tipoAlgoritmo, int numUser){
-		List<Estabelecimento> recomendacoes = algoritmos.executePersonalizeRecomendationsRemove(numRecomendacao, nomeEstabelecimentos,tipoAlgoritmo,numUser);
-		preencheTabela(recomendacoes);
+		List<List<Estabelecimento>> estabelecimentosRecomendados = algoritmos.executePersonalizeRecomendationsRemove(numRecomendacao, nomeEstabelecimentos,tipoAlgoritmo,numUser);
+		preencheTabela(estabelecimentosRecomendados.get(0));
+		preencheTabela2(estabelecimentosRecomendados.get(1));
 	}
 }

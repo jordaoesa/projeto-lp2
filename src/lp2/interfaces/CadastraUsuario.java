@@ -347,7 +347,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 //	}
 //
 	private void popularityRecomendations(int numRecomendacao){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao);
+		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabela(recomendacoes);
 	}
 	
