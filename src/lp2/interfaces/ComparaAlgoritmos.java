@@ -158,7 +158,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 	}
 
 	private void preencheTabelaComparacoesUsuarios(List<List<String>> comparacoesUsuarios) {
-		Object obj[][] = new Object[comparacoesUsuarios.size()][9];
+		Object obj[][] = new Object[comparacoesUsuarios.size()][10];
 		for(int i=0; i<comparacoesUsuarios.size(); i++){
 			obj[i][0] = comparacoesUsuarios.get(i).get(0);
 			obj[i][1] = comparacoesUsuarios.get(i).get(1);
@@ -169,19 +169,20 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			obj[i][6] = comparacoesUsuarios.get(i).get(6);
 			obj[i][7] = comparacoesUsuarios.get(i).get(7);
 			obj[i][8] = comparacoesUsuarios.get(i).get(8);
+			obj[i][9] = comparacoesUsuarios.get(i).get(9);
 		}
 
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(obj,
-				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Acertos Generico", "Acertos Personalizado", "Acertos Cosseno", "Porcentagem Generico", "Porcentagem Personalizado", "Porcentagem Cosseno" }));
+				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 	}
 
 	private void preencheTabelaComparacoesFinais(List<String> comparacoesFinais){
-		Object obj[][] = new Object[1][7];
+		Object obj[][] = new Object[1][8];
 		for(int i=0; i<comparacoesFinais.size(); i++){
 			obj[0][i] = comparacoesFinais.get(i);
 		}
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(obj,
-				new String[] { "Opinioes Positivas do Sistema", "Acertos Generico", "Acertos Personalizado", "Acertos Cosseno", "Porcentagem Generico", "Porcentagem Personalizado", "Porcentagem Cosseno" }));
+				new String[] { "Opinioes Positivas do Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 	}
 
 	@Override
