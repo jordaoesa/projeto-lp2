@@ -32,23 +32,24 @@ public class Algoritmos {
 		setEstabelecimentos(ReadData.getEstabelecimentos());
 		setUsuarios(ReadData.getUsuarios());
 	}
-	
+
 	/**
-	 * Metodo responsavel por executar as recomendacoes personalizadas para um
-	 * usuario. As recomendacoes personalizadas baseiam-se no valor do produto
-	 * escalar entre os vetores de notas de dois usuarios. Quanto maior esse
-	 * valor, maior a semelhanca de gostos desses dois usuarios.
-	 * @param numRecomend
-	 * 			numero de recomendacoes.
+	 * Executa um algoritmo de acordo com a String tipo selecionado.
+	 * 
+	 * @param numRecomendacoes
+	 *            O numero de recomendacoes que o algoritmo deve tentar fazer.
+	 * @param tipo
+	 *            O tipo de algoritmo a ser rodado.
 	 * @param user
-	 * 			usuario.
-	 * @return
-	 * 			lista dos estabelecimentos recomendados.
+	 *            O usuario ao qual se quer fazer as recomendacoes.
+	 * @return A lista de estabelecimentos recomendados.
 	 */
-	public List<Estabelecimento> executeScalarProductRecomendations(int numRecomend, Usuario user) {
+	public List<List<Estabelecimento>> executeAlgoritmo(int numRecomendacoes, TipoAlgoritmoPersonalizado tipo, Usuario user){
 		
-		List<ProdutoEscalar> listaProdutos = new ArrayList<ProdutoEscalar>();
+		List<Algoritmo> listaAlgoritmos = new ArrayList<Algoritmo>();
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
+		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
 		List<Estabelecimento> copiaEstabelecimentos;
 		
 		String nomeOriginal = user.getNome();
@@ -58,21 +59,33 @@ public class Algoritmos {
 			// em criterio de similaridade.
 			user.setNome(user.getDataHoraCadastro() + "-" + user.getNome() + "- Nome definido para diferenciar este usuario dos demais." +
 					"Este eh o usuario ao qual serao feitas as recomendacoes.");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		for(int i=0; i<usuarios.size(); i++){
 			if(!usuarios.get(i).getNome().equals(user.getNome())){
-				ProdutoEscalar produto = null;
-				try {
-					produto = new ProdutoEscalar(user, usuarios.get(i));
-					produto.calculaProdutoEscalar();
-					listaProdutos.add(produto);
-				} catch (Exception e) {
+				try{
+					Algoritmo algoritmo = null;
+					if(tipo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
+						algoritmo = new ProdutoEscalar(user, usuarios.get(i));
+					}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO)){
+						algoritmo = new Cosseno(user, usuarios.get(i));
+					}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO)){
+						algoritmo = new CossenoIntersecao(user, usuarios.get(i));
+					}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE)){
+						algoritmo = new SimilaridadeDice(user, usuarios.get(i));
+					}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD)){
+						algoritmo = new SimilaridadeJaccard(user, usuarios.get(i));
+					}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP)){
+						algoritmo = new SimilaridadeOverlap(user, usuarios.get(i));
+					}
+					algoritmo.calculaSimilaridade();
+					listaAlgoritmos.add(algoritmo);
+				}catch (Exception e) {
 					e.printStackTrace();
 				}
-				
 			}
 		}
 		
@@ -83,34 +96,65 @@ public class Algoritmos {
 			e.printStackTrace();
 		}
 		
-		Collections.sort(listaProdutos, Collections.reverseOrder());
-		
-		Iterator<ProdutoEscalar> it = listaProdutos.iterator();
+		Collections.sort(listaAlgoritmos, Collections.reverseOrder());
+		Iterator<Algoritmo> it = listaAlgoritmos.iterator();
 
-		while(estabelecimentosRecomendados.size() < numRecomend && it.hasNext()){
-			ProdutoEscalar produto = it.next();
+		while(estabelecimentosRecomendados.size() < numRecomendacoes && it.hasNext()){
+			Algoritmo algoritmo = it.next();
 			for(int i=0; i<estabelecimentos.size(); i++){
-				estabelecimentos.get(i).setNota(produto.getUser2().getOpinioes().get(i));
+				estabelecimentos.get(i).setNota(algoritmo.getUser2().getOpinioes().get(i));
 			}
 			
+			//if(tipo.equals(Estabelecimentos.RECOMENDADOS)){
 			copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
 			Collections.sort(copiaEstabelecimentos, Collections.reverseOrder());
 			
 			for(Estabelecimento estabelecimento : copiaEstabelecimentos){
 				if (!estabelecimentosRecomendados.contains(estabelecimento)
-						&& estabelecimentosRecomendados.size() < numRecomend
+						&& estabelecimentosRecomendados.size() < numRecomendacoes
 						&& estabelecimento.getNota() > 0
-						&& produto.getUser1().getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == 0) {
+						&& algoritmo.getUser1().getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == 0) {
 
 					estabelecimentosRecomendados.add(estabelecimento);
 				}
 			}
-			if(estabelecimentosRecomendados.size() == numRecomend || !it.hasNext()){
-				return estabelecimentosRecomendados;
+			if(estabelecimentosRecomendados.size() == numRecomendacoes || !it.hasNext()){
+				break;
+			}
+		}
+			
+		
+		//Collections.sort(listaAlgoritmos, Collections.reverseOrder());
+		Iterator<Algoritmo> itContrario = listaAlgoritmos.iterator();
+
+		while(estabelecimentosNaoRecomendados.size() < numRecomendacoes && itContrario.hasNext()){
+			Algoritmo algoritmoContrario = itContrario.next();
+			for(int i=0; i<estabelecimentos.size(); i++){
+				estabelecimentos.get(i).setNota(algoritmoContrario.getUser2().getOpinioes().get(i));
+			}
+			
+			copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
+			Collections.sort(copiaEstabelecimentos);
+			
+			for(Estabelecimento estabelecimento : copiaEstabelecimentos){
+				if (!estabelecimentosNaoRecomendados.contains(estabelecimento)
+						&& !estabelecimentosRecomendados.contains(estabelecimento)
+						&& estabelecimentosNaoRecomendados.size() < numRecomendacoes
+						&& estabelecimento.getNota() < 0
+						&& algoritmoContrario.getUser1().getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == 0) {
+
+					estabelecimentosNaoRecomendados.add(estabelecimento);
+				}
+			}
+			if(estabelecimentosNaoRecomendados.size() == numRecomendacoes || !itContrario.hasNext()){
+				break;
 			}
 		}
 		
-		return new ArrayList<Estabelecimento>();
+		returnList.add(estabelecimentosRecomendados);
+		returnList.add(estabelecimentosNaoRecomendados);
+
+		return returnList;
 	}
 	
 	
@@ -156,58 +200,6 @@ public class Algoritmos {
 		}
 		return estabelecimentosRecomendados;
 	}
-
-	/**
-	 * Pearson Correlation Algorithm of recomendations.
-	 * 
-	 * @param numRecomend
-	 *            numero de recomendacoes.
-	 * @param user
-	 *            usuario.
-	 * @return lista dos estabelecimentos recomendados.
-	 */
-	public List<Estabelecimento> executeCossineRecomendations(int numRecomend, Usuario user) {
-		
-		List<Cosseno> listaCossenos = new ArrayList<Cosseno>();
-		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> copiaEstabelecimentos;
-		
-		for(int i=0; i<usuarios.size(); i++){
-			if(!usuarios.get(i).getNome().equals(user.getNome())){
-				Cosseno cosseno = new Cosseno(user, usuarios.get(i));
-				cosseno.calculaCosseno();
-				listaCossenos.add(cosseno);
-			}
-		}
-		
-		Collections.sort(listaCossenos, Collections.reverseOrder());
-		
-		Iterator<Cosseno> it = listaCossenos.iterator();
-
-		while(estabelecimentosRecomendados.size() < numRecomend && it.hasNext()){
-			Cosseno cosseno = it.next();
-			for(int i=0; i<estabelecimentos.size(); i++){
-				estabelecimentos.get(i).setNota(cosseno.getUser2().getOpinioes().get(i));
-			}
-			
-			copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
-			Collections.sort(copiaEstabelecimentos, Collections.reverseOrder());
-			
-			for(Estabelecimento estabelecimento : copiaEstabelecimentos){
-				if (!estabelecimentosRecomendados.contains(estabelecimento)
-						&& estabelecimentosRecomendados.size() < numRecomend
-						&& estabelecimento.getNota() > 0
-						&& cosseno.getUser1().getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == 0) {
-					
-					estabelecimentosRecomendados.add(estabelecimento);
-				}
-			}
-			if(estabelecimentosRecomendados.size() == numRecomend || !it.hasNext()){
-				return estabelecimentosRecomendados;
-			}
-		}
-		return new ArrayList<Estabelecimento>();
-	}
 	
 	/**
 	 * Compara todos os algoritmos de recomendacao implementados.
@@ -241,8 +233,8 @@ public class Algoritmos {
 					user.getOpinioes().set(i, 0); // escondendo estabelecimento
 					
 					List<Estabelecimento> estabelecimentosGenericos = executeGenericRecomendations(numRecomendacoes);
-					List<Estabelecimento> estabelecimentosProdutoEscalar = executeScalarProductRecomendations(numRecomendacoes, user);
-					List<Estabelecimento> estabelecimentosCosseno = executeCossineRecomendations(numRecomendacoes, user);
+					List<Estabelecimento> estabelecimentosProdutoEscalar = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
+					List<Estabelecimento> estabelecimentosCosseno = executeAlgoritmo(numRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, user).get(0);
 					
 					user.getOpinioes().set(i, avaliacaoOriginal); // redefinindo a nota original do estabelecimento escondido
 					
@@ -369,24 +361,57 @@ public class Algoritmos {
 		return numOpinioesPositivas;
 	}
 	
-	//*** DA UMA OLHADA SE ISSO TA FUNCIONANDO CERTO ***//
+	//*** 
 	public List<Estabelecimento> executeScalarProductRecomendationsFilter(int numRecomendacoes, Usuario user, String palavraChave) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> Estabelecimentos =  executeScalarProductRecomendations(estabelecimentos.size(), user);
-		
-//		for(Estabelecimento est : Estabelecimentos){
-//			System.out.println(est.getNome());
-//		}
-		
+		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size())
-		{//for(int i=0; i<numRecomendacoes; i++){
-			//if(i < Estabelecimentos.size() && Estabelecimentos.get(i).getNota() > 0){
-				if((Estabelecimentos.get(i).getNome().toLowerCase().contains(palavraChave.toLowerCase()))){
-				//	estabelecimentosRecomendados.add(Estabelecimentos.get(i));
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+				if((estabelecimentosRec.get(i).getNome().toLowerCase().contains(palavraChave.trim().toLowerCase()))){
+					//continue;
 				}else{
+					estabelecimentosRecomendados.add(estabelecimentosRec.get(i));
+				}
+				
+				i++;
+			
+		}
+		return estabelecimentosRecomendados;
+	}
+	
+	//***
+	public List<Estabelecimento> executeGenericRecomendationsFilter(int numRecomendacoes, String palavraChave) {
+
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
+		
+		int i = 0;
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+				if((Estabelecimentos.get(i).getNome().toLowerCase().contains(palavraChave.trim().toLowerCase()))){
+					//continue;
+				}else{
+					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
+				}
+					
+				
+				
+				i++;	
+		}
+		return estabelecimentosRecomendados;
+	}
+	
+	
+	//****
+	public List<Estabelecimento> executeGenericRecomendationsType(int numRecomendacoes, String type) {
+
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
+		
+		int i = 0;
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+				if(Estabelecimentos.get(i).getTipoDeComida().equalsIgnoreCase(type)){
 					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
 				}
 				i++;
@@ -397,8 +422,59 @@ public class Algoritmos {
 	}
 	
 	
-	//***
-	public List<Estabelecimento> executeGenericRecomendationsFilter(int numRecomendacoes, String palavraChave) {
+	//*** 
+	public List<Estabelecimento> executeScalarProductRecomendationsType(int numRecomendacoes, Usuario user, String type) {
+
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> estabelecimentosRec =   executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
+		
+		int i = 0;
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+				if(estabelecimentosRec.get(i).getTipoDeComida().equalsIgnoreCase(type)){
+					estabelecimentosRecomendados.add(estabelecimentosRec.get(i));
+				}
+				i++;
+		}
+		
+		return estabelecimentosRecomendados;
+	}
+	
+	//********
+	public List<Estabelecimento> executeGenericRecomendationsLocation(int numRecomendacoes, String localizacao){
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
+		
+		int i = 0;
+		while(estabelecimentosRecomendados.size() < numRecomendacoes && i< estabelecimentos.size()){
+			if(Estabelecimentos.get(i).getLocalizacao().toLowerCase().contains(localizacao.toLowerCase())){
+				estabelecimentosRecomendados.add(Estabelecimentos.get(i));
+			}
+			i++;
+		}
+		
+		
+		return estabelecimentosRecomendados;
+	}
+	
+	//*******
+	public List<Estabelecimento> executeScalarProductRecomendationsLocation(int numRecomendacoes, Usuario user, String localizacao){
+		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
+		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
+		
+		int i = 0;
+		while(estabelecimentosRecomendados.size() < numRecomendacoes && i< estabelecimentos.size()){
+			if(estabelecimentosRec.get(i).getLocalizacao().toLowerCase().contains(localizacao.toLowerCase())){
+				estabelecimentosRecomendados.add(estabelecimentosRec.get(i));
+			}
+			i++;
+		}
+		
+		
+		return estabelecimentosRecomendados;
+	}
+	
+	//Metodo que remove as recomendacoes selecionadas
+	public List<Estabelecimento> executeGenericRecomendationsRemove(int numRecomendacoes,String listaRemovidos) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
@@ -411,7 +487,7 @@ public class Algoritmos {
 		
 		int i = 0;
 		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
-				if((Estabelecimentos.get(i).getNome().toLowerCase().contains(palavraChave.toLowerCase()))){
+				if(listaRemovidos.contains(Estabelecimentos.get(i).getNome())){
 					//System.out.println("entrou");
 					//continue;
 //					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
@@ -424,47 +500,6 @@ public class Algoritmos {
 			
 		}
 		//System.out.println("tamanho" + estabelecimentosRecomendados.get(0).getNome());
-		return estabelecimentosRecomendados;
-	}
-	
-	
-	//****
-	public List<Estabelecimento> executeGenericRecomendationsType(int numRecomendacoes, String type) {
-
-		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
-		
-		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes)
-		{//for(int i=0; i<numRecomendacoes; i++){
-			//if(i < Estabelecimentos.size() && Estabelecimentos.get(i).getNota() > 0){
-				if(Estabelecimentos.get(i).getTipoDeComida().equalsIgnoreCase(type)){
-					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
-				}
-				i++;
-			
-		}
-		
-		return estabelecimentosRecomendados;
-	}
-	
-	
-	//*** DA UMA OLHADA SE TA FUNCIONANDO DIREITO TBM **///
-	public List<Estabelecimento> executeScalarProductRecomendationsType(int numRecomendacoes, Usuario user, String type) {
-
-		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> Estabelecimentos =  executeScalarProductRecomendations(estabelecimentos.size(), user);
-		
-		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes)
-		{//for(int i=0; i<numRecomendacoes; i++){
-			//if(i < Estabelecimentos.size() && Estabelecimentos.get(i).getNota() > 0){
-				if(Estabelecimentos.get(i).getTipoDeComida().equalsIgnoreCase(type)){
-					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
-				}
-				i++;
-		}
-		
 		return estabelecimentosRecomendados;
 	}
 	

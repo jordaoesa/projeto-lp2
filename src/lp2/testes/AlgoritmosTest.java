@@ -3,6 +3,7 @@ package lp2.testes;
 import java.util.List;
 
 import lp2.algoritmos.Algoritmos;
+import lp2.algoritmos.TipoAlgoritmoPersonalizado;
 import lp2.lerDados.Estabelecimento;
 import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
@@ -40,20 +41,21 @@ public class AlgoritmosTest {
 	@Test
 	public void testExecuteScalarProductRecomendations() {
 		List<Estabelecimento> estab = null;
-		estab = algoritmo.executeScalarProductRecomendations(10, user1);
+		//estab = algoritmo.executeScalarProductRecomendations(10, user1);
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
-		estab = algoritmo.executeScalarProductRecomendations(39, user1);
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
 		// nao pode ser 39. nao ha estabelecimentos suficientes nos usuarios semelhantes a este usuario e que tenham nota superior a 0.
 		Assert.assertFalse(estab.size() == 39);
 		
-		estab = algoritmo.executeScalarProductRecomendations(100, user1);
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
 		Assert.assertFalse(estab.size() == 100);
 		
 		for(int i=0; i<user1.getOpinioes().size(); i++){
 			user1.getOpinioes().set(i, 0);
 		}
-		estab = algoritmo.executeScalarProductRecomendations(10, user1);
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
 	}

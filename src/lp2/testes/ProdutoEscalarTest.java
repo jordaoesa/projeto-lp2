@@ -101,32 +101,32 @@ public class ProdutoEscalarTest {
 	public void testaCalculaProdutoEscalar(){
 		
 		//verifica produtoEscalar antes de calcular, tem que ser 0
-		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 0,produto1.getProdutoEscalar());
+		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 0.0,produto1.getResultado());
 		
 		//como as notas sao 2 em user1 e 1 em user2, produto escalar tem que ser 2
-		produto1.calculaProdutoEscalar();
-		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 2,produto1.getProdutoEscalar());
+		produto1.calculaSimilaridade();
+		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 2.0,produto1.getResultado());
 	}
 	@Test
 	public void testaSetProdutoEscalar(){
 		//antes de setar verifica que eh 0
-		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 0,produto1.getProdutoEscalar());
+		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 0.0,produto1.getResultado());
 		//depois de setar
-		produto1.setProdutoEscalar(5);
-		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 5,produto1.getProdutoEscalar());
+		produto1.setResultado(5);
+		Assert.assertEquals("Erro no metodo calculaProdutoEscalar", 5.0,produto1.getResultado());
 	}
 	@Test
 	public void testaCompareTo() throws Exception{
 		produto2 = new ProdutoEscalar(user1, user3);
 		
 		//uso o metodo calculaProduto, porque se nao sera 0.
-		produto2.calculaProdutoEscalar();
-		produto1.calculaProdutoEscalar();
+		produto2.calculaSimilaridade();
+		produto1.calculaSimilaridade();
 		
 		//note que produto escalar de produto1 tem que ser 2,pois eh 2*1 = 2
 		//e produto escalar de produto2 tem que ser 6,pois eh 2*3 = 6
-		Assert.assertEquals("Erro no metodo compareTo", -4, produto1.compareTo(produto2));//-4 pois produto1 eh menor que produto2
-		Assert.assertEquals("Erro no metodo compareTo", 4, produto2.compareTo(produto1));//4 produto2 eh maior que produto1
+		Assert.assertEquals("Erro no metodo compareTo", -1, produto1.compareTo(produto2));//-4 pois produto1 eh menor que produto2
+		Assert.assertEquals("Erro no metodo compareTo", 1, produto2.compareTo(produto1));//4 produto2 eh maior que produto1
 	}
 }
 

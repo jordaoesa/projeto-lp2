@@ -28,13 +28,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import org.netbeans.lib.awtextra.AbsoluteConstraints;
-import org.netbeans.lib.awtextra.AbsoluteLayout;
-
 import lp2.algoritmos.Algoritmos;
+import lp2.algoritmos.TipoAlgoritmoPersonalizado;
 import lp2.lerDados.Estabelecimento;
 import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
+
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  * 
@@ -50,6 +51,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private Algoritmos algoritmos;
 	private boolean boolalgoritmoTipo1 = false;
 	private boolean boolalgoritmoTipo2 = false;
+	private boolean boolalgoritmoTipo3 = false;
+	private boolean boolalgoritmoTipo4 = false;
+	private boolean boolalgoritmoTipo5 = false;
+	private boolean boolalgoritmoTipo6 = false;
+	private boolean boolalgoritmoTipo7 = false;
 	private List<String> notas;
 	private List<String> nomesEstabelecimentos;
 	private List<String> estabelecimentosAdicionados;
@@ -74,6 +80,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private JComboBox listaSuspensaNotas;
 	private JRadioButton selectScalarProductAlgorithm;
 	private JRadioButton selectPopularityAlgorithm;
+	private JRadioButton selectCosineAlgorithm;
+	private JRadioButton selectCossenoIntersecao;
+	private JRadioButton selectSimilaridadeDice;
+	private JRadioButton selectSimilaridadeJaccard;
+	private JRadioButton selectSimilaridadeOverlap;
 	private ButtonGroup selectAlgorithm;
 	private JInternalFrame frameRecomendacoes;
 	private JTable tabelaRecomendacoes;
@@ -139,11 +150,21 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		tabelaResultado.setEnabled(false);
 
 		//RadionButton/ButonGroup
-		selectScalarProductAlgorithm = new JRadioButton("Algoritmo Personalizado");
-		selectPopularityAlgorithm = new JRadioButton("Algoritmo Popularidade");
+		selectScalarProductAlgorithm = new JRadioButton("Popularidade");
+		selectPopularityAlgorithm = new JRadioButton("Produto Escalar");
+		selectCosineAlgorithm = new JRadioButton("Cosseno");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
+		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
+		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
 		selectAlgorithm = new ButtonGroup();
 		selectAlgorithm.add(selectPopularityAlgorithm);
 		selectAlgorithm.add(selectScalarProductAlgorithm);
+		selectAlgorithm.add(selectCosineAlgorithm);
+		selectAlgorithm.add(selectCossenoIntersecao);
+		selectAlgorithm.add(selectSimilaridadeDice);
+		selectAlgorithm.add(selectSimilaridadeJaccard);
+		selectAlgorithm.add(selectSimilaridadeOverlap);
 
 		//JLabels
 		nomeUsuario = new JLabel("Nome:");
@@ -207,8 +228,13 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		add(numeroDeRecomendacoes, new AbsoluteConstraints(50,460,210,23));
 		add(notaEstabelecimento, new AbsoluteConstraints(50, 140, 200, 23));
 		add(listaSuspensaNotas, new AbsoluteConstraints(270, 140, 320, 23));
-		add(selectPopularityAlgorithm, new AbsoluteConstraints(50, 400, 210, 23));
-		add(selectScalarProductAlgorithm, new AbsoluteConstraints(50, 430, 210, 23));
+		add(selectPopularityAlgorithm, new AbsoluteConstraints(50, 430, 180, 23));
+		add(selectScalarProductAlgorithm, new AbsoluteConstraints(50, 400, 180, 23));
+		add(selectCosineAlgorithm, new AbsoluteConstraints(240, 400, 180, 23));
+		add(selectCossenoIntersecao, new AbsoluteConstraints(240, 430, 180, 23));
+		add(selectSimilaridadeDice, new AbsoluteConstraints(430, 400, 180, 23));
+		add(selectSimilaridadeJaccard, new AbsoluteConstraints(430, 430, 180, 23));
+		add(selectSimilaridadeOverlap, new AbsoluteConstraints(620, 400, 180, 23));
 		add(scrollPane, new AbsoluteConstraints(10,230,776,147));
 		add(botaoVoltar, new AbsoluteConstraints(600,500,120,23));
 		add(botaoGerarRecomendacao, new AbsoluteConstraints(50, 500, 190, 23));
@@ -267,6 +293,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		botaoGravarUsuario.addActionListener(this);
 		selectPopularityAlgorithm.addActionListener(this);
 		selectScalarProductAlgorithm.addActionListener(this);
+		selectCosineAlgorithm.addActionListener(this);
+		selectCossenoIntersecao.addActionListener(this);
+		selectSimilaridadeDice.addActionListener(this);
+		selectSimilaridadeJaccard.addActionListener(this);
+		selectSimilaridadeOverlap.addActionListener(this);
 		listaSuspensaDeEstabelecimentos.addActionListener(this);
 		listaSuspensaNotas.addActionListener(this);
 		botaoVoltar.addActionListener(this);
@@ -310,14 +341,46 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 	}
 
-	private void scalarProductRecomendations(Usuario usuario, int qtdRecomendacoes){
-		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendations(qtdRecomendacoes, usuario);
-		preencheTabela(recomendacoes);
-	}
-
+//	private void scalarProductRecomendations(Usuario usuario, int qtdRecomendacoes){
+//		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario).get(0);
+//		preencheTabela(recomendacoes);
+//	}
+//
 	private void popularityRecomendations(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao);
 		preencheTabela(recomendacoes);
+	}
+	
+	private void executaAlgoritmo(TipoAlgoritmoPersonalizado tipo, Usuario user, int qtdRecomendacoes){
+		List<Estabelecimento> recomendacoes = new ArrayList<Estabelecimento>();
+		//List<Estabelecimento> naoRecomendados = new ArrayList<Estabelecimento>();
+		if(tipo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP)){
+			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user);
+			recomendacoes = resultados.get(0);
+			//naoRecomendados = resultados.get(1);
+		}
+		preencheTabela(recomendacoes);
+		//preencheTabela2(naoRecomendados);
 	}
 
 	private void preencheTabela(List<Estabelecimento> recomendacoes) {
@@ -396,17 +459,28 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		//evento do botao seleciona Algoritmo Popular
 		}if(event.getSource() == selectPopularityAlgorithm){
 			frameRecomendacoes.setVisible(false);
-			boolalgoritmoTipo1 = false;
-			boolalgoritmoTipo2 = true;
-
-		//evento do botao seleciona Algoritmo Produto Escalar
+			trocaAlgoritmo(1);
 		}if(event.getSource() == selectScalarProductAlgorithm){
 			frameRecomendacoes.setVisible(false);
-			boolalgoritmoTipo1 = true;
-			boolalgoritmoTipo2 = false;
-
-		//evento do botaoGravarUsuario
-		}if(event.getSource() == botaoGravarUsuario){
+			trocaAlgoritmo(2);
+		}if(event.getSource() == selectCosineAlgorithm){
+			frameRecomendacoes.setVisible(false);
+			trocaAlgoritmo(3);
+		}if(event.getSource() == selectCossenoIntersecao){
+			frameRecomendacoes.setVisible(false);
+			trocaAlgoritmo(4);
+		}if(event.getSource() == selectSimilaridadeDice){
+			frameRecomendacoes.setVisible(false);
+			trocaAlgoritmo(5);
+		}if(event.getSource() == selectSimilaridadeJaccard){
+			frameRecomendacoes.setVisible(false);
+			trocaAlgoritmo(6);
+		}if(event.getSource() == selectSimilaridadeOverlap){
+			frameRecomendacoes.setVisible(false);
+			trocaAlgoritmo(7);
+		}
+		
+		if(event.getSource() == botaoGravarUsuario){
 			frameRecomendacoes.setVisible(false);
 			String nome = areaNomeUsuario.getText();
 			if(nome.replace(" ", "").equals(""))
@@ -472,10 +546,26 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 				if (boolalgoritmoTipo1 && recomendacao > 0){
 					frameRecomendacoes.setVisible(true);
-					scalarProductRecomendations(usuario, recomendacao);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario, recomendacao);
+					//scalarProductRecomendations(usuario, recomendacao);
 				} else if (boolalgoritmoTipo2 && recomendacao > 0){
 					frameRecomendacoes.setVisible(true);
 					popularityRecomendations(recomendacao);
+				}else if(boolalgoritmoTipo3 && recomendacao > 0){
+					frameRecomendacoes.setVisible(true);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, usuario, recomendacao);
+				}else if(boolalgoritmoTipo4 && recomendacao > 0){
+					frameRecomendacoes.setVisible(true);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, usuario, recomendacao);
+				}else if(boolalgoritmoTipo5 && recomendacao > 0){
+					frameRecomendacoes.setVisible(true);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, usuario, recomendacao);
+				}else if(boolalgoritmoTipo6 && recomendacao > 0){
+					frameRecomendacoes.setVisible(true);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, usuario, recomendacao);
+				}else if(boolalgoritmoTipo7 && recomendacao > 0){
+					frameRecomendacoes.setVisible(true);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, usuario, recomendacao);
 				} else {
 					JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
@@ -486,7 +576,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 			//evento do botao gerar recomendacoes quando as lista de estabelecimentos ou opinioes estao vazias.
 		}if(event.getSource() == botaoGerarRecomendacao && (ReadData.getEstabelecimentos().isEmpty() || ReadData.getUsuarios().isEmpty())){
-			if ((boolalgoritmoTipo1 || boolalgoritmoTipo2) && recomendacao > 0){
+			if (temAlgoritmoSelecionado() && recomendacao > 0){
 				JOptionPane.showMessageDialog(null, "Arquivo de Opinioes/Estabelecimentos vazio(s). Impossivel gerar recomendacoes.", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
 				JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -511,6 +601,49 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao");
 		botaoGravarUsuario.setToolTipText("Grava um usuario no arquivo");
 		botaoRemover.setToolTipText("Remove opiniao da tabela");
+	}
+	
+	private void trocaAlgoritmo(int alg){
+		boolalgoritmoTipo1 = false;
+		boolalgoritmoTipo2 = false;
+		boolalgoritmoTipo3 = false;
+		boolalgoritmoTipo4 = false;
+		boolalgoritmoTipo5 = false;
+		boolalgoritmoTipo6 = false;
+		boolalgoritmoTipo7 = false;
+		
+		switch(alg){
+			case 1:
+				boolalgoritmoTipo1 = true;
+				break;
+			case 2:
+				boolalgoritmoTipo2 = true;
+				break;
+			case 3:
+				boolalgoritmoTipo3 = true;
+				break;
+			case 4:
+				boolalgoritmoTipo4 = true;
+				break;
+			case 5:
+				boolalgoritmoTipo5 = true;
+				break;
+			case 6:
+				boolalgoritmoTipo6 = true;
+				break;
+			case 7:
+				boolalgoritmoTipo7 = true;
+				break;
+			default:
+				//pass
+				break;
+		}
+	}
+	
+	private boolean temAlgoritmoSelecionado(){
+		if(boolalgoritmoTipo1 || boolalgoritmoTipo2 || boolalgoritmoTipo3 || boolalgoritmoTipo4 || boolalgoritmoTipo5 || boolalgoritmoTipo6 || boolalgoritmoTipo7)
+			return true;
+		return false;
 	}
 
 }
