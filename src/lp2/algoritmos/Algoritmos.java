@@ -195,7 +195,7 @@ public class Algoritmos {
 		copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
 		Collections.sort(copiaEstabelecimentos, Collections.reverseOrder());
 		
-		for(int i=0; i<numRecomendacoes; i++){
+		for(int i=0; i<numRecomendacoes-1; i++){
 			if(i < copiaEstabelecimentos.size() && copiaEstabelecimentos.get(i).getNota() > 0){
 				estabelecimentosRecomendados.add(copiaEstabelecimentos.get(i));
 			}
@@ -204,9 +204,15 @@ public class Algoritmos {
 		Collections.sort(copiaEstabelecimentos);
 		
 		for(int i=0; i<numRecomendacoes; i++){
-			if(i < copiaEstabelecimentos.size() && copiaEstabelecimentos.get(i).getNota() < 0 && !estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(i))){
+			if(i < copiaEstabelecimentos.size() && copiaEstabelecimentos.get(i).getNota() <= 0 && !estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(i))){
 				estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(i));
 			}
+		}
+		
+		if(!copiaEstabelecimentos.isEmpty() && estabelecimentosNaoRecomendados.isEmpty()){
+			if(estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(0)))
+				estabelecimentosRecomendados.remove(copiaEstabelecimentos.get(0));
+			estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(0));
 		}
 		
 		returnList.add(estabelecimentosRecomendados);
@@ -560,33 +566,33 @@ public class Algoritmos {
 	}
 	
 	//Metodo que remove as recomendacoes selecionadas
-	public List<Estabelecimento> executeGenericRecomendationsRemove(int numRecomendacoes,String listaRemovidos) {
+	public List<List<Estabelecimento>> executeGenericRecomendationsRemove(int numRecomendacoes,String listaRemovidos) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size()).get(0);
+		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
+		List<List<Estabelecimento>> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size());
+		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
 		
-		System.out.println(estabelecimentosRecomendados.size());
 		
-//		for(Estabelecimento est : Estabelecimentos){
-//			System.out.println(est.getNome());
-//		}
+		for(Estabelecimento e : Estabelecimentos.get(1)){
+			estabelecimentosNaoRecomendados.add(e);
+		}
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
-				if(listaRemovidos.contains(Estabelecimentos.get(i).getNome())){
-					//System.out.println("entrou");
-					//continue;
-//					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
-				}else{
-					System.out.println("entrou");
-					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
-				}
-				//System.out.println("nao entrou");
-				i++;
-			
+		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < Estabelecimentos.get(0).size()){
+			if(!listaRemovidos.contains(Estabelecimentos.get(0).get(i).getNome())){
+				estabelecimentosRecomendados.add(Estabelecimentos.get(0).get(i));
+			}else if(!estabelecimentosNaoRecomendados.contains(Estabelecimentos.get(0).get(i))){
+				estabelecimentosNaoRecomendados.add(Estabelecimentos.get(0).get(i));
+			}
+			i++;
 		}
-		//System.out.println("tamanho" + estabelecimentosRecomendados.get(0).getNome());
-		return estabelecimentosRecomendados;
+		
+		
+		
+		returnList.add(estabelecimentosRecomendados);
+		returnList.add(estabelecimentosNaoRecomendados);
+		return returnList;
 	}
 	
 
@@ -594,10 +600,8 @@ public class Algoritmos {
 	public List<List<Estabelecimento>> executePersonalizeRecomendationsRemove(int numRecomendacoes,String listaRemovidos,TipoAlgoritmoPersonalizado tipoDeAlgoritmo,int numberUser) {
 		
 		List<Estabelecimento> estabelecimentosAlgoritmoRecomendados = null;
-		//List<Estabelecimento> estabelecimentosAlgoritmoNaoRecomendados = null;
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
-		//List<List<Estabelecimento>> temporaria = new ArrayList<List<Estabelecimento>>();
 		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
 
 		
@@ -617,9 +621,7 @@ public class Algoritmos {
 
 		int i = 0;
 		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentosAlgoritmoRecomendados.size()){
-			if(listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
-				//continue;
-			}else{
+			if(!listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
 				estabelecimentosRecomendados.add(estabelecimentosAlgoritmoRecomendados.get(i));
 			}
 			i++;

@@ -880,7 +880,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		indiceLinha = tabela.getSelectedRow();   
 		//Pega a linha que foi clicada  
 		Object valoresLinhaTabela = tabela.getValueAt(indiceLinha,0);
-		System.out.println(valoresLinhaTabela);  
+		//System.out.println(valoresLinhaTabela);  
 		
 		return String.valueOf(valoresLinhaTabela);
 	} 
@@ -930,9 +930,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	
 	//Quando remover uma recomendacao,recomendar outra.
 	private void removeRecomendacaoPopular(int numRecomendacao, String nomeEstabelecimentos){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsRemove(numRecomendacao,nomeEstabelecimentos);
-		preencheTabela(recomendacoes);
-
+		List<List<Estabelecimento>> recomendacoes = algoritmos.executeGenericRecomendationsRemove(numRecomendacao,nomeEstabelecimentos);
+		preencheTabela(recomendacoes.get(0));
+		preencheTabela2(recomendacoes.get(1));
 	}
 	//quando remove uma recomendao, coma algoritmos personalizados
 	private void removeRecomendacaoPersonalizados(int numRecomendacao,String nomeEstabelecimentos, TipoAlgoritmoPersonalizado tipoAlgoritmo, int numUser){
