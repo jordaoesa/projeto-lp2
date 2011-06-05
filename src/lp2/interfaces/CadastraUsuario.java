@@ -424,8 +424,9 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent event) {
 		//LOCALIZACAO
 		if(event.getSource() == botaoComoChegar){
-			new VerLocalizacao();
-			System.out.println("como chegar");
+			MenuInicial.panelCorpo.removeAll();
+			MenuInicial.panelCorpo.add(new VerLocalizacao());
+			MenuInicial.panelCorpo.updateUI();
 		}
 		//evento do botaoAdicionar
 		if(event.getSource() == botaoAdicionar){
