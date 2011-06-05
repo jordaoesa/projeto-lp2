@@ -770,6 +770,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			
 			//evento do botao Gerar Recomendacao
 		}if(event.getSource() == botaoGerarRecomendacao && !ReadData.getUsuarios().isEmpty() && !ReadData.getEstabelecimentos().isEmpty()){
+			estabelecimentosRemovidos = "";
 			if(numUsuario > 0 && recomendacao > 0){ //tratando o caso de o cara nao ter selecionado nenhum usuario
 
 				if(boolalgoritmoTipo2){
@@ -938,6 +939,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	//quando remove uma recomendao, coma algoritmos personalizados
 	private void removeRecomendacaoPersonalizados(int numRecomendacao,String nomeEstabelecimentos, TipoAlgoritmoPersonalizado tipoAlgoritmo, int numUser){
 		List<List<Estabelecimento>> estabelecimentosRecomendados = algoritmos.executePersonalizeRecomendationsRemove(numRecomendacao, nomeEstabelecimentos,tipoAlgoritmo,numUser);
+//		for(Estabelecimento e : estabelecimentosRecomendados.get(1)){
+//			System.out.println(e.getNome());
+//		}
 		preencheTabela(estabelecimentosRecomendados.get(0));
 		preencheTabela2(estabelecimentosRecomendados.get(1));
 	}

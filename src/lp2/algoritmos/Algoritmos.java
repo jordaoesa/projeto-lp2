@@ -22,7 +22,7 @@ public class Algoritmos {
 
 	private static List<Usuario> usuarios;
 	private static List<Estabelecimento> estabelecimentos;
-	private List<Algoritmo> listaAlgoritmos = new ArrayList<Algoritmo>();
+	private List<Algoritmo> listaAlgoritmos;
 
 	/**
 	 * Metodo que instancia um objeto da classe Algoritmos que eh responsavel
@@ -47,6 +47,7 @@ public class Algoritmos {
 	 */
 	public List<List<Estabelecimento>> executeAlgoritmo(int numRecomendacoes, TipoAlgoritmoPersonalizado tipo, Usuario user){
 		
+		listaAlgoritmos = new ArrayList<Algoritmo>();
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
 		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
@@ -209,11 +210,11 @@ public class Algoritmos {
 			}
 		}
 		
-		if(!copiaEstabelecimentos.isEmpty() && estabelecimentosNaoRecomendados.isEmpty()){
-			if(estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(0)))
-				estabelecimentosRecomendados.remove(copiaEstabelecimentos.get(0));
-			estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(0));
-		}
+//		if(!copiaEstabelecimentos.isEmpty() && estabelecimentosNaoRecomendados.isEmpty()){
+//			if(estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(0)))
+//				estabelecimentosRecomendados.remove(copiaEstabelecimentos.get(0));
+//			estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(0));
+//		}
 		
 		returnList.add(estabelecimentosRecomendados);
 		returnList.add(estabelecimentosNaoRecomendados);
@@ -599,11 +600,10 @@ public class Algoritmos {
 	//Metodo que remove as recomendacoes Popularidade selecionadas
 	public List<List<Estabelecimento>> executePersonalizeRecomendationsRemove(int numRecomendacoes,String listaRemovidos,TipoAlgoritmoPersonalizado tipoDeAlgoritmo,int numberUser) {
 		
-		List<Estabelecimento> estabelecimentosAlgoritmoRecomendados = null;
+		List<Estabelecimento> estabelecimentosAlgoritmoRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
 		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
-
 		
 		if(tipoDeAlgoritmo.equals(TipoAlgoritmoPersonalizado.COSSENO)){
 			estabelecimentosAlgoritmoRecomendados = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numberUser-1)).get(0);
@@ -621,14 +621,16 @@ public class Algoritmos {
 
 		int i = 0;
 		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentosAlgoritmoRecomendados.size()){
-			if(!listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
+			if(listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
+				//pass
+			}else{
 				estabelecimentosRecomendados.add(estabelecimentosAlgoritmoRecomendados.get(i));
 			}
 			i++;
 
 		}
 		
-		
+		Collections.sort(listaAlgoritmos, Collections.reverseOrder());
 		Iterator<Algoritmo> itContrario = listaAlgoritmos.iterator();
 
 		while(estabelecimentosNaoRecomendados.size() < numRecomendacoes && itContrario.hasNext()){
