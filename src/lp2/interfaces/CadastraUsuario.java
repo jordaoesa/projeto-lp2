@@ -47,6 +47,9 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 @SuppressWarnings("serial")
 public class CadastraUsuario extends JPanel implements ActionListener {
 
+	//Mudanca Localizacao
+	private JButton botaoComoChegar;
+	
 	private String nomeEstabelecimento;
 	private Algoritmos algoritmos;
 	private boolean boolalgoritmoTipo1 = false;
@@ -136,7 +139,10 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	}
 	
 	private void instanciaComponentes(){
-
+		
+		//##LOCALIZACAO
+		botaoComoChegar = new JButton("Como chegar?");
+		
 		//Algoritmos
 		algoritmos = new Algoritmos();
 
@@ -241,6 +247,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		add(botaoGravarUsuario, new AbsoluteConstraints(320, 500, 160, 23));
 		add(botaoAdicionar, new AbsoluteConstraints(50,180,120,23));
 		add(botaoRemover, new AbsoluteConstraints(200,180,120,23));
+		add(botaoComoChegar, new AbsoluteConstraints(600,100,120,23));
 		add(selecioneEstabelecimento, new AbsoluteConstraints(50,100,210,23));
 
 	}
@@ -302,6 +309,9 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		listaSuspensaNotas.addActionListener(this);
 		botaoVoltar.addActionListener(this);
 		botaoRemover.addActionListener(this);
+		
+		//alteracao Localizacao
+		botaoComoChegar.addActionListener(this);
 
 	}
 
@@ -412,6 +422,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		//LOCALIZACAO
+		if(event.getSource() == botaoComoChegar){
+			new VerLocalizacao();
+			System.out.println("como chegar");
+		}
 		//evento do botaoAdicionar
 		if(event.getSource() == botaoAdicionar){
 			frameRecomendacoes.setVisible(false);
