@@ -157,17 +157,47 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			public void mouseClicked(MouseEvent evt){
 				if(contaclicked % 2 == 0){
 					contaclicked ++;
-					if(boolalgoritmoTipo1)
-						scalarProductRecomendationsOrderlyTable(numUsuario, recomendacao);
-					if(boolalgoritmoTipo2)
+					if(boolalgoritmoTipo1){
 						popularityRecomendationsOrderlyTable(recomendacao);
+					}if(boolalgoritmoTipo2){
+						//popularityRecomendationsOrderlyTable(recomendacao);
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+					}if(boolalgoritmoTipo3){
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO);
+					}if(boolalgoritmoTipo4){
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO);
+					}if(boolalgoritmoTipo5){
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE);
+					}if(boolalgoritmoTipo6){
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD);
+					}if(boolalgoritmoTipo7){
+						AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP);
+					}
+						
 				}else{
 					contaclicked ++;
-					if(boolalgoritmoTipo1)
-						//scalarProductRecomendations(numUsuario, recomendacao);
-						executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, numUsuario, recomendacao);
-					if(boolalgoritmoTipo2)
+					if(boolalgoritmoTipo1){
 						popularityRecomendations(recomendacao);
+						//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+					}if(boolalgoritmoTipo2){
+						//popularityRecomendations(recomendacao);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR,numUsuario ,recomendacao);
+					}
+					if(boolalgoritmoTipo3){
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, numUsuario, recomendacao);
+					}
+					if(boolalgoritmoTipo4){
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario, recomendacao);
+					}
+					if(boolalgoritmoTipo5){
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario, recomendacao);
+					}
+					if(boolalgoritmoTipo6){
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario, recomendacao);
+					}
+					if(boolalgoritmoTipo7){
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario, recomendacao);
+					}
 				}
 			}
 		});
@@ -193,6 +223,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		scrollNotRecomendacoes.setViewportView(tabelaNotRecomendacoes);
 
 		//add scroolpane( tabela ), no frameInterno
+	
 		frameRecomendacoes.getContentPane().add(scrollPane, new AbsoluteConstraints(0,90,650,180));
 		frameRecomendacoes.getContentPane().add(selecioneOrdenacao, new AbsoluteConstraints(10,10));
 		frameRecomendacoes.getContentPane().add(listaOrdenacao, new AbsoluteConstraints(10,25));
@@ -543,6 +574,113 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(0);
 		preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
 	}
+	
+	private static void AnyRecomendationsOrderly(int numberUser, int qtdRecomendacoes,TipoAlgoritmoPersonalizado tipo){
+		List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, tipo, ReadData.getUsuarios().get(numberUser-1));
+		preencheAsTabelaOrdenadas(tabela,resultados.get(0), ordenacaoSelecionada);
+		preencheAsTabelaOrdenadas(tabelaNotRecomendacoes, resultados.get(1), ordenacaoSelecionada);
+	}
+	
+	private static void AnyAlgoritmRecomendationsOrderlyTable(int numberUser, int qtdRecomendacoes,TipoAlgoritmoPersonalizado tipo){
+		List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, tipo, ReadData.getUsuarios().get(numberUser-1));
+		preencheAnyTableOrderly(tabela, resultados.get(0), "Ordem Alfabetica");
+		//preencheAnyTableOrderly(tabelaNotRecomendacoes, resultados.get(1), "Ordem Alfabetica");
+	}
+	
+	private static void preencheAnyTableOrderly(JTable table,List<Estabelecimento> recomendacoes,String ordenacao) {
+		Object obj[][] = new Object[recomendacoes.size()][3];
+
+		if(ordenacao.equals("Ordem Alfabetica")){
+
+			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
+			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
+				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
+					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
+						Estabelecimento temp = estabelecimentosOrdenados.get(i);
+						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
+						estabelecimentosOrdenados.set(j, temp);
+					}
+				}
+			}
+
+			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
+				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
+				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
+				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
+			}
+			//seta a tabela para nao ser editada nenhuma celula.
+			table.setModel(new DefaultTableModel(obj,
+					new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+			{
+				public boolean isCellEditable(int rowIndex, int mColIndex){  
+					return false;  
+				}  
+			});
+			//seta o tamanho das colunas
+			table.getColumnModel().getColumn(2).setPreferredWidth(20);	
+			table.getColumnModel().getColumn(1).setPreferredWidth(190);
+			table.getColumnModel().getColumn(0).setPreferredWidth(130);
+		}
+	}
+	
+	private static void preencheAsTabelaOrdenadas(JTable table,List<Estabelecimento> recomendacoes,String ordenacao) {
+		Object obj[][] = new Object[recomendacoes.size()][3];
+
+		if(ordenacao.equals("Ordem Alfabetica")){
+
+			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
+			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
+				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
+					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
+						Estabelecimento temp = estabelecimentosOrdenados.get(i);
+						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
+						estabelecimentosOrdenados.set(j, temp);
+					}
+				}
+			}
+
+			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
+				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
+				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
+				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
+			}
+		}
+
+		if(ordenacao.equals("Tipo de Refeicao")){
+
+			int numLugarAdicionados = 0;
+			//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
+			for(int i=0; i < recomendacoes.size(); i++){
+				if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+					numLugarAdicionados ++;
+				}
+			}
+			//adiciona todos os outros
+			for (int i = 0; i < recomendacoes.size(); i++) {
+				if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+					numLugarAdicionados++;
+				}
+			}
+		}
+		//seta a tabela para nao ser editada nenhuma celula.
+		table.setModel(new DefaultTableModel(obj,
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+		{
+			public boolean isCellEditable(int rowIndex, int mColIndex){  
+				return false;  
+			}  
+		});
+		//seta o tamanho das colunas
+		table.getColumnModel().getColumn(2).setPreferredWidth(20);	
+		table.getColumnModel().getColumn(1).setPreferredWidth(190);
+		table.getColumnModel().getColumn(0).setPreferredWidth(130);
+	}
 
 
 	private static void preencheTabela(List<Estabelecimento> recomendacoes) {
@@ -668,42 +806,74 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			}
 		}
 		if(event.getSource() == tiposDeComida){
+			System.out.println("tipo de comida");
 			tipoDeComidaSelecionada = tiposDeComida.getSelectedItem().toString();
-			popularityRecomendationsOrderly(recomendacao);
+			if(boolalgoritmoTipo1)
+				System.out.println("tipo 1");
+				popularityRecomendationsOrderly(recomendacao);
+			if(boolalgoritmoTipo2)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+			if(boolalgoritmoTipo3)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO);
+			if(boolalgoritmoTipo4)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO);
+			if(boolalgoritmoTipo5)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE);
+			if(boolalgoritmoTipo6)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD);
+			if(boolalgoritmoTipo7)
+				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP);
+			//popularityRecomendationsOrderly(recomendacao);
 			//System.out.println(tipoDeComidaSelecionada);
 		}
+		
 		//evento do botao listaSuspensaDeUsuarios
 		if(event.getSource() == listaSuspensaDeUsuarios){
 			numUsuario = listaSuspensaDeUsuarios.getSelectedIndex();
 			campoBusca.setText("");
 			//evento do botao listaOrdenacao #########
 		}if(event.getSource() == listaOrdenacao) {
-
 			ordenacaoSelecionada = listaOrdenacao.getSelectedItem().toString();
-
 			if(ordenacaoSelecionada.equals("Ordem Alfabetica")){
-
 				tiposDeComida.setVisible(false);
 				if(boolalgoritmoTipo1)
-					scalarProductRecomendationsOrderly(numUsuario, recomendacao);
-				if(boolalgoritmoTipo2)
 					popularityRecomendationsOrderly(recomendacao);
+				if(boolalgoritmoTipo2)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+				if(boolalgoritmoTipo3)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO);
+				if(boolalgoritmoTipo4)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO);
+				if(boolalgoritmoTipo5)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE);
+				if(boolalgoritmoTipo6)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD);
+				if(boolalgoritmoTipo7)
+					AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP);
 			}
-
 			if(ordenacaoSelecionada.equals("Tipo de Refeicao")){
 				tiposDeComida.setVisible(true);
-				if(boolalgoritmoTipo1)
-					scalarProductRecomendationsOrderly(numUsuario, recomendacao);
-				if(boolalgoritmoTipo2)
-					popularityRecomendationsOrderly(recomendacao);
+				
 			//pra voltar pro default	
 			}if(ordenacaoSelecionada.equals("")){
 				tiposDeComida.setVisible(false);
-				if(boolalgoritmoTipo1)
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, numUsuario, recomendacao);
-					//scalarProductRecomendations(numUsuario, recomendacao);
-				if(boolalgoritmoTipo2)
+				if(boolalgoritmoTipo1){
 					popularityRecomendations(recomendacao);
+					//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+				}if(boolalgoritmoTipo2){
+					//popularityRecomendations(recomendacao);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR,numUsuario ,recomendacao);
+				}if(boolalgoritmoTipo3){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, numUsuario, recomendacao);
+				}if(boolalgoritmoTipo4){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario, recomendacao);
+				}if(boolalgoritmoTipo5){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario, recomendacao);
+				}if(boolalgoritmoTipo6){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario, recomendacao);
+				}if(boolalgoritmoTipo7){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario, recomendacao);
+				}
 			}
 		}
 			
