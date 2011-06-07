@@ -140,6 +140,26 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		areaRecomendacoes = new JTextField();
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
 		imageErrado = new ImageIcon("./src/lp2/imagens/Stop.png");
+		
+		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(
+				new Object[][] {}, new String[] { "Nome", "Opinioes Positivas",
+						"Opinioes Cadastradas", "Porcentagem Popularidade",
+						"Porcentagem ProdutoEscalar", "Porcentagem Cosseno",
+						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Similaridade Dice",
+						"Porcentagem Similaridade Jaccard",
+						"Porcentagem Similaridade Overlap" }));
+
+		tabelaComparacoesFinais.setModel(new DefaultTableModel(
+				new Object[][] {}, new String[] {
+						"Opinioes Positivas do Sistema",
+						"Opinioes Cadastradas no Sistema",
+						"Porcentagem Popularidade",
+						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
+						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Similaridade Dice",
+						"Porcentagem Similaridade Jaccard",
+						"Porcentagem Similaridade Overlap" }));
 
 	}
 
