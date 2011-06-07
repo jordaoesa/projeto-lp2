@@ -250,7 +250,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 	}
 	private void instanciaTodosComponentes(){
-		algoritmos = new Algoritmos();		
+		algoritmos = new Algoritmos();
 		usuariosCadastrados = new String[ReadData.getUsuarios().size()+1];
 
 		//***
