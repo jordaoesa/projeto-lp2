@@ -23,7 +23,7 @@ public class SimilaridadeDice extends Algoritmo{
 				numerador++;
 			}
 		}
-		resultado = numerador / super.getUser1().getOpinioes().size();
+		resultado = 2*numerador / super.getUser1().getOpinioes().size() + super.getUser2().getOpinioes().size();
 		super.setResultado(resultado);		
 	}
 

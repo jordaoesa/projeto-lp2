@@ -51,7 +51,7 @@ public class Algoritmos {
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosNaoRecomendados = new ArrayList<Estabelecimento>();
 		List<List<Estabelecimento>> returnList = new ArrayList<List<Estabelecimento>>();
-		List<Estabelecimento> copiaEstabelecimentos;
+		List<Estabelecimento> copiaEstabelecimentos = new ArrayList<Estabelecimento>();
 		
 		String nomeOriginal = user.getNome();
 		try {
@@ -64,6 +64,36 @@ public class Algoritmos {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		calculaSimilaridade(user, tipo);
+		
+		try {
+			// voltando ao nome original do usuario
+			user.setNome(nomeOriginal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		selecionaEstabelecimentosRecomendados(estabelecimentosRecomendados, copiaEstabelecimentos, numRecomendacoes);
+		selecionaEstabelecimentosNaoRecomendados(estabelecimentosNaoRecomendados, estabelecimentosRecomendados, copiaEstabelecimentos, numRecomendacoes);
+		
+		returnList.add(estabelecimentosRecomendados);
+		returnList.add(estabelecimentosNaoRecomendados);
+
+		return returnList;
+	}
+
+
+	/**
+	 * Metodo responsavel por verificar o tipo do algoritmo a ser executado e
+	 * calcular a similaridade usuario-usuario.
+	 * 
+	 * @param user
+	 *            O usuario para o qual se quer os similares.
+	 * @param tipo
+	 *            O tipo do algoritmo a ser executado.
+	 */
+	private void calculaSimilaridade(Usuario user, TipoAlgoritmoPersonalizado tipo){
 		
 		for(int i=0; i<usuarios.size(); i++){
 			if(!usuarios.get(i).getNome().equals(user.getNome())){
@@ -90,12 +120,20 @@ public class Algoritmos {
 			}
 		}
 		
-		try {
-			// voltando ao nome original do usuario
-			user.setNome(nomeOriginal);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	}
+
+	/**
+	 * Metodo responsavel por percorrer a lista de algoritmos e procurar os
+	 * estabelecimentos mais recomendados para o usuario.
+	 * 
+	 * @param estabelecimentosRecomendados
+	 *            A lista de estabelecimentos recomendados.
+	 * @param copiaEstabelecimentos
+	 *            Uma copia da lista de estabelecimentos.
+	 * @param numRecomendacoes
+	 *            O numero de estabelecimentos a ser recomendado.
+	 */
+	private void selecionaEstabelecimentosRecomendados(List<Estabelecimento> estabelecimentosRecomendados, List<Estabelecimento> copiaEstabelecimentos, int numRecomendacoes){
 		
 		Collections.sort(listaAlgoritmos, Collections.reverseOrder());
 		Iterator<Algoritmo> it = listaAlgoritmos.iterator();
@@ -123,8 +161,24 @@ public class Algoritmos {
 				break;
 			}
 		}
-			
 		
+	}
+
+	/**
+	 * Metodo responsavel por percorrer a lista de algoritmos e procurar os
+	 * estabelecimentos menos recomendados para o usuario.
+	 * 
+	 * @param estabelecimentosNaoRecomendados
+	 *            A lista de estabelecimentos nao recomendados.
+	 * @param estabelecimentosRecomendados
+	 *            A lista de estabelecimentos recomendados.
+	 * @param copiaEstabelecimentos
+	 *            Uma copia da lista de estabelecimentos.
+	 * @param numRecomendacoes
+	 *            O numero de estabelecimentos a ser recomendado.
+	 */
+	private void selecionaEstabelecimentosNaoRecomendados(List<Estabelecimento> estabelecimentosNaoRecomendados, List<Estabelecimento> estabelecimentosRecomendados, List<Estabelecimento> copiaEstabelecimentos, int numRecomendacoes) {
+
 		//Collections.sort(listaAlgoritmos, Collections.reverseOrder());
 		Iterator<Algoritmo> itContrario = listaAlgoritmos.iterator();
 
@@ -152,12 +206,7 @@ public class Algoritmos {
 			}
 		}
 		
-		returnList.add(estabelecimentosRecomendados);
-		returnList.add(estabelecimentosNaoRecomendados);
-
-		return returnList;
 	}
-	
 	
 	/**
 	 * Metodo responsavel por executar as recomendacoes genericas para um

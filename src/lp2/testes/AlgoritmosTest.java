@@ -64,6 +64,7 @@ public class AlgoritmosTest {
 	public void testExecuteGenericRecomendations() {
 		List<Estabelecimento> estab = null;
 		estab = algoritmo.executeGenericRecomendations(10).get(0);
+		System.out.println(estab.size());
 		Assert.assertTrue(estab.size() == 10);
 		
 		estab = algoritmo.executeGenericRecomendations(40).get(0);
