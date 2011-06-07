@@ -14,18 +14,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.AbstractListModel;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import lp2.algoritmos.Algoritmos;
@@ -99,6 +103,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private ImageIcon imageOk;
 	private ImageIcon imageErrado;
 	private int recomendacao = 0;
+	
+	private JLabel labelBusca;
+	private JTextField campoBusca;
+	private JList listaEncontrados;
+	private List<Integer> indicesEncontrados;
 
 	public CadastraUsuario(){
 
@@ -179,6 +188,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		numeroDeRecomendacoes = new JLabel("Numero de Recomendacoes:");
 		iconNotificacaoNome = new JLabel();
 		iconNotificacaoRecomencadao = new JLabel();
+		labelBusca = new JLabel("Busca: ");
 
 		//carrega as imagens das notificacoes
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
@@ -203,11 +213,15 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		//campo de texto
 		areaNomeUsuario = new JTextField();
 		areaNumRecomendacoes = new JTextField();
+		campoBusca = new JTextField();
 
 		scrollPane.setViewportView(tabelaResultado);
 
 		//frameInterno
 		frameRecomendacoes = new JInternalFrame();
+		
+		//JLists
+		listaEncontrados = new JList();
 
 	}
 	
@@ -225,15 +239,19 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 		//add no container do JPanel
 		add(frameRecomendacoes, new AbsoluteConstraints(70,250,650,180));
-		add(listaSuspensaDeEstabelecimentos, new AbsoluteConstraints(270,100,320,23));
+		add(selecioneEstabelecimento, new AbsoluteConstraints(50,85,210,23));
+		add(listaSuspensaDeEstabelecimentos, new AbsoluteConstraints(270,85,320,23));
+		add(labelBusca, new AbsoluteConstraints(50,115,210,23));
+		add(campoBusca, new AbsoluteConstraints(270,115,320,23));
+		add(listaEncontrados, new AbsoluteConstraints(270,138,320,-1));
+		add(notaEstabelecimento, new AbsoluteConstraints(50, 145, 200, 23));
+		add(listaSuspensaNotas, new AbsoluteConstraints(270, 145, 320, 23));
 		add(iconNotificacaoRecomencadao, new AbsoluteConstraints(365,450,40,40));
 		add(iconNotificacaoNome, new AbsoluteConstraints(305,40,40,40));
 		add(nomeUsuario, new AbsoluteConstraints(50,50,50,23));
 		add(areaNomeUsuario, new AbsoluteConstraints(100,50,200,23));
 		add(areaNumRecomendacoes, new AbsoluteConstraints(260,460,100,23));
 		add(numeroDeRecomendacoes, new AbsoluteConstraints(50,460,210,23));
-		add(notaEstabelecimento, new AbsoluteConstraints(50, 140, 200, 23));
-		add(listaSuspensaNotas, new AbsoluteConstraints(270, 140, 320, 23));
 		add(selectPopularityAlgorithm, new AbsoluteConstraints(50, 430, 180, 23));
 		add(selectScalarProductAlgorithm, new AbsoluteConstraints(50, 400, 180, 23));
 		add(selectCosineAlgorithm, new AbsoluteConstraints(240, 400, 180, 23));
@@ -247,8 +265,8 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		add(botaoGravarUsuario, new AbsoluteConstraints(320, 500, 160, 23));
 		add(botaoAdicionar, new AbsoluteConstraints(50,180,120,23));
 		add(botaoRemover, new AbsoluteConstraints(200,180,120,23));
-		add(botaoComoChegar, new AbsoluteConstraints(600,100,120,23));
-		add(selecioneEstabelecimento, new AbsoluteConstraints(50,100,210,23));
+		add(botaoComoChegar, new AbsoluteConstraints(600,85,120,23));
+		
 
 	}
 
@@ -348,6 +366,55 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 				}
 			}
 		});
+		
+		campoBusca.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent evt) {
+				String nomeEstabelecimento = campoBusca.getText();
+				indicesEncontrados = new ArrayList<Integer>();
+				List<String> nomesEstabelecimentosEncontrados = new ArrayList<String>();
+				for (int i = 0; i < ReadData.getEstabelecimentos().size(); i++) {
+					Estabelecimento estabelecimento = ReadData.getEstabelecimentos().get(i);
+					if (estabelecimento.getNome().length() >= nomeEstabelecimento.length() && estabelecimento.getNome().subSequence(0, nomeEstabelecimento.length()).toString().equalsIgnoreCase(nomeEstabelecimento) && indicesEncontrados.size() < 5) {
+						indicesEncontrados.add(i);
+						nomesEstabelecimentosEncontrados.add(estabelecimento.getNome());
+					}
+				}
+				final String nomesEstabelecimentos[] = new String[nomesEstabelecimentosEncontrados.size()];
+				for (int i = 0; i < nomesEstabelecimentosEncontrados.size(); i++) {
+					nomesEstabelecimentos[i] = nomesEstabelecimentosEncontrados.get(i);
+				}
+				if (campoBusca.getText().equals("")) {
+					listaEncontrados.setVisible(false);
+					indiceEstabelecimento = 0;
+					listaSuspensaDeEstabelecimentos.setSelectedIndex(0);
+				} else {
+					listaEncontrados.setVisible(true);
+				}
+				listaEncontrados.setSize(320, 27 * nomesEstabelecimentosEncontrados.size());
+				listaEncontrados.setModel(new AbstractListModel() {
+					
+					String nomes[] = nomesEstabelecimentos;
+					@Override
+					public int getSize() {
+						return nomes.length;
+					}
+					@Override
+					public Object getElementAt(int index) {
+						return nomes[index];
+					}
+				});
+				listaEncontrados.addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent evt) {
+						if (listaEncontrados.getSelectedIndex() >= 0) {
+							listaEncontrados.setVisible(false);
+							indiceEstabelecimento = indicesEncontrados.get(listaEncontrados.getSelectedIndex());
+							listaSuspensaDeEstabelecimentos.setSelectedIndex(indiceEstabelecimento + 1);
+							campoBusca.setText(ReadData.getEstabelecimentos().get(indiceEstabelecimento).getNome());
+						}
+					}
+				});
+			}
+		});
 
 	}
 
@@ -355,7 +422,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 //		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario).get(0);
 //		preencheTabela(recomendacoes);
 //	}
-//
+
 	private void popularityRecomendations(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabela(recomendacoes);
@@ -466,6 +533,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		}if(event.getSource() == listaSuspensaDeEstabelecimentos){
 			frameRecomendacoes.setVisible(false);
 			indiceEstabelecimento = listaSuspensaDeEstabelecimentos.getSelectedIndex()-1;
+			campoBusca.setText("");
 
 		//evento da listaSuspensa de Notas
 		}if(event.getSource() == listaSuspensaNotas){
