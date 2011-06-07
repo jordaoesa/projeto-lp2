@@ -1,6 +1,7 @@
 package lp2.algoritmos;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -497,6 +498,49 @@ public class Algoritmos {
 		return numOpinioesPositivas;
 	}
 	
+	public List<List<String>> topFiveSimilarities(Usuario user, TipoAlgoritmoPersonalizado tipo) {
+		listaAlgoritmos = new ArrayList<Algoritmo>();
+		List<List<String>> returnList = new ArrayList<List<String>>();
+		final int NUM_USUARIOS_SIMILARES = 10;
+
+		calculaSimilaridade(user, tipo);
+		
+		Collections.sort(listaAlgoritmos, Collections.reverseOrder());
+		for (int i = 0; i < listaAlgoritmos.size() && returnList.size() < NUM_USUARIOS_SIMILARES; i++) {
+			List<String> formatacaoDeLinha = new ArrayList<String>();
+			formatacaoDeLinha.add(listaAlgoritmos.get(i).getUser2().getNome());
+			formatacaoDeLinha.addAll(estabelecimentosRecomendadosPor_Para(listaAlgoritmos.get(i).getUser2(), listaAlgoritmos.get(i).getUser1()));
+			returnList.add(formatacaoDeLinha);
+		}
+		
+		return returnList;
+	}
+	
+	private List<String> estabelecimentosRecomendadosPor_Para(Usuario similar, Usuario user) {
+		List<String> returnList = new ArrayList<String>();
+		final int NUM_ESTAB_RECOMEND = 5;
+		final int ESTAB_DESCONHECIDO = 0;
+		
+		for(int i=0; i<estabelecimentos.size(); i++){
+			estabelecimentos.get(i).setNota(similar.getOpinioes().get(i));
+		}
+		
+		List<Estabelecimento> copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
+		Collections.sort(copiaEstabelecimentos, Collections.reverseOrder());
+		
+		for(Estabelecimento estabelecimento : copiaEstabelecimentos){
+			if (!returnList.contains(estabelecimento.getNome())
+					&& returnList.size() < NUM_ESTAB_RECOMEND
+					&& estabelecimento.getNota() > 0
+					&& user.getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == ESTAB_DESCONHECIDO) {
+
+				returnList.add(estabelecimento.getNome());
+			}
+		}
+	
+		return returnList;
+	}
+
 	//*** 
 	public List<Estabelecimento> executeScalarProductRecomendationsFilter(int numRecomendacoes, Usuario user, String palavraChave) {
 
