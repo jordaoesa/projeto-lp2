@@ -34,6 +34,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 	private JButton loadFileOpinioes;
 	private JButton loadFileEstabelecimentos;
 	private JButton botaoComparaAlgoritmos;
+	private JButton botaoMaisSimilares;
 	private JLabel imagemFundo;
 	private ImageIcon image;
 
@@ -65,6 +66,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		loadFileOpinioes = new JButton("Novas Opinioes");			
 		loadFileEstabelecimentos = new JButton("Novos Estabelecimentos");
 		botaoComparaAlgoritmos = new JButton("Comparar Algoritmos");
+		botaoMaisSimilares = new JButton("Mais Similares");
 		
 		//Label
 		imagemFundo = new JLabel();
@@ -80,7 +82,8 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		add(botaoPopularidade, new AbsoluteConstraints(570,108,210,23));
 		add(botaoGerarRecomendacao, new AbsoluteConstraints(570,149,210,23));
 		add(botaoComparaAlgoritmos, new AbsoluteConstraints(570, 272, 210, 23));
-		add(botaoSair, new AbsoluteConstraints(570,313,210,23));
+		add(botaoMaisSimilares, new AbsoluteConstraints(570, 313, 210, 23));
+		add(botaoSair, new AbsoluteConstraints(570,354,210,23));
 		add(imagemFundo, new AbsoluteConstraints(-1, -2, -1, -1));
 
 	}
@@ -94,6 +97,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoSair.addActionListener(this);
 		loadFileOpinioes.addActionListener(this);
 		loadFileEstabelecimentos.addActionListener(this);
+		botaoMaisSimilares.addActionListener(this);
 	}
 	
 	private void todosToolTipText(){
@@ -139,6 +143,9 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 				MenuInicial.panelCorpo.removeAll();
 				MenuInicial.panelCorpo.add(new ComparaAlgoritmos());
 				MenuInicial.panelCorpo.updateUI();
+			}
+			if(event.getSource() == botaoMaisSimilares){
+				System.out.println("similares");
 			}
 			//evento do botao Sair
 			if(event.getSource() == botaoSair){
