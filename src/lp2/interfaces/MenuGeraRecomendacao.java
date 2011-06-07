@@ -829,10 +829,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			}
 			if(ordenacaoSelecionada.equals("Tipo de Refeicao")){
 				tiposDeComida.setVisible(true);
-				
 			//pra voltar pro default	
 			}if(ordenacaoSelecionada.equals("")){
 				tiposDeComida.setVisible(false);
+				estabelecimentosRemovidos = "";
 				if(boolalgoritmoTipo1){
 					popularityRecomendations(recomendacao);
 					//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
