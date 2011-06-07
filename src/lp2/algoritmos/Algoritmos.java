@@ -245,7 +245,7 @@ public class Algoritmos {
 		copiaEstabelecimentos = new ArrayList<Estabelecimento>(estabelecimentos);
 		Collections.sort(copiaEstabelecimentos, Collections.reverseOrder());
 		
-		for(int i=0; i<numRecomendacoes-1; i++){
+		for(int i=0; i<numRecomendacoes; i++){
 			if(i < copiaEstabelecimentos.size() && copiaEstabelecimentos.get(i).getNota() > 0){
 				estabelecimentosRecomendados.add(copiaEstabelecimentos.get(i));
 			}
@@ -258,12 +258,6 @@ public class Algoritmos {
 				estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(i));
 			}
 		}
-		
-//		if(!copiaEstabelecimentos.isEmpty() && estabelecimentosNaoRecomendados.isEmpty()){
-//			if(estabelecimentosRecomendados.contains(copiaEstabelecimentos.get(0)))
-//				estabelecimentosRecomendados.remove(copiaEstabelecimentos.get(0));
-//			estabelecimentosNaoRecomendados.add(copiaEstabelecimentos.get(0));
-//		}
 		
 		returnList.add(estabelecimentosRecomendados);
 		returnList.add(estabelecimentosNaoRecomendados);
