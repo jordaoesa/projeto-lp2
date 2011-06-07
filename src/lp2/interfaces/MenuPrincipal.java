@@ -145,7 +145,9 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 				MenuInicial.panelCorpo.updateUI();
 			}
 			if(event.getSource() == botaoMaisSimilares){
-				System.out.println("similares");
+				MenuInicial.panelCorpo.removeAll();
+				MenuInicial.panelCorpo.add(new MenuVerSimilares());
+				MenuInicial.panelCorpo.updateUI();
 			}
 			//evento do botao Sair
 			if(event.getSource() == botaoSair){
