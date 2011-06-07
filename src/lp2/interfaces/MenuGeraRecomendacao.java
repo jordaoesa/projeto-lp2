@@ -468,37 +468,37 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private static void popularityRecomendationsFilter(int numRecomendacoes, String palavraChave){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsFilter(numRecomendacoes, palavraChave);
 		System.out.println("tamanho" + recomendacoes.get(0).getNome());
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 
 	//***
 	private static void scalarProductRecomendationsFilter(int numberUser, int numRecomendacoes, String palavraChave){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsFilter(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), palavraChave);
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 
 	//***
 	private static void popularityRecomendationsType(int numRecomendacoes, String type){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsType(numRecomendacoes, type);
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 
 	//***
 	private static void scalarProductRecomendationsType(int numberUser, int numRecomendacoes, String type){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsType(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), type);
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 	
 	//****
 	private static void scalarProductRecomendationsLocation(int numberUser, int numRecomendacoes, String local){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsLocation(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), local);
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 	
 	///****
 	private static void popularityRecomendationsLocation(int numRecomendacoes, String local){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsLocation(numRecomendacoes, local);
-		preencheTabela(recomendacoes);
+		preencheTabela(tabela,recomendacoes);
 	}
 	
 	private static void executaAlgoritmo(TipoAlgoritmoPersonalizado tipo, int numberUser, int qtdRecomendacoes){
@@ -529,8 +529,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			recomendacoes = resultados.get(0);
 			naoRecomendados = resultados.get(1);
 		}
-		preencheTabela(recomendacoes);
-		preencheTabela2(naoRecomendados);
+		preencheTabela(tabela,recomendacoes);
+		preencheTabela(tabelaNotRecomendacoes, naoRecomendados);
+		//preencheTabela2(naoRecomendados);
 	}
 
 //	private static void scalarProductRecomendations(int numberUser, int qtdRecomendacoes){
@@ -541,10 +542,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 //	}
 
 	private static void popularityRecomendations(int numRecomendacao){
-		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
-		preencheTabela(recomendacoes);
-		List<Estabelecimento> naoRecomendados = algoritmos.executeGenericRecomendations(numRecomendacao).get(1);
-		preencheTabela2(naoRecomendados);
+		List<List<Estabelecimento>> resultados = algoritmos.executeGenericRecomendations(numRecomendacao);
+		preencheTabela(tabela,resultados.get(0));
+		preencheTabela(tabelaNotRecomendacoes,resultados.get(1));
 	}
 	
 //	private void cosineRecomendations(int numberUser, int qtdRecomendacoes) {
@@ -556,23 +556,27 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 	private static void popularityRecomendationsOrderly(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
-		preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
+		//preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
+		preencheAnyTableOrderly(tabela, recomendacoes, ordenacaoSelecionada);
 	}
 
 	private static void scalarProductRecomendationsOrderly(int numberUser, int qtdRecomendacoes){
 		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(0);
-		preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
+		//preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
+		preencheAnyTableOrderly(tabela, recomendacoes, ordenacaoSelecionada);
 	}
 	
 	//&&&&&&&&&&@@@@@@@@@@@@@@@@@@@
 	private static void popularityRecomendationsOrderlyTable(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
-		preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
+		//preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
+		preencheAnyTableOrderly(tabela, recomendacoes, "Ordem Alfabetica");
 	}
 	
 	private static void scalarProductRecomendationsOrderlyTable(int numberUser, int qtdRecomendacoes){
 		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(0);
-		preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
+		//preencheTabelaOrdenadas(recomendacoes, "Ordem Alfabetica");
+		preencheAnyTableOrderly(tabela, recomendacoes, "Ordem Alfabetica");
 	}
 	
 	private static void AnyRecomendationsOrderly(int numberUser, int qtdRecomendacoes,TipoAlgoritmoPersonalizado tipo){
@@ -592,22 +596,24 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		if(ordenacao.equals("Ordem Alfabetica")){
 
-			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
-			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
-				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
-					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
-						Estabelecimento temp = estabelecimentosOrdenados.get(i);
-						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
-						estabelecimentosOrdenados.set(j, temp);
-					}
-				}
-			}
-
-			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
-				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
-				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
-				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
-			}
+//			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
+//			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
+//				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
+//					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
+//						Estabelecimento temp = estabelecimentosOrdenados.get(i);
+//						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
+//						estabelecimentosOrdenados.set(j, temp);
+//					}
+//				}
+//			}
+//
+//			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
+//				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
+//				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
+//				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
+//			}
+			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
+			
 			//seta a tabela para nao ser editada nenhuma celula.
 			table.setModel(new DefaultTableModel(obj,
 					new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
@@ -628,45 +634,47 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		if(ordenacao.equals("Ordem Alfabetica")){
 
-			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
-			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
-				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
-					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
-						Estabelecimento temp = estabelecimentosOrdenados.get(i);
-						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
-						estabelecimentosOrdenados.set(j, temp);
-					}
-				}
-			}
-
-			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
-				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
-				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
-				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
-			}
+//			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
+//			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
+//				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
+//					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
+//						Estabelecimento temp = estabelecimentosOrdenados.get(i);
+//						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
+//						estabelecimentosOrdenados.set(j, temp);
+//					}
+//				}
+//			}
+//
+//			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
+//				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
+//				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
+//				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
+//			}
+			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
 		}
 
 		if(ordenacao.equals("Tipo de Refeicao")){
-
-			int numLugarAdicionados = 0;
-			//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
-			for(int i=0; i < recomendacoes.size(); i++){
-				if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-					numLugarAdicionados ++;
-				}
-			}
-			//adiciona todos os outros
-			for (int i = 0; i < recomendacoes.size(); i++) {
-				if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-					numLugarAdicionados++;
-				}
-			}
+			obj = ordenaTipoDeComida(obj, recomendacoes);
+//			int numLugarAdicionados = 0;
+//			//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
+//			for(int i=0; i < recomendacoes.size(); i++){
+//				if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+//					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+//					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+//					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+//					numLugarAdicionados ++;
+//				}
+//			}
+//			//adiciona todos os outros
+//			for (int i = 0; i < recomendacoes.size(); i++) {
+//				if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+//					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+//					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+//					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+//					numLugarAdicionados++;
+//				}
+//			}
+			
 		}
 		//seta a tabela para nao ser editada nenhuma celula.
 		table.setModel(new DefaultTableModel(obj,
@@ -683,7 +691,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	}
 
 
-	private static void preencheTabela(List<Estabelecimento> recomendacoes) {
+	private static void preencheTabela(JTable table,List<Estabelecimento> recomendacoes) {
 		Object obj[][] = new Object[recomendacoes.size()][3];
 		for(int i=0; i < recomendacoes.size(); i++){
 			obj[i][0] = recomendacoes.get(i).getNome();
@@ -691,7 +699,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			obj[i][2] = recomendacoes.get(i).getTipoDeComida();
 		}
 
-		tabela.setModel(new DefaultTableModel(obj,
+		table.setModel(new DefaultTableModel(obj,
 				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
@@ -700,89 +708,57 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		});
 
 		//seta o tamanho das colunas
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(20);	
-		tabela.getColumnModel().getColumn(1).setPreferredWidth(190);
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(130);
+		table.getColumnModel().getColumn(2).setPreferredWidth(20);	
+		table.getColumnModel().getColumn(1).setPreferredWidth(190);
+		table.getColumnModel().getColumn(0).setPreferredWidth(130);
 		
-		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
-		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
-		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
 	}
 	
-	private static void preencheTabela2(List<Estabelecimento> recomendacoes) {
-		Object obj[][] = new Object[recomendacoes.size()][3];
-		for(int i=0; i < recomendacoes.size(); i++){
-			obj[i][0] = recomendacoes.get(i).getNome();
-			obj[i][1] = recomendacoes.get(i).getLocalizacao();
-			obj[i][2] = recomendacoes.get(i).getTipoDeComida();
-		}
+//	private static void preencheTabela2(List<Estabelecimento> recomendacoes) {
+//		Object obj[][] = new Object[recomendacoes.size()][3];
+//		for(int i=0; i < recomendacoes.size(); i++){
+//			obj[i][0] = recomendacoes.get(i).getNome();
+//			obj[i][1] = recomendacoes.get(i).getLocalizacao();
+//			obj[i][2] = recomendacoes.get(i).getTipoDeComida();
+//		}
+//
+//		tabelaNotRecomendacoes.setModel(new DefaultTableModel(obj,
+//				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+//
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
+//		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
+//	}
 
-		tabelaNotRecomendacoes.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
-
-		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
-		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
-		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
-	}
-
-	private static void preencheTabelaOrdenadas(List<Estabelecimento> recomendacoes,String ordenacao) {
-		Object obj[][] = new Object[recomendacoes.size()][3];
-
-		if(ordenacao.equals("Ordem Alfabetica")){
-
-			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
-			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
-				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
-					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
-						Estabelecimento temp = estabelecimentosOrdenados.get(i);
-						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
-						estabelecimentosOrdenados.set(j, temp);
-					}
-				}
-			}
-
-			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
-				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
-				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
-				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
-			}
-		}
-
-		if(ordenacao.equals("Tipo de Refeicao")){
-
-			int numLugarAdicionados = 0;
-			//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
-			for(int i=0; i < recomendacoes.size(); i++){
-				if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-					numLugarAdicionados ++;
-				}
-			}
-			//adiciona todos os outros
-			for (int i = 0; i < recomendacoes.size(); i++) {
-				if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-					numLugarAdicionados++;
-				}
-			}
-		}
-		//seta a tabela para nao ser editada nenhuma celula.
-		tabela.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
-		{
-			public boolean isCellEditable(int rowIndex, int mColIndex){  
-				return false;  
-			}  
-		});
-		//seta o tamanho das colunas
-		tabela.getColumnModel().getColumn(2).setPreferredWidth(20);	
-		tabela.getColumnModel().getColumn(1).setPreferredWidth(190);
-		tabela.getColumnModel().getColumn(0).setPreferredWidth(130);
-	}
+//	private static void preencheTabelaOrdenadas(List<Estabelecimento> recomendacoes,String ordenacao) {
+//		Object obj[][] = new Object[recomendacoes.size()][3];
+//
+//		if(ordenacao.equals("Ordem Alfabetica")){
+//			//metodo ordenaPorOrdemAlfabetica			
+//			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
+//		}
+//
+//		if(ordenacao.equals("Tipo de Refeicao")){
+//			//metodo ordenaPorTipoDeCOmida
+//			obj = ordenaTipoDeComida(obj, recomendacoes);
+//			
+//		}
+//		//seta a tabela para nao ser editada nenhuma celula.
+//		tabela.setModel(new DefaultTableModel(obj,
+//				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+//		{
+//			public boolean isCellEditable(int rowIndex, int mColIndex){  
+//				return false;  
+//			}  
+//		});
+//		//seta o tamanho das colunas
+//		tabela.getColumnModel().getColumn(2).setPreferredWidth(20);	
+//		tabela.getColumnModel().getColumn(1).setPreferredWidth(190);
+//		tabela.getColumnModel().getColumn(0).setPreferredWidth(130);
+//	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -1103,16 +1079,59 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	//Quando remover uma recomendacao,recomendar outra.
 	private void removeRecomendacaoPopular(int numRecomendacao, String nomeEstabelecimentos){
 		List<List<Estabelecimento>> recomendacoes = algoritmos.executeGenericRecomendationsRemove(numRecomendacao,nomeEstabelecimentos);
-		preencheTabela(recomendacoes.get(0));
-		preencheTabela2(recomendacoes.get(1));
+		preencheTabela(tabela,recomendacoes.get(0));
+		preencheTabela(tabelaNotRecomendacoes, recomendacoes.get(1));
+		//preencheTabela2(recomendacoes.get(1));
 	}
 	//quando remove uma recomendao, coma algoritmos personalizados
 	private void removeRecomendacaoPersonalizados(int numRecomendacao,String nomeEstabelecimentos, TipoAlgoritmoPersonalizado tipoAlgoritmo, int numUser){
 		List<List<Estabelecimento>> estabelecimentosRecomendados = algoritmos.executePersonalizeRecomendationsRemove(numRecomendacao, nomeEstabelecimentos,tipoAlgoritmo,numUser);
-//		for(Estabelecimento e : estabelecimentosRecomendados.get(1)){
-//			System.out.println(e.getNome());
-//		}
-		preencheTabela(estabelecimentosRecomendados.get(0));
-		preencheTabela2(estabelecimentosRecomendados.get(1));
+		preencheTabela(tabela,estabelecimentosRecomendados.get(0));
+		preencheTabela(tabelaNotRecomendacoes, estabelecimentosRecomendados.get(1));
+		//preencheTabela2(estabelecimentosRecomendados.get(1));
+	}
+	
+	private static Object[][] ordenaTipoDeComida(Object[][] obj,List<Estabelecimento> recomendacoes){
+		int numLugarAdicionados = 0;
+		//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
+		for(int i=0; i < recomendacoes.size(); i++){
+			if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+				obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+				obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+				obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+				numLugarAdicionados ++;
+			}
+		}
+		//adiciona todos os outros
+		for (int i = 0; i < recomendacoes.size(); i++) {
+			if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
+				obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
+				obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
+				obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
+				numLugarAdicionados++;
+			}
+		}
+		return obj;
+	}
+	
+
+	private static Object[][] ordenaPorOrdemAlfabetica(Object[][] obj, List<Estabelecimento> recomendacoes){
+			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
+		for(int i=0; i<estabelecimentosOrdenados.size(); i++){
+			for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
+				if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
+					Estabelecimento temp = estabelecimentosOrdenados.get(i);
+					estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
+					estabelecimentosOrdenados.set(j, temp);
+				}
+			}
+		}
+
+		for(int i=0; i < estabelecimentosOrdenados.size(); i++){
+			obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
+			obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
+			obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
+		}
+		return obj;
 	}
 }

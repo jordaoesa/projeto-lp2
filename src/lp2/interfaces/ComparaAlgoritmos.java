@@ -172,7 +172,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			obj[i][8] = comparacoesUsuarios.get(i).get(8);
 			obj[i][9] = comparacoesUsuarios.get(i).get(9);
 		}
-
+		
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(obj,
 				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 	}

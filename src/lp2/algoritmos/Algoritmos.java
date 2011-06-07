@@ -670,9 +670,9 @@ public class Algoritmos {
 
 		int i = 0;
 		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentosAlgoritmoRecomendados.size()){
-			if(listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
+			if(!listaRemovidos.contains(estabelecimentosAlgoritmoRecomendados.get(i).getNome())){
 				//pass
-			}else{
+			//}else{
 				estabelecimentosRecomendados.add(estabelecimentosAlgoritmoRecomendados.get(i));
 			}
 			i++;
