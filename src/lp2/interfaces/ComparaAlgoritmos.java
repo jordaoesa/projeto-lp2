@@ -126,13 +126,17 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 	private void instanciaTodosComponentes(){
 		algoritmos = new Algoritmos();
 		tabelaComparacoesPorUsuario = new JTable();
+		
 		tabelaComparacoesFinais = new JTable();
+		
 		botaoVoltar = new JButton("Voltar");
 		botaoComparar = new JButton("Comparar");
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(tabelaComparacoesPorUsuario);
-		scrollPane2 = new JScrollPane();
-		scrollPane2.setViewportView(tabelaComparacoesFinais);
+		scrollPane = new JScrollPane(tabelaComparacoesPorUsuario, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scrollPane.setViewportView(tabelaComparacoesPorUsuario);
+		scrollPane2 = new JScrollPane(tabelaComparacoesFinais, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		//scrollPane2.setViewportView(tabelaComparacoesFinais);
+		tabelaComparacoesPorUsuario.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabelaComparacoesFinais.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		comparacoesPorUsuario = new JLabel("Comparacoes por Usuario");
 		comparacoesFinais = new JLabel("Comparacoes Finais");
 		numRecomendacoes = new JLabel("Numero de recomendacoes:");
@@ -141,34 +145,18 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
 		imageErrado = new ImageIcon("./src/lp2/imagens/Stop.png");
 		
-		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(
-				new Object[][] {}, new String[] { "Nome", "Opinioes Positivas",
-						"Opinioes Cadastradas", "Porcentagem Popularidade",
-						"Porcentagem ProdutoEscalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
-						"Porcentagem Similaridade Dice",
-						"Porcentagem Similaridade Jaccard",
-						"Porcentagem Similaridade Overlap" }));
-
-		tabelaComparacoesFinais.setModel(new DefaultTableModel(
-				new Object[][] {}, new String[] {
-						"Opinioes Positivas do Sistema",
-						"Opinioes Cadastradas no Sistema",
-						"Porcentagem Popularidade",
-						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
-						"Porcentagem Similaridade Dice",
-						"Porcentagem Similaridade Jaccard",
-						"Porcentagem Similaridade Overlap" }));
-
+		
+		iniciaTabelaUsuario();
+		iniciaTabelaComparacoesFinais();
+	
 	}
 
 	private void addNoContainer(){
-		add(scrollPane, new AbsoluteConstraints(10,90,776,330));
-		add(scrollPane2, new AbsoluteConstraints(10,450,776,45));
+		add(scrollPane, new AbsoluteConstraints(10,90,776,300));
+		add(scrollPane2, new AbsoluteConstraints(10,430,776,70));
 
 		add(comparacoesPorUsuario, new AbsoluteConstraints(310,60,200,23));
-		add(comparacoesFinais, new AbsoluteConstraints(310,420,200,23));
+		add(comparacoesFinais, new AbsoluteConstraints(310,400,200,23));
 
 		add(botaoVoltar, new AbsoluteConstraints(600,500,120,23));
 
@@ -195,6 +183,8 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(obj,
 				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+		setTabelaPorUsuario();
+
 	}
 
 	private void preencheTabelaComparacoesFinais(List<String> comparacoesFinais){
@@ -204,6 +194,8 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		}
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(obj,
 				new String[] { "Opinioes Positivas do Sistema", "Opinioes Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+
+		setTamanhoTabelaFinais();
 	}
 
 	@Override
@@ -229,7 +221,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 	}
 	
 	//Classe que compara os algoritmos 
-	class ComparaAlgoritmosAqui extends Thread {   
+	class ComparaAlgoritmosAqui implements Runnable {   
 		public void run() {  
 			List<List> comparacoes = algoritmos.compareAlgorithms(numRecomend);
 			preencheTabelaComparacoesUsuarios((List<List<String>>)comparacoes.get(0));
@@ -291,6 +283,60 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			}
 		
 		}
+	}
+	private void setTamanhoTabelaFinais(){
+
+		tabelaComparacoesFinais.setRowHeight(25);
+		tabelaComparacoesFinais.getColumnModel().getColumn(0).setPreferredWidth(180);
+		tabelaComparacoesFinais.getColumnModel().getColumn(1).setPreferredWidth(210);
+		tabelaComparacoesFinais.getColumnModel().getColumn(2).setPreferredWidth(170);
+		tabelaComparacoesFinais.getColumnModel().getColumn(3).setPreferredWidth(190);
+		tabelaComparacoesFinais.getColumnModel().getColumn(4).setPreferredWidth(170);
+		tabelaComparacoesFinais.getColumnModel().getColumn(5).setPreferredWidth(200);
+		tabelaComparacoesFinais.getColumnModel().getColumn(6).setPreferredWidth(200);
+		tabelaComparacoesFinais.getColumnModel().getColumn(7).setPreferredWidth(210);
+		tabelaComparacoesFinais.getColumnModel().getColumn(8).setPreferredWidth(210);
+
+	}
+	private void setTabelaPorUsuario(){
+
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(0).setPreferredWidth(200);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(1).setPreferredWidth(120);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(2).setPreferredWidth(140);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(3).setPreferredWidth(170);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(4).setPreferredWidth(185);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(5).setPreferredWidth(145);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(6).setPreferredWidth(200);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(7).setPreferredWidth(200);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(8).setPreferredWidth(210);
+		tabelaComparacoesPorUsuario.getColumnModel().getColumn(9).setPreferredWidth(210);	
+	}
+	private void iniciaTabelaUsuario(){
+		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(
+				new Object[][] {}, new String[] { "Nome", "Opinioes Positivas",
+						"Opinioes Cadastradas", "Porcentagem Popularidade",
+						"Porcentagem ProdutoEscalar", "Porcentagem Cosseno",
+						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Similaridade Dice",
+						"Porcentagem Similaridade Jaccard",
+						"Porcentagem Similaridade Overlap" }));	
+		
+		setTabelaPorUsuario();	
+	}
+	private void iniciaTabelaComparacoesFinais(){
+
+		tabelaComparacoesFinais.setModel(new DefaultTableModel(
+				new Object[][] {}, new String[] {
+						"Opinioes Positivas do Sistema",
+						"Opinioes Cadastradas no Sistema",
+						"Porcentagem Popularidade",
+						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
+						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Similaridade Dice",
+						"Porcentagem Similaridade Jaccard",
+						"Porcentagem Similaridade Overlap" }));
+		setTamanhoTabelaFinais();
+
 	}
 
 
