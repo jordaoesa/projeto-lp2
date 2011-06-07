@@ -227,7 +227,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		frameRecomendacoes.getContentPane().add(scrollPane, new AbsoluteConstraints(0,90,650,180));
 		frameRecomendacoes.getContentPane().add(selecioneOrdenacao, new AbsoluteConstraints(10,10));
 		frameRecomendacoes.getContentPane().add(listaOrdenacao, new AbsoluteConstraints(10,25));
-		frameRecomendacoes.getContentPane().add(tiposDeComida, new AbsoluteConstraints(140,25));
+		frameRecomendacoes.getContentPane().add(tiposDeComida, new AbsoluteConstraints(170,25));
 		frameRecomendacoes.getContentPane().add(labelRecomend, new AbsoluteConstraints(280,70));
 		frameRecomendacoes.getContentPane().add(labelNotRecomend, new AbsoluteConstraints(280, 280));
 		frameRecomendacoes.getContentPane().add(scrollNotRecomendacoes, new AbsoluteConstraints(0,300,650,180));
@@ -467,7 +467,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	//***
 	private static void popularityRecomendationsFilter(int numRecomendacoes, String palavraChave){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsFilter(numRecomendacoes, palavraChave);
-		System.out.println("tamanho" + recomendacoes.get(0).getNome());
+		//System.out.println("tamanho" + recomendacoes.get(0).getNome());
 		preencheTabela(tabela,recomendacoes);
 	}
 
@@ -557,7 +557,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private static void popularityRecomendationsOrderly(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		//preencheTabelaOrdenadas(recomendacoes, ordenacaoSelecionada);
-		preencheAnyTableOrderly(tabela, recomendacoes, ordenacaoSelecionada);
+		preencheAsTabelaOrdenadas(tabela, recomendacoes, ordenacaoSelecionada);
 	}
 
 	private static void scalarProductRecomendationsOrderly(int numberUser, int qtdRecomendacoes){
@@ -782,10 +782,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			}
 		}
 		if(event.getSource() == tiposDeComida){
-			System.out.println("tipo de comida");
+			//System.out.println("tipo de comida");
 			tipoDeComidaSelecionada = tiposDeComida.getSelectedItem().toString();
 			if(boolalgoritmoTipo1)
-				System.out.println("tipo 1");
+				//System.out.println("tipo 1");
 				popularityRecomendationsOrderly(recomendacao);
 			if(boolalgoritmoTipo2)
 				AnyRecomendationsOrderly(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
@@ -917,6 +917,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			//evento do botao Gerar Recomendacao
 		}if(event.getSource() == botaoGerarRecomendacao && !ReadData.getUsuarios().isEmpty() && !ReadData.getEstabelecimentos().isEmpty()){
 			estabelecimentosRemovidos = "";
+			listaOrdenacao.setSelectedIndex(0);
 			if(numUsuario > 0 && recomendacao > 0){ //tratando o caso de o cara nao ter selecionado nenhum usuario
 
 				if(boolalgoritmoTipo2){
