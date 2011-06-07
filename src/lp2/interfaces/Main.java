@@ -49,7 +49,7 @@ public class Main {
 					barra.setValue(progressBarra);
 					progressBarra++;
 					try{
-						sleep(1);
+						sleep(2);
 					}catch (InterruptedException e) {
 						e.printStackTrace();
 					}
