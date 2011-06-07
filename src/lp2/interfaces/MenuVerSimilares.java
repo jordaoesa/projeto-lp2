@@ -3,6 +3,7 @@ package lp2.interfaces;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -11,6 +12,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import lp2.algoritmos.Algoritmos;
+import lp2.algoritmos.TipoAlgoritmoPersonalizado;
 import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
 
@@ -32,6 +35,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	private JTable tabela;
 	private JComboBox listaSuspensaDeUsuarios;
 	private String usuariosCadastrados[];
+	private static Algoritmos algoritmos;
 
 	public MenuVerSimilares(){
 
@@ -42,7 +46,6 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 
 		instanciaTodosComponentes();
 		iniciaComboBoxEstabelecimentos();
-		iniciaTabelas();
 		addNoContainer();
 
 		botaoVoltar.addActionListener(this);
@@ -52,23 +55,17 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	
 	private void instanciaTodosComponentes(){
 
+		algoritmos = new Algoritmos();
 		tabela = new JTable();
-		tabela.setEnabled(false);
-		
-		scrollPaneTabelaOpinioes = new JScrollPane();
-		scrollPaneTabelaOpinioes.setViewportView(tabela);			
-		
+		scrollPaneTabelaOpinioes = new JScrollPane(tabela, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		botaoVoltar = new JButton("Voltar");	
 	}
 	
 	private void addNoContainer(){
-		add(scrollPaneTabelaOpinioes, new AbsoluteConstraints(10,100,776,210));
+		add(scrollPaneTabelaOpinioes, new AbsoluteConstraints(10,100, 776, 300));
 		add(botaoVoltar, new AbsoluteConstraints(600,500,120,23));
-	}
-
-	private void iniciaTabelas() {
-		tabela.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Usuario", "Nota" }));
+		add(listaSuspensaDeUsuarios, new AbsoluteConstraints(200, 50));
 	}
 
 	private void iniciaComboBoxEstabelecimentos() {
@@ -89,8 +86,6 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		if(event.getSource() == listaSuspensaDeUsuarios){
 			if(listaSuspensaDeUsuarios.getSelectedIndex() != 0)
 				preencheTabela();
-			else
-				iniciaTabelas();
 		}
 
 		if(event.getSource() == botaoVoltar){
@@ -101,14 +96,53 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	}
 
 	private void preencheTabela(){
-		Object table[][] = new Object[ReadData.getUsuarios().size()][2];
-
-		for(int i=0; i<ReadData.getUsuarios().size(); i++){
+		List<List<String>> temp = algoritmos.topFiveSimilarities(ReadData.getUsuarios().get(listaSuspensaDeUsuarios.getSelectedIndex()-1), TipoAlgoritmoPersonalizado.COSSENO);
+		Object table[][] = new Object[temp.get(0).size()][6];
+		
+		for(int i=0; i < temp.get(0).size(); i++){
+			try {
+				table[i][0] = temp.get(i).get(0);
+			} catch (Exception ex) {
+				table[i][0] = null;
+			}
+			try {
+				table[i][1] = temp.get(i).get(1);
+			} catch (Exception ex) {
+				table[i][1] = null;
+			}
+			try {
+				table[i][2] = temp.get(i).get(2);
+			} catch (Exception ex) {
+				table[i][2] = null;
+			}
+			try {
+				table[i][3] = temp.get(i).get(3);
+			} catch (Exception ex) {
+				table[i][3] = null;
+			}
+			try {
+				table[i][4] = temp.get(i).get(4);
+			} catch (Exception ex) {
+				table[i][4] = null;
+			}
+			try {
+				table[i][5] = temp.get(i).get(5);
+			} catch (Exception ex) {
+				table[i][5] = null;
+			}
 			
 		}
 
 		tabela.setModel(new DefaultTableModel(table,
 				new String[] { "Usuario", "Estabelecimento 1", "Estabelecimento 2", "Estabelecimento 3", "Estabelecimento 4", "Estabelecimento 5" }));
+		
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(200);
+		
 	}
 
 }
