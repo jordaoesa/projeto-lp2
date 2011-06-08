@@ -542,12 +542,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		//preencheTabela2(naoRecomendados);
 	}
 
-	//	private static void scalarProductRecomendations(int numberUser, int qtdRecomendacoes){
-	//		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(0);
-	//		preencheTabela(recomendacoes);
-	//		List<Estabelecimento> naoRecomendados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1)).get(1);
-	//		preencheTabela2(naoRecomendados);
-	//	}
 
 	private static void popularityRecomendations(int numRecomendacao){
 		List<List<Estabelecimento>> resultados = algoritmos.executeGenericRecomendations(numRecomendacao);
@@ -555,12 +549,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		preencheTabela(tabelaNotRecomendacoes,resultados.get(1));
 	}
 
-	//	private void cosineRecomendations(int numberUser, int qtdRecomendacoes) {
-	//		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numberUser-1)).get(0);
-	//		preencheTabela(recomendacoes);
-	//		List<Estabelecimento> naoRecomendados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numberUser-1)).get(1);
-	//		preencheTabela2(naoRecomendados);
-	//	}
 
 	private static void popularityRecomendationsOrderly(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
@@ -604,22 +592,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		if(ordenacao.equals("Ordem Alfabetica")){
 
-			//			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
-			//			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
-			//				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
-			//					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
-			//						Estabelecimento temp = estabelecimentosOrdenados.get(i);
-			//						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
-			//						estabelecimentosOrdenados.set(j, temp);
-			//					}
-			//				}
-			//			}
-			//
-			//			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
-			//				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
-			//				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
-			//				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
-			//			}
 			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
 
 			//seta a tabela para nao ser editada nenhuma celula.
@@ -641,48 +613,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		Object obj[][] = new Object[recomendacoes.size()][3];
 
 		if(ordenacao.equals("Ordem Alfabetica")){
-
-			//			List<Estabelecimento> estabelecimentosOrdenados = new ArrayList<Estabelecimento>(recomendacoes);
-			//			for(int i=0; i<estabelecimentosOrdenados.size(); i++){
-			//				for(int j=i+1; j<estabelecimentosOrdenados.size(); j++){
-			//					if(estabelecimentosOrdenados.get(i).comparePorNome(estabelecimentosOrdenados.get(j)) > 0){
-			//						Estabelecimento temp = estabelecimentosOrdenados.get(i);
-			//						estabelecimentosOrdenados.set(i, estabelecimentosOrdenados.get(j));
-			//						estabelecimentosOrdenados.set(j, temp);
-			//					}
-			//				}
-			//			}
-			//
-			//			for(int i=0; i < estabelecimentosOrdenados.size(); i++){
-			//				obj[i][0] = estabelecimentosOrdenados.get(i).getNome();
-			//				obj[i][1] = estabelecimentosOrdenados.get(i).getLocalizacao();
-			//				obj[i][2] = estabelecimentosOrdenados.get(i).getTipoDeComida();
-			//			}
 			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
 		}
-
 		if(ordenacao.equals("Tipo de Refeicao")){
 			obj = ordenaTipoDeComida(obj, recomendacoes);
-			//			int numLugarAdicionados = 0;
-			//			//adiciona nas primeiras posicoes os lugares que tem o tipo escolhido
-			//			for(int i=0; i < recomendacoes.size(); i++){
-			//				if(recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-			//					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-			//					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-			//					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-			//					numLugarAdicionados ++;
-			//				}
-			//			}
-			//			//adiciona todos os outros
-			//			for (int i = 0; i < recomendacoes.size(); i++) {
-			//				if(!recomendacoes.get(i).getTipoDeComida().equals(tipoDeComidaSelecionada)){
-			//					obj[numLugarAdicionados][0] = recomendacoes.get(i).getNome();
-			//					obj[numLugarAdicionados][1] = recomendacoes.get(i).getLocalizacao();
-			//					obj[numLugarAdicionados][2] = recomendacoes.get(i).getTipoDeComida();
-			//					numLugarAdicionados++;
-			//				}
-			//			}
-
 		}
 		//seta a tabela para nao ser editada nenhuma celula.
 		table.setModel(new DefaultTableModel(obj,
@@ -720,53 +654,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		table.getColumnModel().getColumn(1).setPreferredWidth(190);
 		table.getColumnModel().getColumn(0).setPreferredWidth(130);
 
-		//		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
-		//		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
-		//		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
 	}
 
-	//	private static void preencheTabela2(List<Estabelecimento> recomendacoes) {
-	//		Object obj[][] = new Object[recomendacoes.size()][3];
-	//		for(int i=0; i < recomendacoes.size(); i++){
-	//			obj[i][0] = recomendacoes.get(i).getNome();
-	//			obj[i][1] = recomendacoes.get(i).getLocalizacao();
-	//			obj[i][2] = recomendacoes.get(i).getTipoDeComida();
-	//		}
-	//
-	//		tabelaNotRecomendacoes.setModel(new DefaultTableModel(obj,
-	//				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
-	//
-	//		tabelaNotRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
-	//		tabelaNotRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
-	//		tabelaNotRecomendacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
-	//	}
 
-	//	private static void preencheTabelaOrdenadas(List<Estabelecimento> recomendacoes,String ordenacao) {
-	//		Object obj[][] = new Object[recomendacoes.size()][3];
-	//
-	//		if(ordenacao.equals("Ordem Alfabetica")){
-	//			//metodo ordenaPorOrdemAlfabetica			
-	//			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
-	//		}
-	//
-	//		if(ordenacao.equals("Tipo de Refeicao")){
-	//			//metodo ordenaPorTipoDeCOmida
-	//			obj = ordenaTipoDeComida(obj, recomendacoes);
-	//			
-	//		}
-	//		//seta a tabela para nao ser editada nenhuma celula.
-	//		tabela.setModel(new DefaultTableModel(obj,
-	//				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
-	//		{
-	//			public boolean isCellEditable(int rowIndex, int mColIndex){  
-	//				return false;  
-	//			}  
-	//		});
-	//		//seta o tamanho das colunas
-	//		tabela.getColumnModel().getColumn(2).setPreferredWidth(20);	
-	//		tabela.getColumnModel().getColumn(1).setPreferredWidth(190);
-	//		tabela.getColumnModel().getColumn(0).setPreferredWidth(130);
-	//	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -774,7 +664,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		if(event.getSource() == enviaEmail){
 			nomeEmail = JOptionPane.showInputDialog("Digite seu nome:");
 			emailUsuario = JOptionPane.showInputDialog("Digite seu email:");
-			System.out.println(textEmail(nomeEmail));
 			if(!(nomeEmail.equals("") && emailUsuario.equals(""))){
 				try {
 					new Email(emailUsuario, textEmail(nomeEmail)).run();
@@ -1166,8 +1055,20 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private String textEmail(String nome){
 		List<List<Estabelecimento>> resultados = null;
 		String FIM_DE_LINHA = System.getProperty("line.separator");
-		if(boolalgoritmoTipo2){
-			System.out.println("aqui metodo textemail");
+		
+		if(boolalgoritmoTipo1){
+			List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(39).get(0);
+			StringBuffer boasRecomendacoes = new StringBuffer();
+			for(Estabelecimento est: recomendacoes){
+				boasRecomendacoes.append(est.toString() + FIM_DE_LINHA);
+			}
+			
+			return "Olá, " + nome + FIM_DE_LINHA + FIM_DE_LINHA +
+			"Estamos enviando as recomendações de restaurantes indicadas pelo programa Bom Conselho-UFCG" + FIM_DE_LINHA + FIM_DE_LINHA + "Estabelecimentos mais populares do nosso serviço " + FIM_DE_LINHA + 
+			boasRecomendacoes.toString() + FIM_DE_LINHA +
+			"Obrigado por usar nossos serviços =]";
+			
+		}if(boolalgoritmoTipo2){
 			resultados = algoritmos.executeAlgoritmo(recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numUsuario-1));
 		}if(boolalgoritmoTipo3){
 			resultados = algoritmos.executeAlgoritmo(recomendacao, TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numUsuario-1));
@@ -1185,13 +1086,14 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		for(Estabelecimento est: resultados.get(0)){
 			boasRecomendacoes.append(est.toString() + FIM_DE_LINHA);
 		}
+		
 		StringBuffer masRecomendacoes = new StringBuffer();
 		for(Estabelecimento est:resultados.get(1)){
 			masRecomendacoes.append(est.toString() + FIM_DE_LINHA);
 		}
-		return "Ola," + nome + FIM_DE_LINHA +
+		return "Olá, " + nome + FIM_DE_LINHA + FIM_DE_LINHA +
 		"Estamos enviando as recomendações de restaurantes indicadas pelo programa Bom Conselho-UFCG" + FIM_DE_LINHA +"Boas recomedacoes" + FIM_DE_LINHA + 
-		boasRecomendacoes.toString() + FIM_DE_LINHA + "Corra desses lugares a seguir!!" + FIM_DE_LINHA + masRecomendacoes.toString() + FIM_DE_LINHA +
+		boasRecomendacoes.toString() + FIM_DE_LINHA + "Corra desses lugares a seguir!!" + FIM_DE_LINHA +FIM_DE_LINHA + masRecomendacoes.toString() + FIM_DE_LINHA +
 		"Obrigado por usar nossos serviços =]";
 	}
 }
