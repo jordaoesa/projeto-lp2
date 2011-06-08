@@ -5,5 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="src/lp2/externalJar/AbsoluteLayout.jar"/>
 	<classpathentry kind="lib" path="src/lp2/externalJar/mail.jar"/>
+	<classpathentry kind="con" path="com.google.gdt.eclipse.managedapis.MANAGED_API_CONTAINER/gwt-maps-1.1.0"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

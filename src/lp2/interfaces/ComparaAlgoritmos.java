@@ -3,20 +3,16 @@ package lp2.interfaces;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -24,7 +20,6 @@ import javax.swing.JWindow;
 import javax.swing.table.DefaultTableModel;
 
 import lp2.algoritmos.Algoritmos;
-import lp2.lerDados.Estabelecimento;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -32,13 +27,10 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 @SuppressWarnings("serial")
 public class ComparaAlgoritmos extends JPanel implements ActionListener{
 
-	private JWindow window = new JWindow();
-	private JProgressBar barra = new JProgressBar();
-	
 	JanelaAguarde esperePorFavor = new JanelaAguarde();
 	Thread executaJanelaAguarde;
 	
-	ComparaAlgoritmosAqui processaAlgoritmo = new ComparaAlgoritmosAqui();
+	ComparaAlgoritmosAqui processaAlgoritmo = new ComparaAlgoritmosAqui(esperePorFavor.getWindow());
 	Thread executaProcessaAlgoritmo;
 	
 	
@@ -76,21 +68,21 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		addNoContainer();
 		trataEventoCampoTexto();
 
-		//seta o tamanho/altura da barra
-		barra.setPreferredSize(new Dimension(407,20));
-		barra.setStringPainted(true);
-
-		//carrega uma imagem no label imagem
-		JLabel imagem = new JLabel();
-		ImageIcon image = new ImageIcon("./src/lp2/imagens/apresentacao.jpg");
-		imagem.setIcon(image);
-
-		//define layout da janela
-		window.getContentPane().setLayout(new BorderLayout());
-		//add no container da janela a imagem e barra.
-		window.getContentPane().add(imagem,BorderLayout.CENTER);
-		window.getContentPane().add(barra,BorderLayout.SOUTH);
-		
+//		//seta o tamanho/altura da barra
+//		barra.setPreferredSize(new Dimension(407,20));
+//		barra.setStringPainted(true);
+//
+//		//carrega uma imagem no label imagem
+//		JLabel imagem = new JLabel();
+//		ImageIcon image = new ImageIcon("./src/lp2/imagens/apresentacao.jpg");
+//		imagem.setIcon(image);
+//
+//		//define layout da janela
+//		window.getContentPane().setLayout(new BorderLayout());
+//		//add no container da janela a imagem e barra.
+//		window.getContentPane().add(imagem,BorderLayout.CENTER);
+//		window.getContentPane().add(barra,BorderLayout.SOUTH);
+//		
 		//texto quando mouse fica parado sobre o botao
 		botaoVoltar.setToolTipText("Clique para voltar ao menu anterior");
 		botaoComparar.setToolTipText("Clique para comparar os algoritmos");
@@ -214,75 +206,55 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			if(numRecomend > 0){
 				executaJanelaAguarde.start();
 				executaProcessaAlgoritmo.start();
-				barra.setValue(100);
 			}else{
 				JOptionPane.showMessageDialog(null, "Numero de recomendacoes invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
+	
 	//Classe que compara os algoritmos 
-	class ComparaAlgoritmosAqui implements Runnable {   
+	class ComparaAlgoritmosAqui implements Runnable {
+		JWindow window;
+		
+		public ComparaAlgoritmosAqui(JWindow window){
+			this.window = window;
+		}
+		
 		public void run() {  
 			List<List> comparacoes = algoritmos.compareAlgorithms(numRecomend);
 			preencheTabelaComparacoesUsuarios((List<List<String>>)comparacoes.get(0));
 			preencheTabelaComparacoesFinais((List<String>)comparacoes.get(1));
-			
-			//pra quando terminar de comparar setar os 100%
-			barra.setValue(100);
-			try{
-				//pra demorar um pouco antes de fechar tudo
-				Thread.sleep(100);
-			}
-			catch(InterruptedException ignore){
-				ignore.getStackTrace();
-			}
-			window.setVisible(false);
+			window.dispose();
 		}
 		
 	}
 	
 	//Classe interna da janela Aguarde
 	class JanelaAguarde extends Thread {
-
-		int progressBarra = 0;
-		Random random = new Random();
-		
+		private JWindow window = new JWindow();
 		public JanelaAguarde(){
-			
-			//seta o tamanho/altura da barra
-			barra.setPreferredSize(new Dimension(407,20));
-			barra.setStringPainted(true);
-			
+
 			//carrega uma imagem no label imagem
 			JLabel imagem = new JLabel();
-			ImageIcon image = new ImageIcon("./src/lp2/imagens/apresentacao.jpg");
+			ImageIcon image = new ImageIcon("./src/lp2/imagens/aguarde.gif");
 			imagem.setIcon(image);
 
 			//define layout da janela
 			window.getContentPane().setLayout(new BorderLayout());
 			//add no container da janela a imagem e barra.
 			window.getContentPane().add(imagem,BorderLayout.CENTER);
-			window.getContentPane().add(barra,BorderLayout.SOUTH);
 		}
 		
 		public void run(){
-			progressBarra = 0;
 			window.pack();
 			window.setVisible(true);
 			window.setLocationRelativeTo(null);
-			
-			//aumenta o progresso da barra enquanto estiver processando o compara
-			//algoritmo
-			while (executaProcessaAlgoritmo.isAlive()) {
-				barra.setValue(Math.min(progressBarra, 100));
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException ignore) {
-				}
-				progressBarra += random.nextInt(20);
-			}
 		
 		}
+		public JWindow getWindow(){
+			return this.window;
+		}
+		                           
 	}
 	private void setTamanhoTabelaFinais(){
 

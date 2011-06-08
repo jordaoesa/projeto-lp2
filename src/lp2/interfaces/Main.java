@@ -2,6 +2,8 @@ package lp2.interfaces;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -34,7 +36,8 @@ public class Main {
 		ImageIcon image = new ImageIcon("./src/lp2/imagens/apresentacao.jpg");
 		imagem.setIcon(image);
 		//seta o tamanho/altura da barra
-		barra.setPreferredSize(new Dimension(407,10));
+		barra.setPreferredSize(new Dimension(407,15));
+		barra.setStringPainted(true);
 		//define layout da janela
 		window.getContentPane().setLayout(new BorderLayout());
 		//add no container da janela a imagem e barra.
@@ -42,17 +45,17 @@ public class Main {
 		window.getContentPane().add(barra,BorderLayout.SOUTH);
 		
 		new Thread(){
+			Random random = new Random();
 			public void run(){
 				int progressBarra = 0;
 				//aumenta o progresso da barra
 				while(progressBarra < 101){
-					barra.setValue(progressBarra);
-					progressBarra++;
-					try{
-						sleep(2);
-					}catch (InterruptedException e) {
-						e.printStackTrace();
+					barra.setValue(Math.min(progressBarra, 100));
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException ignore) {
 					}
+					progressBarra += random.nextInt(30);
 				}
 				//fecha janela
 				window.dispose();
