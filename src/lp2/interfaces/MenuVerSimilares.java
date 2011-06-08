@@ -3,18 +3,25 @@ package lp2.interfaces;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractListModel;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import lp2.algoritmos.Algoritmos;
@@ -43,7 +50,6 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	private JLabel descricaoTabela;
 	private JComboBox listaSuspensaDeUsuarios;
 	private String usuariosCadastrados[];
-	
 	private ButtonGroup selectAlgorithm ;
 	private JRadioButton selectScalarProductAlgorithm;
 	private JRadioButton selectCosineAlgorithm;
@@ -51,7 +57,12 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	private JRadioButton selectSimilaridadeDice;
 	private JRadioButton selectSimilaridadeJaccard;
 	private JRadioButton selectSimilaridadeOverlap;
-
+	private JLabel labelBusca;
+	private JTextField campoBusca;
+	private JList listaEncontrados;
+	private List<Integer> indicesEncontrados;
+	private int numUsuario = 0;
+	
 	private static Algoritmos algoritmos;
 	
 	public MenuVerSimilares(){
@@ -74,19 +85,74 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		
 		addActionListener();
 		setLayoutDefaultTabela();
+		
 	}
 	
 	private void addActionListener(){
 		
 		botaoVoltar.addActionListener(this);
 		listaSuspensaDeUsuarios.addActionListener(this);
-		
 		selectCosineAlgorithm.addActionListener(this);
 		selectCossenoIntersecao.addActionListener(this);
 		selectSimilaridadeDice.addActionListener(this);
 		selectSimilaridadeJaccard.addActionListener(this);
 		selectSimilaridadeOverlap.addActionListener(this);
 		selectScalarProductAlgorithm.addActionListener(this);
+		eventosKey();
+		
+	}
+	
+	private void eventosKey(){
+		
+		campoBusca.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent evt){
+				String nome = campoBusca.getText();
+				indicesEncontrados = new ArrayList<Integer>();
+				List<String> nomesEncontrados = new ArrayList<String>();
+				
+				for(int i=0; i<ReadData.getUsuarios().size(); i++){
+					Usuario user = ReadData.getUsuarios().get(i);
+					
+					if(user.getNome().length() >= nome.length() && user.getNome().subSequence(0, nome.length()).toString().equalsIgnoreCase(nome) && indicesEncontrados.size() < 5){
+						indicesEncontrados.add(i);
+						nomesEncontrados.add(user.getNome());
+					}
+				}
+				
+				final String nomesUsers[] = new String[nomesEncontrados.size()];
+				for(int i=0; i<nomesEncontrados.size(); i++){
+					nomesUsers[i] = nomesEncontrados.get(i);
+				}
+				
+				if(campoBusca.getText().equals("")){
+					listaEncontrados.setVisible(false);
+					numUsuario = -1;
+					listaSuspensaDeUsuarios.setSelectedIndex(0);
+				}else{
+					listaEncontrados.setVisible(true);
+				}
+				
+				listaEncontrados.setSize(200, 27*nomesEncontrados.size());
+				listaEncontrados.setModel(new AbstractListModel() {
+					String nomes[] = nomesUsers;
+					@Override
+					public int getSize() { return nomes.length; }
+					@Override
+					public Object getElementAt(int index) { return nomes[index]; }
+				});
+				
+				listaEncontrados.addListSelectionListener(new ListSelectionListener() {
+		            public void valueChanged(ListSelectionEvent evt) {
+		            	if(listaEncontrados.getSelectedIndex() >= 0){
+		            		listaEncontrados.setVisible(false);
+			            	numUsuario = indicesEncontrados.get(listaEncontrados.getSelectedIndex());
+							listaSuspensaDeUsuarios.setSelectedIndex(numUsuario+1);
+							campoBusca.setText(ReadData.getUsuarios().get(numUsuario).getNome());
+		            	}
+			        }
+			    });
+			}
+		});
 		
 	}
 	
@@ -101,6 +167,9 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		selecioneUsuario = new JLabel("Selecione o Usuario:");
 		selecioneAlgoritmo = new JLabel("Selecione o Algoritmo:");
 		descricaoTabela = new JLabel("Tabela que mostra os 10 Usuario mais similare e 5 estabelecimentos recomendados por eles.");
+		labelBusca = new JLabel("Busca:");
+		campoBusca = new JTextField();
+		listaEncontrados = new JList();
 		
 		selectAlgorithm = new ButtonGroup();
 		selectScalarProductAlgorithm = new JRadioButton("Produto Escalar");
@@ -113,13 +182,15 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	}
 	
 	private void addNoContainer(){
+		add(labelBusca, new AbsoluteConstraints(490,50,60,23));
+		add(campoBusca, new AbsoluteConstraints(550,50,200,23));
+		add(listaEncontrados, new AbsoluteConstraints(550,73,200,-1));
 		add(scrollPaneTabelaOpinioes, new AbsoluteConstraints(10,250, 776, 203));
 		add(botaoVoltar, new AbsoluteConstraints(600,500,120,23));
 		add(listaSuspensaDeUsuarios, new AbsoluteConstraints(220, 50, 250, 23));
 		add(selecioneUsuario, new AbsoluteConstraints(40, 50, 200, 23));
 		add(selecioneAlgoritmo, new AbsoluteConstraints(40, 90, 200, 23));
 		add(descricaoTabela, new AbsoluteConstraints(70,200, 700, 50));
-		
 		add(selectScalarProductAlgorithm, new AbsoluteConstraints(200, 90, 200, 23));
 		add(selectCosineAlgorithm, new AbsoluteConstraints(200, 120, 200, -1));
 		add(selectCossenoIntersecao, new AbsoluteConstraints(410, 90, 200, 23));
@@ -145,6 +216,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == listaSuspensaDeUsuarios){
+			campoBusca.setText("");
 			if(listaSuspensaDeUsuarios.getSelectedIndex() == 0)
 				setLayoutDefaultTabela();
 			if(listaSuspensaDeUsuarios.getSelectedIndex() != 0 && selectAlgorithm.getSelection() != null)
