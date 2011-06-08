@@ -24,6 +24,7 @@ import javax.swing.JWindow;
 import javax.swing.table.DefaultTableModel;
 
 import lp2.algoritmos.Algoritmos;
+import lp2.lerDados.Estabelecimento;
 
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
@@ -219,7 +220,6 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			}
 		}
 	}
-	
 	//Classe que compara os algoritmos 
 	class ComparaAlgoritmosAqui implements Runnable {   
 		public void run() {  

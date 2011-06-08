@@ -173,5 +173,9 @@ public class Estabelecimento implements Comparable<Estabelecimento> {
 			return true;
 		return false;
 	}
+	@Override
+	public String toString(){
+		return getNome() + ", " + getLocalizacao() + "," + getTipoDeComida(); 
+	}
     
 }
