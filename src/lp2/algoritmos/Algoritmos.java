@@ -512,7 +512,7 @@ public class Algoritmos {
 			formatacaoDeLinha.addAll(estabelecimentosRecomendadosPor_Para(listaAlgoritmos.get(i).getUser2(), listaAlgoritmos.get(i).getUser1()));
 			returnList.add(formatacaoDeLinha);
 		}
-		
+
 		return returnList;
 	}
 	
