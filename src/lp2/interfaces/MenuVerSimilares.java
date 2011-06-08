@@ -73,7 +73,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		selectAlgorithm.add(selectSimilaridadeOverlap);
 		
 		addActionListener();
-		
+		setLayoutDefaultTabela();
 	}
 	
 	private void addActionListener(){
@@ -145,6 +145,8 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == listaSuspensaDeUsuarios){
+			if(listaSuspensaDeUsuarios.getSelectedIndex() == 0)
+				setLayoutDefaultTabela();
 			if(listaSuspensaDeUsuarios.getSelectedIndex() != 0 && selectAlgorithm.getSelection() != null)
 				preencheTabela();
 		}
@@ -226,17 +228,29 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 						"Estabelecimento 3", "Estabelecimento 4",
 						"Estabelecimento 5" }));
 
-				tabela.getColumnModel().getColumn(0).setPreferredWidth(200);
-				tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
-				tabela.getColumnModel().getColumn(2).setPreferredWidth(200);
-				tabela.getColumnModel().getColumn(3).setPreferredWidth(200);
-				tabela.getColumnModel().getColumn(4).setPreferredWidth(200);
-				tabela.getColumnModel().getColumn(5).setPreferredWidth(200);
+				setLayoutTabela();
 			}
 		}catch(Exception e){
 			JOptionPane.showMessageDialog(null, "Selecione o Usuario/Algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	private void setLayoutTabela(){
+		tabela.getColumnModel().getColumn(0).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(1).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(2).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(3).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(4).setPreferredWidth(200);
+		tabela.getColumnModel().getColumn(5).setPreferredWidth(200);
+	}
+	
+	private void setLayoutDefaultTabela(){
+		tabela.setModel(new DefaultTableModel(new Object[][]{}, new String[] {
+				"Usuario", "Estabelecimento 1", "Estabelecimento 2",
+				"Estabelecimento 3", "Estabelecimento 4",
+				"Estabelecimento 5" }));
+		setLayoutTabela();
 	}
 
 }
