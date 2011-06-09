@@ -38,7 +38,7 @@ public class Main {
 
 	private static void iniciaSplashScreen(){
 
-		final JWindow window = new JWindow();
+		final JWindow janelaApresentacao = new JWindow();
 		final JProgressBar barra = new JProgressBar();
 
 		//carrega uma imagem no label imagem
@@ -49,10 +49,10 @@ public class Main {
 		barra.setPreferredSize(new Dimension(407,15));
 		barra.setStringPainted(true);
 		//define layout da janela
-		window.getContentPane().setLayout(new BorderLayout());
+		janelaApresentacao.getContentPane().setLayout(new BorderLayout());
 		//add no container da janela a imagem e barra.
-		window.getContentPane().add(imagem,BorderLayout.CENTER);
-		window.getContentPane().add(barra,BorderLayout.SOUTH);
+		janelaApresentacao.getContentPane().add(imagem,BorderLayout.CENTER);
+		janelaApresentacao.getContentPane().add(barra,BorderLayout.SOUTH);
 		
 		new Thread(){
 			Random random = new Random();
@@ -62,19 +62,20 @@ public class Main {
 				while(progressBarra < 101){
 					barra.setValue(Math.min(progressBarra, 100));
 					try {
-						Thread.sleep(500);
+						Thread.sleep(2);
 					} catch (InterruptedException ignore) {
 					}
 					progressBarra += random.nextInt(30);
 				}
 				//fecha janela
-				window.dispose();
+				janelaApresentacao.dispose();
+				
 				new MenuInicial();
 			}
 		}.start();
 		
-		window.pack();
-		window.setVisible(true);
-		window.setLocationRelativeTo(null);
+		janelaApresentacao.pack();
+		janelaApresentacao.setVisible(true);
+		janelaApresentacao.setLocationRelativeTo(null);
 	}
 }
