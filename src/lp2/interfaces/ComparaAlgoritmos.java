@@ -175,7 +175,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 		}
 		
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(obj,
-				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+				new String[] { "Nome", "Opiniões Positivas", "Opiniões Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Interseção", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 		setTabelaPorUsuario();
 
 	}
@@ -186,7 +186,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 			obj[0][i] = comparacoesFinais.get(i);
 		}
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(obj,
-				new String[] { "Opinioes Positivas do Sistema", "Opinioes Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+				new String[] { "Opiniões Positivas do Sistema", "Opiniões Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Interseção", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 
 		setTamanhoTabelaFinais();
 	}
@@ -207,7 +207,7 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 				executaJanelaAguarde.start();
 				executaProcessaAlgoritmo.start();
 			}else{
-				JOptionPane.showMessageDialog(null, "Numero de recomendacoes invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Numero de recomendações invalido.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -285,10 +285,10 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 	}
 	private void iniciaTabelaUsuario(){
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(
-				new Object[][] {}, new String[] { "Nome", "Opinioes Positivas",
-						"Opinioes Cadastradas", "Porcentagem Popularidade",
+				new Object[][] {}, new String[] { "Nome", "Opiniões Positivas",
+						"Opiniões Cadastradas", "Porcentagem Popularidade",
 						"Porcentagem ProdutoEscalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Cosseno Interseção",
 						"Porcentagem Similaridade Dice",
 						"Porcentagem Similaridade Jaccard",
 						"Porcentagem Similaridade Overlap" }));	
@@ -299,11 +299,11 @@ public class ComparaAlgoritmos extends JPanel implements ActionListener{
 
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(
 				new Object[][] {}, new String[] {
-						"Opinioes Positivas do Sistema",
-						"Opinioes Cadastradas no Sistema",
+						"Opiniões Positivas do Sistema",
+						"Opiniões Cadastradas no Sistema",
 						"Porcentagem Popularidade",
 						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Cosseno Interseção",
 						"Porcentagem Similaridade Dice",
 						"Porcentagem Similaridade Jaccard",
 						"Porcentagem Similaridade Overlap" }));

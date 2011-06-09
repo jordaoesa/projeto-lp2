@@ -71,10 +71,10 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 		insiraLocal = new JLabel("Insira o local");
 		ondeDesejaIr = new JLabel("Onde deseja ir:");
 		endereco = new JTextField();
-		tipoVisaoSatelite = new JRadioButton("Visao Satelite");
-		tipoVisaoHibrida = new JRadioButton("Visao Hibrida");
-		tipoVisaoTerreno = new JRadioButton("Visao Terrena");
-		tipoVisaoNormal = new JRadioButton("Visao Normal");
+		tipoVisaoSatelite = new JRadioButton("Visão Satelite");
+		tipoVisaoHibrida = new JRadioButton("Visão Hibrida");
+		tipoVisaoTerreno = new JRadioButton("Visão Terrena");
+		tipoVisaoNormal = new JRadioButton("Visão Normal");
 		selecionaVisao = new ButtonGroup();
 		selecionaVisao.add(tipoVisaoHibrida);
 		selecionaVisao.add(tipoVisaoTerreno);
@@ -164,7 +164,7 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 			e.printStackTrace();
 			System.out.println("mal forma url"); 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Nossa!Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(null, "Nossa! Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
 		}
 		return null;
 
@@ -244,9 +244,9 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 					Thread th = new Thread(new CarregaImagem(urlFinal));
 					th.start();
 				}else
-					JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
 			}else{
-				JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
@@ -280,7 +280,7 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 			if(enderecoDestino.equals("Campus da UFCG")){
 				enderecoDestino = "Rua Aprígio Veloso";
 			}else if(enderecoDestino.equals("Shopping Boulevard")){
-				enderecoDestino = "Av. Pref Severino Bezerra Cabral";
+				enderecoDestino = "Av. Prof Severino Bezerra Cabral";
 			}
 		}
 		if(event.getSource() == botaoVoltar){
