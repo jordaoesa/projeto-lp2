@@ -3,16 +3,31 @@ package lp2.algoritmos;
 import lp2.lerDados.Usuario;
 
 /**
+ * Classe que define um tipo de algoritmo a ser utilizado 
+ * no sistema de recomendacao, similaridade por cosseno.
+ * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
  *         Jordao Ezequiel Serafim de Araujo<br>
  */
 public class Cosseno extends Algoritmo{
 
+	/**
+	 * Construtor.
+	 * @param user1
+	 * 			primeiro usuario.
+	 * @param user2
+	 * 			segundo usuario.
+	 * @throws Exception
+	 * 			caso algum erro ocorra.
+	 */
 	public Cosseno(Usuario user1, Usuario user2) throws Exception {
 		super(user1, user2);
 	}
 
+	/**
+	 * Metodo que calcula a similaridade entre dois usuarios por cosseno.
+	 */
 	@Override
 	public void calculaSimilaridade() {
 		Double numerador = 0.0;

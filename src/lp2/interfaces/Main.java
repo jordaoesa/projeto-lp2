@@ -13,6 +13,8 @@ import lp2.lerDados.ReadData;
 
 
 /**
+ * Classe responsavel por iniciar o sistema, fazendo a leitura de
+ * arquivos padroes e iniciando a janela da interface grafica para o usuario.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -21,6 +23,14 @@ import lp2.lerDados.ReadData;
  */
 public class Main {
 
+	
+	/**
+	 * Metodo que inicia a execucao do sistema  para o usuario, e
+	 * faz a leitura dos arquivos padroes para tal.
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String args[]) throws Exception{
 		iniciaSplashScreen();
 		ReadData.initLists();

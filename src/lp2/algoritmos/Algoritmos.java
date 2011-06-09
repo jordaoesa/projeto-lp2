@@ -10,8 +10,8 @@ import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
 
 /**
- * Classe que define os tipos de algoritmos a serem utilizados no sistema de
- * recomendacao.
+ * Classe que define dois dos tipos de algoritmos a serem utilizados 
+ * no sistema de recomendacao.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -493,6 +493,17 @@ public class Algoritmos {
 		return numOpinioesPositivas;
 	}
 	
+	
+	/***
+	 * Metodo que tem a funcao de retornar o nome dos estabelecimentos que um determinado usuario recomendou para outro.
+	 * 
+	 * @param user
+	 * 			Usuario que deseja ter recomendacoes.
+	 * @param tipo
+	 * 			tipo de algoritmo escolhido para o mesmo.
+	 * @return
+	 * 			um list de list de string contendo o nome dos estabelecimentos.
+	 */
 	public List<List<String>> topFiveSimilarities(Usuario user, TipoAlgoritmoPersonalizado tipo) {
 		listaAlgoritmos = new ArrayList<Algoritmo>();
 		List<List<String>> returnList = new ArrayList<List<String>>();
@@ -537,6 +548,23 @@ public class Algoritmos {
 	}
 
 	//*** 
+	/**
+	 * Metodo responsavel por executar as recomendacoes personalizadas para um
+	 * usuario, e filtrar as buscas por palavra-chave. As recomendacoes personalizdas baseiam-se na similaridade de gostos
+	 * de restaurantes entre dois usuarios, ou seja, quanto mais parecidas suas opinioes sobre um restaurante, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes personalizadas sao
+	 * sempre distintas para os usuarios, pois a
+	 * nota influencia nas recomendacoes, e o filtro por palavra-chave tambem.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param user
+	 * 			Usuario que deseja as recomendacoes.
+	 * @param palavraChave
+	 * 			palavra-chave a ser filtrada.
+	 * @return
+	 * 			um list com os estabelecimentos recomendados filtrados.
+	 */
 	public List<Estabelecimento> executeScalarProductRecomendationsFilter(int numRecomendacoes, Usuario user, String palavraChave) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
@@ -557,6 +585,21 @@ public class Algoritmos {
 	}
 	
 	//***
+	/**
+	 * Metodo responsavel por executar as recomendacoes genericas para um
+	 * usuario, e filtrar as buscas por palavra-chave. As recomendacoes genericas baseiam-se na popularidade
+	 * dos restaurantes, ou seja, quanto mais popular um restaurante eh, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes genericas sao quase
+	 * sempre iguais para todos os usuarios, elas mudam apenas quando a
+	 * nota escondida influencia nas recomendacoes, e quando a palavra-chave a ser filtrada difere.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param palavraChave
+	 * 			palavra-chave a ser filtrada.
+	 * @return
+	 * 			um list com os estabelecimentos recomendados.
+	 */
 	public List<Estabelecimento> executeGenericRecomendationsFilter(int numRecomendacoes, String palavraChave) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
@@ -579,6 +622,21 @@ public class Algoritmos {
 	
 	
 	//****
+	/**
+	 *Metodo responsavel por executar as recomendacoes genericas para um
+	 * usuario, e filtrar as buscas por tipo de estabelecimento. As recomendacoes genericas baseiam-se na popularidade
+	 * dos restaurantes, ou seja, quanto mais popular um restaurante eh, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes genericas sao quase
+	 * sempre iguais para todos os usuarios, elas mudam apenas quando a
+	 * nota escondida influencia nas recomendacoes, e quando o tipo de estabelecimento a ser filtrado difere.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param type
+	 * 			tipo de estabelecimento, o qual deseja filtrar.
+	 * @return
+	 * 			um list dos estabelecimentos recomendados.
+	 */
 	public List<Estabelecimento> executeGenericRecomendationsType(int numRecomendacoes, String type) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
@@ -597,7 +655,24 @@ public class Algoritmos {
 	}
 	
 	
-	//*** 
+	//***
+	/**
+	 * Metodo responsavel por executar as recomendacoes personalizadas para um
+	 * usuario, e filtrar as buscas por tipo de estabelecimento. As recomendacoes personalizdas baseiam-se na similaridade de gostos
+	 * de restaurantes entre dois usuarios, ou seja, quanto mais parecidas suas opinioes sobre um restaurante, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes personalizadas sao
+	 * sempre distintas para os usuarios, pois a
+	 * nota influencia nas recomendacoes, e os filtro por tipo tambem.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param user
+	 * 			Usuario que deseja as recomendacoes.
+	 * @param type
+	 * 			tipo de estabelecimento a ser filtrado.
+	 * @return
+	 * 			um list com os estabelecimentos recomendados filtrados por tipo de estabelecimento.
+	 */
 	public List<Estabelecimento> executeScalarProductRecomendationsType(int numRecomendacoes, Usuario user, String type) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
@@ -615,6 +690,21 @@ public class Algoritmos {
 	}
 	
 	//********
+	/**
+	 *Metodo responsavel por executar as recomendacoes genericas para um
+	 * usuario, e filtrar as buscas por localizacao. As recomendacoes genericas baseiam-se na popularidade
+	 * dos restaurantes, ou seja, quanto mais popular um restaurante eh, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes genericas sao quase
+	 * sempre iguais para todos os usuarios, elas mudam apenas quando a
+	 * nota escondida influencia nas recomendacoes, e quando o tipo de localizacao do estabelecimento difere.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param localizacao
+	 * 			localizacao do estabelecimento, o qual deseja filtrar.
+	 * @return
+	 * 			um list dos estabelecimentos recomendados.
+	 */
 	public List<Estabelecimento> executeGenericRecomendationsLocation(int numRecomendacoes, String localizacao){
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size()).get(0);
@@ -632,6 +722,23 @@ public class Algoritmos {
 	}
 	
 	//*******
+	/**
+	 * Metodo responsavel por executar as recomendacoes personalizadas para um
+	 * usuario, e filtrar as buscas por localizacao do estabelecimento. As recomendacoes personalizdas baseiam-se na similaridade de gostos
+	 * de restaurantes entre dois usuarios, ou seja, quanto mais parecidas suas opinioes sobre um restaurante, mais provavel eh que o
+	 * usuario em questao goste desse restaurante. As recomendacoes personalizadas sao
+	 * sempre distintas para os usuarios, pois a
+	 * nota influencia nas recomendacoes, e os filtro por localizacao tambem.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param user
+	 * 			Usuario que deseja as recomendacoes.
+	 * @param localizacao
+	 * 			localizacao do estabelecimento a ser filtrado.
+	 * @return
+	 * 			um list com os estabelecimentos recomendados filtrados de acordo com sua localizacao.
+	 */
 	public List<Estabelecimento> executeScalarProductRecomendationsLocation(int numRecomendacoes, Usuario user, String localizacao){
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
 		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
@@ -648,7 +755,22 @@ public class Algoritmos {
 		return estabelecimentosRecomendados;
 	}
 	
+	
+	//***********MENINOS NAO ENTENDI BEM O Q ESSA FUNCAO FAZ, DEEM UMA OLHADA SE TA CERTO
 	//Metodo que remove as recomendacoes selecionadas
+	/**
+	 * Metodo que tem a funcao de remover os estabelecimentos selecionados em uma lista de estabelecimentos recomendados 
+	 * ao usuario. Apos receber a recomendacao o usuario podera pedir novas recomendacoes, entao se faz necessario limpar
+	 * a lista de recomendacoes anteriores.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes.
+	 * @param listaRemovidos
+	 * 			lista dos intens a serem removidos.
+	 * @return	
+	 * 			um list de lists
+	 */
+	
 	public List<List<Estabelecimento>> executeGenericRecomendationsRemove(int numRecomendacoes,String listaRemovidos) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();

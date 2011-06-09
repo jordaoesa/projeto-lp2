@@ -33,6 +33,10 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
+ * Classe que cria e executa a interface grafica do menu ver similares para
+ * interacao com o usuario do sistema. Esse menu disponibiliza ao usuario os 10
+ * usuarios que possuem opinioes mais similares as suas, e lhe recomenda cinco
+ * estabelecimentos por usuario similar.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -65,6 +69,11 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 	
 	private static Algoritmos algoritmos;
 	
+	
+	/**
+	 * Metodo que cria e inicia a interface grafica do menu ver similares, 
+	 *  para interacao com o usuario.
+	 */
 	public MenuVerSimilares(){
 
 		setSize(800,600);
@@ -174,7 +183,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		selectAlgorithm = new ButtonGroup();
 		selectScalarProductAlgorithm = new JRadioButton("Produto Escalar");
 		selectCosineAlgorithm = new JRadioButton("Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
@@ -213,6 +222,10 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		botaoVoltar.setToolTipText("Clique para volta ao menu anterior");
 	}
 
+	/**
+	 * Metodo que tem a funcao de verificar e capturar 
+	 * eventos do usuario com a interface grafica.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == listaSuspensaDeUsuarios){
