@@ -1,7 +1,6 @@
 package lp2.algoritmos;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -380,9 +379,7 @@ public class Algoritmos {
 			comparacaoPorUsuario.add(user.getNome());
 			comparacaoPorUsuario.add(String.valueOf(getOpinioesPositivasUser(user)));
 			comparacaoPorUsuario.add(String.valueOf(getOpinioesCadastradasUser(user)));
-//			comparacaoPorUsuario.add(String.valueOf(acertosGenericos));
-//			comparacaoPorUsuario.add(String.valueOf(acertosProdutoEscalar));
-//			comparacaoPorUsuario.add(String.valueOf(acertosCosseno));
+			
 			if(getOpinioesPositivasUser(user) > 0){
 				comparacaoPorUsuario.add(nfDouble.format((acertosGenericos / (double)getOpinioesPositivasUser(user))*100) + "%");
 				comparacaoPorUsuario.add(nfDouble.format((acertosProdutoEscalar / (double)getOpinioesPositivasUser(user))*100) + "%");
@@ -405,9 +402,7 @@ public class Algoritmos {
 		}
 		comparacaoFinal.add(String.valueOf(getOpinioesPositivasSistema()));
 		comparacaoFinal.add(String.valueOf(getOpinioesCadastradasSistema()));
-//		comparacaoFinal.add(String.valueOf(totalAcertosGenericos));
-//		comparacaoFinal.add(String.valueOf(totalAcertosProdutoEscalar));
-//		comparacaoFinal.add(String.valueOf(totalAcertosCosseno));
+
 		if(getOpinioesPositivasSistema() > 0){
 			comparacaoFinal.add(nfDouble.format((totalAcertosGenericos / (double) getOpinioesPositivasSistema())*100) + "%");
 			comparacaoFinal.add(nfDouble.format((totalAcertosProdutoEscalar / (double) getOpinioesPositivasSistema())*100) + "%");

@@ -39,14 +39,13 @@ public class AlgoritmosTest {
 	}
 
 	@Test
-	public void testExecuteScalarProductRecomendations() {
+	public void testExecuteAlgoritmoProduto() {
+		//Produto Escalar
 		List<Estabelecimento> estab = null;
-		//estab = algoritmo.executeScalarProductRecomendations(10, user1);
 		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
 		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
-		// nao pode ser 39. nao ha estabelecimentos suficientes nos usuarios semelhantes a este usuario e que tenham nota superior a 0.
 		Assert.assertFalse(estab.size() == 39);
 		
 		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
@@ -56,6 +55,111 @@ public class AlgoritmosTest {
 			user1.getOpinioes().set(i, 0);
 		}
 		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+	}
+	
+	@Test
+	public void testExecuteAlgoritmoCosseno() {
+		//Cosseno
+		List<Estabelecimento> estab = null;
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.COSSENO, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.COSSENO, user1).get(0);
+		Assert.assertFalse(estab.size() == 39);
+		
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.COSSENO, user1).get(0);
+		Assert.assertFalse(estab.size() == 100);
+		
+		for(int i=0; i<user1.getOpinioes().size(); i++){
+			user1.getOpinioes().set(i, 0);
+		}
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.COSSENO, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+	}
+	
+	@Test
+	public void testExecuteAlgoritmoCossenoIntersecao() {
+		//Cosseno Intersecao
+		List<Estabelecimento> estab = null;
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user1).get(0);
+		Assert.assertFalse(estab.size() == 39);
+		
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user1).get(0);
+		Assert.assertFalse(estab.size() == 100);
+		
+		for(int i=0; i<user1.getOpinioes().size(); i++){
+			user1.getOpinioes().set(i, 0);
+		}
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+	}
+	
+	@Test
+	public void testExecuteAlgoritmoSimilaridadeDice() {
+		//Similaridade Dice
+		List<Estabelecimento> estab = null;
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user1).get(0);
+		Assert.assertFalse(estab.size() == 39);
+		
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user1).get(0);
+		Assert.assertFalse(estab.size() == 100);
+		
+		for(int i=0; i<user1.getOpinioes().size(); i++){
+			user1.getOpinioes().set(i, 0);
+		}
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+	}
+	
+	@Test
+	public void testExecuteAlgoritmoSimilaridadeJaccard() {
+		//Similaridade Jaccard
+		List<Estabelecimento> estab = null;
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user1).get(0);
+		Assert.assertFalse(estab.size() == 39);
+		
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user1).get(0);
+		Assert.assertFalse(estab.size() == 100);
+		
+		for(int i=0; i<user1.getOpinioes().size(); i++){
+			user1.getOpinioes().set(i, 0);
+		}
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+	}
+	
+	@Test
+	public void testExecuteAlgoritmoSimilaridadeOverlap() {
+		//Similaridade Overlap
+		List<Estabelecimento> estab = null;
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user1).get(0);
+		Assert.assertTrue(estab.size() == 10);
+		
+		estab = algoritmo.executeAlgoritmo(39, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user1).get(0);
+		Assert.assertFalse(estab.size() == 39);
+		
+		estab = algoritmo.executeAlgoritmo(100, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user1).get(0);
+		Assert.assertFalse(estab.size() == 100);
+		
+		for(int i=0; i<user1.getOpinioes().size(); i++){
+			user1.getOpinioes().set(i, 0);
+		}
+		estab = algoritmo.executeAlgoritmo(10, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, user1).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
 	}

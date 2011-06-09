@@ -19,7 +19,7 @@ public class SimilaridadeDice extends Algoritmo{
 		Double resultado = 0.0;
 		
 		for(int i=0; i<super.getUser1().getOpinioes().size(); i++){
-			if(super.getUser1().getOpinioes().get(i) == super.getUser2().getOpinioes().get(i)){
+			if(super.getUser1().getOpinioes().get(i).equals(super.getUser2().getOpinioes().get(i))){
 				numerador++;
 			}
 		}
