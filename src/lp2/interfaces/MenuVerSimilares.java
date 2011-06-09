@@ -174,7 +174,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		selectAlgorithm = new ButtonGroup();
 		selectScalarProductAlgorithm = new JRadioButton("Produto Escalar");
 		selectCosineAlgorithm = new JRadioButton("Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");

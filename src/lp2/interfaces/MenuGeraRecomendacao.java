@@ -137,7 +137,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		//seta propriedades do internalFrame
 		frameRecomendacoes.setLayout(new AbsoluteLayout());
 		frameRecomendacoes.setClosable(true);
-		frameRecomendacoes.setTitle("Recomendacoes");
+		frameRecomendacoes.setTitle("Recomendações");
 		//frameRecomendacoes.setLocation(10, 10);
 		//add RadioButton no buttonGroup
 		selectAlgorithm.add(selectPopularityAlgorithm);
@@ -246,10 +246,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		//definindo um modelo para a tabela, para que ela nao inicie vazia
 		tabela.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 
 		tabelaNotRecomendacoes.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 
 		addEventosComponentes();
 
@@ -269,9 +269,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 
 		//##########
-		tipoDeOrdenacao = new String[]{"","Ordem Alfabetica","Tipo de Refeicao"};
+		tipoDeOrdenacao = new String[]{"","Ordem Alfabetica","Tipo de Refeição"};
 		String[] tipoDeRefeicoes = {"","A la carte", "Prato feito", "Self-service"};
-		selecioneOrdenacao = new JLabel("Tipo de Ordenacao:");
+		selecioneOrdenacao = new JLabel("Tipo de Ordenação:");
 		botaoRemoveRecomendacao = new JButton("Remover");
 
 		//ComboBox ######
@@ -281,7 +281,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		//Labels
 		usuario = new JLabel("Escolha usuario:");
 		algoritmoEscolhido = new JLabel("Escolha algoritmo:");
-		numRecomendacoes = new JLabel("Qual o numero de recomendacoes?");
+		numRecomendacoes = new JLabel("Qual o numero de recomendações?");
 		iconNotificacaoRecomencadao = new JLabel();
 		labelBusca = new JLabel("Busca: ");
 		labelRecomend = new JLabel("Locais onde ir");
@@ -293,17 +293,17 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		//Button
 		//###
-		enviaEmail = new JButton("Receber recomendacoes no email");
+		enviaEmail = new JButton("Receber recomendações no email");
 		selectAlgorithm = new ButtonGroup();		
 		selectScalarProductAlgorithm = new JRadioButton("Algoritmo Personalizado");
 		selectPopularityAlgorithm = new JRadioButton("Algoritmo Popularidade");
 		selectCosineAlgorithm = new JRadioButton("Algoritmo Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
 		botaoVoltar = new JButton("Voltar");
-		botaoGerarRecomendacao = new JButton("Gerar recomendacao");
+		botaoGerarRecomendacao = new JButton("Gerar recomendação");
 
 		//Carrega as imagens
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
@@ -596,7 +596,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 			//seta a tabela para nao ser editada nenhuma celula.
 			table.setModel(new DefaultTableModel(obj,
-					new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+					new String[] { "Restaurante", "Localizacação", "Tipo de Comida" })
 			{
 				public boolean isCellEditable(int rowIndex, int mColIndex){  
 					return false;  
@@ -620,7 +620,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 		//seta a tabela para nao ser editada nenhuma celula.
 		table.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
 				return false;  
@@ -642,7 +642,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 
 		table.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
 				return false;  
@@ -930,7 +930,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		listaSuspensaDeUsuarios.setToolTipText("Nome de todos os usuarios.");
 		botaoVoltar.setToolTipText("Clique para voltar ao menu anterior.");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao.");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendação.");
 
 		//****
 		listaSuspensaDeFiltros.setToolTipText("Tipos de filtros de pesquisa.");
