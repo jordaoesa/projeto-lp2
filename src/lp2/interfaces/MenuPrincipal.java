@@ -154,7 +154,7 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 			//evento do botao Comparar Algoritmos
 			if(event.getSource() == botaoComparaAlgoritmos){
 				MenuInicial.panelCorpo.removeAll();
-				MenuInicial.panelCorpo.add(new ComparaAlgoritmos());
+				MenuInicial.panelCorpo.add(new MenuComparaAlgoritmos());
 				MenuInicial.panelCorpo.updateUI();
 			}
 			if(event.getSource() == botaoMaisSimilares){
