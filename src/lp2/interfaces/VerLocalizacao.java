@@ -21,6 +21,17 @@ import lp2.lerDados.ReadData;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
+
+
+/**
+ *  Classe responsavel por mostrar a localizacao de um determinado
+ *  estabeleimento para o usuario atraves de um mapa.
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 @SuppressWarnings("serial")
 public class VerLocalizacao extends JPanel implements ActionListener{
 
@@ -59,6 +70,13 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 	private JRadioButton tipoVisaoNormal;
 	private ButtonGroup selecionaVisao;
 
+	
+	/**
+	 * Metodo que cria e inicia a uma janela que mostra ao usuario 
+	 * a localiacao do estabelecimento em questao, e a distancia do
+	 * mesmo para sua casa.
+	 */
+	 
 	public VerLocalizacao(){
 
 		setSize(800,600);
@@ -71,10 +89,10 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 		insiraLocal = new JLabel("Insira o local");
 		ondeDesejaIr = new JLabel("Onde deseja ir:");
 		endereco = new JTextField();
-		tipoVisaoSatelite = new JRadioButton("Visão Satelite");
-		tipoVisaoHibrida = new JRadioButton("Visão Hibrida");
-		tipoVisaoTerreno = new JRadioButton("Visão Terrena");
-		tipoVisaoNormal = new JRadioButton("Visão Normal");
+		tipoVisaoSatelite = new JRadioButton("Visao Satelite");
+		tipoVisaoHibrida = new JRadioButton("Visao Hibrida");
+		tipoVisaoTerreno = new JRadioButton("Visao Terrena");
+		tipoVisaoNormal = new JRadioButton("Visao Normal");
 		selecionaVisao = new ButtonGroup();
 		selecionaVisao.add(tipoVisaoHibrida);
 		selecionaVisao.add(tipoVisaoTerreno);
@@ -164,7 +182,7 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 			e.printStackTrace();
 			System.out.println("mal forma url"); 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Nossa! Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(null, "Nossa!Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
 		}
 		return null;
 
@@ -244,9 +262,9 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 					Thread th = new Thread(new CarregaImagem(urlFinal));
 					th.start();
 				}else
-					JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
 			}else{
-				JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
@@ -280,7 +298,7 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 			if(enderecoDestino.equals("Campus da UFCG")){
 				enderecoDestino = "Rua Aprígio Veloso";
 			}else if(enderecoDestino.equals("Shopping Boulevard")){
-				enderecoDestino = "Av. Prof Severino Bezerra Cabral";
+				enderecoDestino = "Av. Pref Severino Bezerra Cabral";
 			}
 		}
 		if(event.getSource() == botaoVoltar){
@@ -289,52 +307,4 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 			MenuInicial.panelCorpo.updateUI();
 		}
 	}
-//	private void criaFrame(final String URL){
-//		
-//		BufferedImage imgCarregada = null;
-//		final JFrame frame = new JFrame("Bom Conselho no Google Mapa");
-//		JLabel iconMaisZoom = new JLabel(new ImageIcon("./src/lp2/imagens/maisZoom.png"));
-//		JLabel iconMenosZoom = new JLabel(new ImageIcon("./src/lp2/imagens/menosZoom.png"));
-//		JLabel imgFundo = null;
-//		final JSlider controlaZoom = new JSlider(SwingConstants.VERTICAL,0,21,14);
-//		controlaZoom.setMajorTickSpacing(1);
-//		frame.setSize(605,512);
-//		frame.setResizable(false);
-//		frame.setLayout(new AbsoluteLayout());
-//		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//		frame.getContentPane().add(iconMaisZoom, new AbsoluteConstraints(10, 10,-1, 30));
-//		frame.getContentPane().add(iconMenosZoom, new AbsoluteConstraints(10, 160, -1, 30));
-//		frame.getContentPane().add(controlaZoom, new AbsoluteConstraints(14,34,20,130));
-//		try{
-//			imgCarregada = getImage(URL);
-//		}catch(NullPointerException ex){
-//			ex.getStackTrace();
-//		}
-//		
-//		imgFundo = new JLabel(new ImageIcon(imgCarregada));
-//		frame.getContentPane().add(imgFundo, new AbsoluteConstraints(-1, -2, -1, -1));
-//		frame.setVisible(true);
-//		
-//		controlaZoom.addChangeListener(new ChangeListener() {
-//			@Override
-//			public void stateChanged(ChangeEvent arg0) {
-//				
-//			}
-//		});
-//		
-//		
-//	}
-//	private BufferedImage atualizaMapa(String URL,int zoom){
-//		BufferedImage imgCarregada;
-//		String novaURL;
-//		try{
-//			novaURL = aumentaZoom(URL, zoom);
-//			imgCarregada = getImage(novaURL);
-//			return imgCarregada;
-//		}catch(NullPointerException ex){
-//			ex.getStackTrace();
-//		}
-//		return null;
-//	}
-
 }

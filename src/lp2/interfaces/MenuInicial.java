@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * Classe que cria e executa a interface do menu inicial do sistema.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -33,6 +34,12 @@ public class MenuInicial extends JFrame implements ActionListener{
 	protected static JPanel panelCorpo = new JPanel();
 	private Container container = getContentPane();
 	
+	
+	
+	/**
+	 * Metodo que cria e inicia a interface grafica do menu inicial, para
+	 * interacao com o usuario.
+	 */
 	public MenuInicial(){
 		super("Bom Conselho");
 		
@@ -104,9 +111,15 @@ public class MenuInicial extends JFrame implements ActionListener{
 			menus[2].add(menuItensSobre[i]);
 		}
 	}
+	
+	
 	//metodo que altera o tema da GUI
+	/**
+	 * Metodo que altera o tema da interface grafica com o usuario.
+	 */
+	
 	public void alteraTema(){ 
-		// método responsável para a mudança no tema do programa
+		
 		if (type1 == true){
 			looks = UIManager.getInstalledLookAndFeels();
 			try{
@@ -131,6 +144,11 @@ public class MenuInicial extends JFrame implements ActionListener{
 	}
 
 	//Metodo que trata todos os eventos
+	
+	/**
+	 * Metodo responsavel por verificar e capturar eventos do
+	 * usuario com a interface.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == menuItensTemas[0]){
@@ -152,10 +170,23 @@ public class MenuInicial extends JFrame implements ActionListener{
 		}
 	}
 	
+	/**
+	 * Modifica o caminho do arquivo com os dados sobre os estabelecimetos
+	 * para leitura e utilizacao no sistema..
+	 * @param path
+	 * 			novo caminho do arquivo.
+	 */
 	public static void setPathEstabelecimentos(String path){
 		pathEstabelecimentos = path;
 	}
 	
+	
+	/**
+	 * Modifica o caminho do arquivo com os dados sobre as opinioes 
+	 * dos usuarios para leitura e utilizacao no sistema.
+	 * @param path
+	 * 			novo caminho do arquivo.
+	 */
 	public static void setPathOpinioes(String path){
 		pathOpinioes = path;
 	}

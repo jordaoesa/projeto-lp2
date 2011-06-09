@@ -17,6 +17,8 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 import lp2.lerDados.ReadData;
 
 /**
+ * Classe que cria e executa a interface grafica do menu principal para
+ * interacao com o usuario do sistema.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -38,6 +40,11 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 	private JLabel imagemFundo;
 	private ImageIcon image;
 
+	
+	/**
+	 *  Metodo que cria e inicia a interface grafica do menu principal, 
+	 *  para interacao com o usuario.
+	 */
 	public MenuPrincipal(){
 		setSize(800,600);
 		setVisible(true);
@@ -59,9 +66,9 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		
 		//Botoes
 		botaoCadastrar = new JButton("Novo Cadastro");
-		botaoVerTodosLugares = new JButton("Ver todos");
-		botaoPopularidade = new JButton("Ver popularidade");
-		botaoGerarRecomendacao = new JButton("Gerar Recomendações");
+		botaoVerTodosLugares = new JButton("Ver todos");	
+		botaoPopularidade = new JButton("Ver popularidade");		
+		botaoGerarRecomendacao = new JButton("Gerar Recomendacoes");		
 		botaoSair = new JButton("Sair");		
 		loadFileOpinioes = new JButton("Novas Opinioes");			
 		loadFileEstabelecimentos = new JButton("Novos Estabelecimentos");
@@ -104,14 +111,20 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		
 		//Texto que quando mouse fica sobre cada componente
 		botaoCadastrar.setToolTipText("Clique para cadastrar um novo usuario.");
-		botaoVerTodosLugares.setToolTipText("Clique para ver opiniões de todos os usuarios.");
+		botaoVerTodosLugares.setToolTipText("Clique para ver opinioes de todos os usuarios.");
 		botaoPopularidade.setToolTipText("Clique para ver popularidade dos estabelecimentos");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar recomendações para um usuario cadastrado.");
-		botaoComparaAlgoritmos.setToolTipText("Clique para comparar os algoritmos de recomendação.");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar recomendacoes para um usuario cadastrado.");
+		botaoComparaAlgoritmos.setToolTipText("Clique para comparar os algoritmos de recomendacao.");
 		botaoSair.setToolTipText("Clique para sair.");
-		loadFileOpinioes.setToolTipText("Clique para escolher um arquivo de opiniões sobre um estabalecimento.");
-		loadFileEstabelecimentos.setToolTipText("Clique para escolher um arquivo com informações de estabelecimentos.");
+		loadFileOpinioes.setToolTipText("Clique para escolher um arquivo de opinioes sobre um estabalecimento.");
+		loadFileEstabelecimentos.setToolTipText("Clique para escolher um arquivo com informacoes de estabelecimentos.");
 	}
+	
+	
+/**
+ * Metodo responsavel por verificar e capturar eventos do usuario
+ * com a inteface grafica.
+ */
 		@Override
 		public void actionPerformed(ActionEvent event) {
 			//evento do botao Cadastrar

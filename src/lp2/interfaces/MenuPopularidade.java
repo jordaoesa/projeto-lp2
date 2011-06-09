@@ -22,6 +22,9 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 
 /**
+ * Classe que cria e executa a interface do menu popularidade do sistema.
+ * Que enumera os estabelecimentos de acordo com sua popularidade entre
+ * todos os usuarios do sistema.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -37,6 +40,12 @@ public class MenuPopularidade extends JPanel implements ActionListener{
 	private JTable tabelaEstabelecimento;
 	private JLabel popularidade;
 
+	
+	/**
+	 * Metodo que cria e inicia a interface grafica do menu de 
+	 * estabelecimentos populares, para
+	 * interacao com o usuario.
+	 */
 	public MenuPopularidade(){
 
 		setSize(800,600);
@@ -94,13 +103,19 @@ public class MenuPopularidade extends JPanel implements ActionListener{
 		}
 		
 		tabelaEstabelecimento.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
 		
 		//seta o tamanho das colunas
 		tabelaEstabelecimento.getColumnModel().getColumn(2).setPreferredWidth(20);	
 		tabelaEstabelecimento.getColumnModel().getColumn(1).setPreferredWidth(190);
 		tabelaEstabelecimento.getColumnModel().getColumn(0).setPreferredWidth(130);
 	}
+	
+	
+	/**
+	 * Metodo responsavel por verificar e capturar eventos do usuario
+	 * com a interface grafica.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == botaoVoltar){

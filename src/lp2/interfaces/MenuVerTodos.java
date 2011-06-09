@@ -16,6 +16,11 @@ import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
 
 /**
+ *  Classe que cria e executa a interface grafica do menu ver todos para
+ * interacao com o usuario do sistema. Essa classe disponibiliza para 
+ * o usuario uma lista de todos os estabelecimentos cadastrados
+ * no sistema, dando a opcao de se escolher um e ter mais informacoes 
+ * sobre o mesmo.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -35,6 +40,12 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 	private JComboBox listaSuspensaDeEstabelecimentos;
 	private String estabelecimentosCadastrados[];
 
+	
+	/**
+	 * Metodo que cria e inicia a interface grafica do menu ver todos 
+	 * os estabelecimentos, e ter outras informacoes sobre o mesmo 
+	 *  para interacao com o usuario.
+	 */
 	public MenuVerTodos(){
 
 		setSize(800,600);
@@ -68,7 +79,7 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 		
 		//Labels
 		selecioneEstabelecimento = new JLabel("Selecione o Estabelecimento:");
-		detalhamentoDeNotas = new JLabel("Quantidade de votos por tipo de avaliação");
+		detalhamentoDeNotas = new JLabel("Quantidade de votos por tipo de avaliacao");
 		
 		//Botoes
 		botaoVoltar = new JButton("Voltar");	
@@ -88,7 +99,7 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 				new String[] { "Usuario", "Nota" }));
 
 		tabelaResultado.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Avaliação", "Quantidade de Votos" }));
+				new String[] { "Avaliacao", "Quantidade de Votos" }));
 	}
 
 	private void iniciaComboBoxEstabelecimentos() {
@@ -109,6 +120,11 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 	}
 
 	//Metodo que trata todos os eventos
+	
+	/**
+	 * Metodo responsavel por verificar e capturar eventos do usuario
+	 * com a interface grafica.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == listaSuspensaDeEstabelecimentos){
@@ -140,8 +156,8 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 
 	private void preencheTabelaResultado() {
 		Object table[][] = new Object[11][2]; 
-		String avaliacao[] = {"5: Incrível. sensacional. impressionante","4: Muito bom", "3: Bastante bom", "2: É bonzinho",
-				"1: Não é ruim", "0: Não conheço","-1: Acho um pouco ruim", "-2: Acho ruim","-3: Acho bastante ruim", 
+		String avaliacao[] = {"5: Incrivel. sensacional. impressionante","4: Muito bom", "3: Bastante bom", "2: Eh bonzinho",
+				"1: Nao eh ruim", "0: Nao conheco","-1: Acho um pouco ruim", "-2: Acho ruim","-3: Acho bastante ruim", 
 				"-4: Acho muito ruim","-5: Detesto" };
 
 		int notas[] = new int[11];
@@ -179,7 +195,7 @@ public class MenuVerTodos extends JPanel implements ActionListener{
 		}
 
 		tabelaResultado.setModel(new DefaultTableModel(table,
-				new String[] { "Avaliação", "Quantidade de Votos" }));
+				new String[] { "Avaliacao", "Quantidade de Votos" }));
 	}
 
 }

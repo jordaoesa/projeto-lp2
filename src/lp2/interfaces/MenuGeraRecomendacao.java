@@ -42,6 +42,8 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
+ * Classe responsavel por criar uma interface grafica e gerar recomendacoes
+ * para os usuarios do sistema.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -124,6 +126,11 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private JLabel labelRecomend;
 	private JLabel labelNotRecomend;
 
+	
+	/**
+	 * Metodo responsavel por inicializar a interface grafica 
+	 * para o usuario interagir com o sistema e receber recomendacoes.
+	 */
 	public MenuGeraRecomendacao(){
 
 		setSize(800,600);
@@ -137,7 +144,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		//seta propriedades do internalFrame
 		frameRecomendacoes.setLayout(new AbsoluteLayout());
 		frameRecomendacoes.setClosable(true);
-		frameRecomendacoes.setTitle("Recomendações");
+		frameRecomendacoes.setTitle("Recomendacoes");
 		//frameRecomendacoes.setLocation(10, 10);
 		//add RadioButton no buttonGroup
 		selectAlgorithm.add(selectPopularityAlgorithm);
@@ -246,10 +253,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		//definindo um modelo para a tabela, para que ela nao inicie vazia
 		tabela.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
 
 		tabelaNotRecomendacoes.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
 
 		addEventosComponentes();
 
@@ -269,9 +276,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 
 		//##########
-		tipoDeOrdenacao = new String[]{"","Ordem Alfabetica","Tipo de Refeição"};
+		tipoDeOrdenacao = new String[]{"","Ordem Alfabetica","Tipo de Refeicao"};
 		String[] tipoDeRefeicoes = {"","A la carte", "Prato feito", "Self-service"};
-		selecioneOrdenacao = new JLabel("Tipo de Ordenação:");
+		selecioneOrdenacao = new JLabel("Tipo de Ordenacao:");
 		botaoRemoveRecomendacao = new JButton("Remover");
 
 		//ComboBox ######
@@ -281,7 +288,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		//Labels
 		usuario = new JLabel("Escolha usuario:");
 		algoritmoEscolhido = new JLabel("Escolha algoritmo:");
-		numRecomendacoes = new JLabel("Qual o numero de recomendações?");
+		numRecomendacoes = new JLabel("Qual o numero de recomendacoes?");
 		iconNotificacaoRecomencadao = new JLabel();
 		labelBusca = new JLabel("Busca: ");
 		labelRecomend = new JLabel("Locais onde ir");
@@ -293,17 +300,17 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		//Button
 		//###
-		enviaEmail = new JButton("Receber recomendações no email");
+		enviaEmail = new JButton("Receber recomendacoes no email");
 		selectAlgorithm = new ButtonGroup();		
 		selectScalarProductAlgorithm = new JRadioButton("Algoritmo Personalizado");
 		selectPopularityAlgorithm = new JRadioButton("Algoritmo Popularidade");
 		selectCosineAlgorithm = new JRadioButton("Algoritmo Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
 		botaoVoltar = new JButton("Voltar");
-		botaoGerarRecomendacao = new JButton("Gerar recomendação");
+		botaoGerarRecomendacao = new JButton("Gerar recomendacao");
 
 		//Carrega as imagens
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
@@ -596,7 +603,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 			//seta a tabela para nao ser editada nenhuma celula.
 			table.setModel(new DefaultTableModel(obj,
-					new String[] { "Restaurante", "Localizacação", "Tipo de Comida" })
+					new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
 			{
 				public boolean isCellEditable(int rowIndex, int mColIndex){  
 					return false;  
@@ -620,7 +627,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 		//seta a tabela para nao ser editada nenhuma celula.
 		table.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localização", "Tipo de Comida" })
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
 				return false;  
@@ -642,7 +649,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 
 		table.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localização", "Tipo de Comida" })
+				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
 				return false;  
@@ -658,6 +665,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 
 
+	/**
+	 *  Metodo responsavel por verificar e capturar eventos do usuario
+	 * com a interface grafica.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
 
@@ -776,7 +787,6 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 				tipoFiltroEstabelecimento = false;
 				palavraChave.setVisible(true);
 				campoTextoPalavraChave.setVisible(true);
-
 				tipo.setVisible(false);
 				listaSuspensaDeTiposEstabelecimentos.setVisible(false);
 				local.setVisible(false);
@@ -786,12 +796,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 				tipoFiltroEstabelecimento = true;
 				tipoFiltroPalavraChave = false;
-
 				palavraChave.setVisible(false);
 				campoTextoPalavraChave.setVisible(false);
 				local.setVisible(false);
 				campoTextoLocalizacao.setVisible(false);
-
 				tipo.setVisible(true);
 				listaSuspensaDeTiposEstabelecimentos.setVisible(true);
 
@@ -801,10 +809,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 				tipoFiltroLocalizacao = true;
 				tipoFiltroEstabelecimento = false;
 				tipoFiltroPalavraChave = false;
-
 				local.setVisible(true);
 				campoTextoLocalizacao.setVisible(true);
-
 				tipo.setVisible(false);
 				listaSuspensaDeTiposEstabelecimentos.setVisible(false);
 				palavraChave.setVisible(false);
@@ -840,6 +846,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						scalarProductRecomendationsFilter(numUsuario, recomendacao, campoTextoPalavraChave.getText());
+						
 					}else if(tipoFiltroEstabelecimento){
 						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
 							frameRecomendacoes.setVisible(true);
@@ -888,27 +895,140 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 					}
 				}
 				if(boolalgoritmoTipo3){
+					
+					
+					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
 
-					//MAIS UM ALGORITMOS PRA POR O FILTRO
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, numUsuario, recomendacao);
-					//cossineRecomendations(numUsuario, recomendacao);
+					}else if(tipoFiltroEstabelecimento){
+						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "A la carte");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Self-service");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Prato feito")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Prato feito");
+						}
+					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
+
+					}else{
+
+						//MAIS UM ALGORITMOS PRA POR O FILTRO
+						frameRecomendacoes.setVisible(true);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, numUsuario, recomendacao);
+						//cossineRecomendations(numUsuario, recomendacao);
+					}
+					
 				}
 				if(boolalgoritmoTipo4){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario, recomendacao);
+					
+					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
+
+					}else if(tipoFiltroEstabelecimento){
+						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "A la carte");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Self-service");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Prato feito")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Prato feito");
+						}
+					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
+
+					}else{
+						frameRecomendacoes.setVisible(true);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario, recomendacao);
+					}
 				}
 				if(boolalgoritmoTipo5){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario, recomendacao);
+					
+					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
+
+					}else if(tipoFiltroEstabelecimento){
+						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "A la carte");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Self-service");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Prato feito")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Prato feito");
+						}
+					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
+
+					}else{
+					
+						frameRecomendacoes.setVisible(true);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario, recomendacao);
+					}
 				}
 				if(boolalgoritmoTipo6){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario, recomendacao);
+					
+					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
+
+					}else if(tipoFiltroEstabelecimento){
+						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "A la carte");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Self-service");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Prato feito")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Prato feito");
+						}
+					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
+
+					}else{
+						frameRecomendacoes.setVisible(true);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario, recomendacao);
+					}
 				}
 				if(boolalgoritmoTipo7){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario, recomendacao);
+					if(tipoFiltroPalavraChave && !(campoTextoPalavraChave.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsFilter(recomendacao, campoTextoPalavraChave.getText());
+
+					}else if(tipoFiltroEstabelecimento){
+						if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("A la carte")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "A la carte");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Self-service")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Self-service");
+						}if(listaSuspensaDeTiposEstabelecimentos.getSelectedItem().toString().equals("Prato feito")){
+							frameRecomendacoes.setVisible(true);
+							popularityRecomendationsType(recomendacao, "Prato feito");
+						}
+					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+						frameRecomendacoes.setVisible(true);
+						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
+
+					}else{
+					
+						frameRecomendacoes.setVisible(true);
+						executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario, recomendacao);
+					}
 				}
 			}if(numUsuario == 0 || recomendacao <= 0 || !temAlgoritmoSelecionado()){
 				JOptionPane.showMessageDialog(null, "\"Usuario/Algoritmo/Numero de recomendacoes\" invalido.");
@@ -930,7 +1050,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		listaSuspensaDeUsuarios.setToolTipText("Nome de todos os usuarios.");
 		botaoVoltar.setToolTipText("Clique para voltar ao menu anterior.");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendação.");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao.");
 
 		//****
 		listaSuspensaDeFiltros.setToolTipText("Tipos de filtros de pesquisa.");
