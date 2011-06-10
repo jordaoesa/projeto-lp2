@@ -130,7 +130,7 @@ public class CarregaMaps implements Runnable {
 			e.printStackTrace();
 			System.out.println("mal forma url"); 
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Nossa!Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
+			JOptionPane.showMessageDialog(null, "Nossa! Ta sem internet", "Erro", JOptionPane.ERROR_MESSAGE);	
 		}
 		return null;
 

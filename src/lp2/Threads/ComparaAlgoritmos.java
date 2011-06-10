@@ -46,7 +46,7 @@ public class ComparaAlgoritmos implements Runnable{
 		}
 
 		this.tableUser.setModel(new DefaultTableModel(obj,
-				new String[] { "Nome", "Opinioes Positivas", "Opinioes Cadastradas", "Porcentagem Popularidade", "Porcentagem ProdutoEscalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+				new String[] { "Nome", "Opiniões Positivas", "Opiniões Cadastradas", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Interseção", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 		MenuComparaAlgoritmos.setTabelaPorUsuario();
 	}
 
@@ -56,7 +56,7 @@ public class ComparaAlgoritmos implements Runnable{
 			obj[0][i] = comparacoesFinais.get(i);
 		}
 		this.tableFinais.setModel(new DefaultTableModel(obj,
-				new String[] { "Opinioes Positivas do Sistema", "Opinioes Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Intersecao", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
+				new String[] { "Opiniões Positivas do Sistema", "Opiniões Cadastradas no Sistema", "Porcentagem Popularidade", "Porcentagem Produto Escalar", "Porcentagem Cosseno", "Porcentagem Cosseno Interseção", "Porcentagem Similaridade Dice", "Porcentagem Similaridade Jaccard", "Porcentagem Similaridade Overlap" }));
 		MenuComparaAlgoritmos.setTamanhoTabelaFinais();
 	}
 }

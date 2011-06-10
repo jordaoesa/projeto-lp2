@@ -103,7 +103,7 @@ public class MenuPopularidade extends JPanel implements ActionListener{
 		}
 		
 		tabelaEstabelecimento.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 		
 		//seta o tamanho das colunas
 		tabelaEstabelecimento.getColumnModel().getColumn(2).setPreferredWidth(20);	

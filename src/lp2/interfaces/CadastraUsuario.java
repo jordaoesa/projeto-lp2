@@ -70,9 +70,9 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private List<String> estabelecimentosAdicionados;
 	private int indiceEstabelecimento = -1;
 	private int indiceNotas = 0;
-	private String avaliacao[] = {"","0 : Nao conheco", "-5: Detesto", "-4: Acho muito ruim","-3: Acho bastante ruim",
-			"-2: Acho ruim", "-1: Acho um pouco ruim","1 : Nao e ruim","2 : E bonzinho","3 : Bastante bom",
-			"4 : Muito bom","5 : Incrivel. sensacional. impressionante"};
+	private String avaliacao[] = {"","0 : Não conheço", "-5: Detesto", "-4: Acho muito ruim","-3: Acho bastante ruim",
+			"-2: Acho ruim", "-1: Acho um pouco ruim","1 : Não é ruim","2 : É bonzinho","3 : Bastante bom",
+			"4 : Muito bom","5 : Incrível. sensacional. impressionante"};
 	private String estabelecimentosCadastrados[];
 	private JComboBox listaSuspensaDeEstabelecimentos;
 	private JTable tabelaResultado;
@@ -128,7 +128,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 		//propriedades do frame interno
 		frameRecomendacoes.setClosable(true);
-		frameRecomendacoes.setTitle("Recomendacoes");
+		frameRecomendacoes.setTitle("Recomendações");
 		frameRecomendacoes.setLocation(125, 200);
 
 		//propriedade da tabela
@@ -174,7 +174,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		selectScalarProductAlgorithm = new JRadioButton("Popularidade");
 		selectPopularityAlgorithm = new JRadioButton("Produto Escalar");
 		selectCosineAlgorithm = new JRadioButton("Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
@@ -185,7 +185,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		nomeUsuario = new JLabel("Nome:");
 		selecioneEstabelecimento = new JLabel("Selecione o Estabelecimento:");
 		notaEstabelecimento = new JLabel("Nota do estabelecimento:");	
-		numeroDeRecomendacoes = new JLabel("Numero de Recomendacoes:");
+		numeroDeRecomendacoes = new JLabel("Número de Recomendações:");
 		iconNotificacaoNome = new JLabel();
 		iconNotificacaoRecomencadao = new JLabel();
 		labelBusca = new JLabel("Busca: ");
@@ -205,7 +205,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 		//botoes
 		botaoVoltar = new JButton("Voltar");
-		botaoGerarRecomendacao = new JButton("Gerar recomendacao");
+		botaoGerarRecomendacao = new JButton("Gerar recomendação");
 		botaoRemover = new JButton("Remover");
 		botaoAdicionar = new JButton("Adicionar");
 		botaoGravarUsuario = new JButton("Gravar Usuario");
@@ -285,7 +285,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private void iniciaArrayNotasENomes(){
 		for(int j=0; j<ReadData.getEstabelecimentos().size(); j++){
 			nomesEstabelecimentos.add(ReadData.getEstabelecimentos().get(j).getNome());
-			notas.add("0 : Nao conheco");
+			notas.add("0 : Não conheço");
 		}
 	}
 
@@ -474,7 +474,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			obj[i][2] = recomendacoes.get(i).getTipoDeComida();
 		}
 		tabelaRecomendacoes.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 
 		//seta o tamanho das colunas
 		tabelaRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
@@ -497,7 +497,6 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	 * Metodo responsavel por verificar e capturar eventos na tela
 	 * da interface grafica.
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == botaoComoChegar){
@@ -545,9 +544,9 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			//evento do botao gerar recomendacoes quando as lista de estabelecimentos ou opinioes estao vazias.
 		}if(event.getSource() == botaoGerarRecomendacao && (ReadData.getEstabelecimentos().isEmpty() || ReadData.getUsuarios().isEmpty())){
 			if (temAlgoritmoSelecionado() && recomendacao > 0){
-				JOptionPane.showMessageDialog(null, "Arquivo de Opinioes/Estabelecimentos vazio(s). Impossivel gerar recomendacoes.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Arquivo de Opiniões/Estabelecimentos vazio(s). Impossivel gerar recomendações.", "Error", JOptionPane.ERROR_MESSAGE);
 			} else {
-				JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Erro em recomendações/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 
 
@@ -566,7 +565,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		listaSuspensaNotas.setToolTipText("Lista de notas para o estabelecimento");
 		botaoAdicionar.setToolTipText("Adiciona uma opiniao na tabela");
 		botaoVoltar.setToolTipText("Clique para voltar ao menu anterior");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendação");
 		botaoGravarUsuario.setToolTipText("Grava um usuario no arquivo");
 		botaoRemover.setToolTipText("Remove opiniao da tabela");
 		botaoComoChegar.setToolTipText("Clique para ver onde fica o lugar");
@@ -656,7 +655,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 				frameRecomendacoes.setVisible(true);
 				executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, usuario, recomendacao);
 			} else {
-				JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Erro em recomendações/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -666,6 +665,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	private void eventoBotaoGravarUsuario(){
 
 		frameRecomendacoes.setVisible(false);
@@ -688,7 +688,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			buffer = new BufferedWriter(new FileWriter(MenuInicial.pathOpinioes, true));
 			buffer.append(armazenaUser);
 			buffer.close();
-			JOptionPane.showMessageDialog(null, "Usuario gravado com sucesso", "Informacao", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Usuario gravado com sucesso", "Informação", JOptionPane.INFORMATION_MESSAGE);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Erro ao gravar Usuario", "Erro", JOptionPane.ERROR_MESSAGE);
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -732,7 +732,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			}else{
 				estabelecimentosAdicionados.remove(nomeEstabelecimento);
 				//para o estabelecimento removido dar nota 0
-				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), "0 : Nao conheco");
+				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), "0 : Não conheço");
 				//atualiza tabela
 				preencheTabelaNotas(estabelecimentosAdicionados, notas);
 			}
@@ -748,7 +748,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			if(!(estabelecimentosAdicionados.contains(nomeEstabelecimento))){
 				estabelecimentosAdicionados.add(nomeEstabelecimento);
 				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
-			}else if(JOptionPane.showConfirmDialog(null, "Estabelecimento ja cadastrado. Deseja atualizar a nota?", "*_*", JOptionPane.YES_NO_OPTION) == 0){
+			}else if(JOptionPane.showConfirmDialog(null, "Estabelecimento já cadastrado. Deseja atualizar a nota?", "*_*", JOptionPane.YES_NO_OPTION) == 0){
 				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
 			}
 			//atualiza tabela estabelecimento/nota
