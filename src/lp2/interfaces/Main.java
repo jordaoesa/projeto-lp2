@@ -62,14 +62,13 @@ public class Main {
 				while(progressBarra < 101){
 					barra.setValue(Math.min(progressBarra, 100));
 					try {
-						Thread.sleep(2);
+						Thread.sleep(200);
 					} catch (InterruptedException ignore) {
 					}
 					progressBarra += random.nextInt(30);
 				}
 				//fecha janela
 				janelaApresentacao.dispose();
-				
 				new MenuInicial();
 			}
 		}.start();
