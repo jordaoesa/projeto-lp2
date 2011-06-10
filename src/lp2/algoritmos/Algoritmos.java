@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import lp2.interfaces.MenuGeraRecomendacao;
 import lp2.lerDados.Estabelecimento;
 import lp2.lerDados.ReadData;
 import lp2.lerDados.Usuario;
@@ -150,6 +151,7 @@ public class Algoritmos {
 			
 			for(Estabelecimento estabelecimento : copiaEstabelecimentos){
 				if (!estabelecimentosRecomendados.contains(estabelecimento)
+						&& !MenuGeraRecomendacao.estabelecimentosRemovidos.contains(estabelecimento.getNome())
 						&& estabelecimentosRecomendados.size() < numRecomendacoes
 						&& estabelecimento.getNota() > 0
 						&& algoritmo.getUser1().getOpinioes().get(estabelecimentos.indexOf(estabelecimento)) == 0) {

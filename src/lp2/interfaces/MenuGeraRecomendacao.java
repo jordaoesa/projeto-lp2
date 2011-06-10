@@ -60,7 +60,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private JButton enviaEmail;
 	private String nomeEmail = "";
 	private String emailUsuario = "";
-	String estabelecimentosRemovidos = "";
+	public static String estabelecimentosRemovidos = "";
 	private String tipoDeOrdenacao[];
 	private JLabel selecioneOrdenacao;
 	private static String ordenacaoSelecionada;
@@ -1034,7 +1034,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 	private void algoritmSemOrdenadacao(){
 		tiposDeComida.setVisible(false);
-		estabelecimentosRemovidos = "";
+		//estabelecimentosRemovidos = "";
 		if(boolalgoritmoTipo1){
 			popularityRecomendations(recomendacao);
 		}if(boolalgoritmoTipo2){
