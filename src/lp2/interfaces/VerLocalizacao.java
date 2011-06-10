@@ -53,6 +53,8 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 	private JButton botaoVoltar;
 	private JLabel insiraLocal;
 	private JLabel ondeDesejaIr;
+	private JLabel marcadorUsuario;
+	private JLabel marcadorLugar;
 	private JTextField endereco;
 	private JComboBox listaEstabelecimetosCadastrados;
 	private String[] estabelecimentosCadastrados;
@@ -105,6 +107,8 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 		selecionaVisao = new ButtonGroup();
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
 		imageErrado = new ImageIcon("./src/lp2/imagens/Stop.png");
+		marcadorLugar = new JLabel(new ImageIcon("./src/lp2/imagens/marcador2.png"));
+		marcadorUsuario = new JLabel(new ImageIcon("./src/lp2/imagens/marcador1.png"));
 	}
 	private void addContainerComponentes(){
 		add(insiraLocal, new AbsoluteConstraints(50,50,123,23));
@@ -119,7 +123,8 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 		add(tipoVisaoSatelite,new AbsoluteConstraints(420,130,200,25));
 		add(tipoVisaoNormal,new AbsoluteConstraints(420,150,200,25));
 		add(iconNotificacao, new AbsoluteConstraints(253,72, 40, 40));
-		
+		add(marcadorUsuario, new AbsoluteConstraints(25,74));
+		add(marcadorLugar, new AbsoluteConstraints(25,144));
 	}
 
 	private void addEventoComponentes(){
@@ -164,20 +169,20 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 	public static String concatenaDestinos(String lugar1,String lugar2){
 		String fonte = lugar1.replace(" ", "+") + ",Campina+Grande,BR";
 		String destino = lugar2.replace(" ", "+") + ",Campina+Grande,BR";
-		String completa = fonte + "|";
+		String completa = fonte + "|&markers=size:m|label:B|color:blue|";
 		completa += destino;
 		return completa;
 	}
 	public static String setTipoImagem(String tipo, String fonteDestino){
 		String setURL = "";
 		if(tipo.equals("Satelite")){
-			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|color:red|" + fonteDestino + "&mobile=true&maptype=satellite&sensor=false";
+			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|label:A|color:red|" + fonteDestino + "&mobile=true&maptype=satellite&sensor=false";
 		}if(tipo.equals("Hibrida")){
-			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|color:red|" + fonteDestino + "&mobile=true&maptype=hybrid&sensor=false";
+			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|label:A|color:red|" + fonteDestino + "&mobile=true&maptype=hybrid&sensor=false";
 		}if(tipo.equals("Normal")){
-			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|color:red|" + fonteDestino + "&mobile=true&maptype=roadmap&sensor=false";
+			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|label:A|color:red|" + fonteDestino + "&mobile=true&maptype=roadmap&sensor=false";
 		}if(tipo.equals("Terreno")){
-			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|color:red|" + fonteDestino + "&mobile=true&maptype=terrain&sensor=false";
+			return setURL = "http://maps.google.com/maps/api/staticmap?&zoom=14&size=600x512&markers=size:m|label:A|color:red|" + fonteDestino + "&mobile=true&maptype=terrain&sensor=false";
 		}
 		return setURL;
 	}	
