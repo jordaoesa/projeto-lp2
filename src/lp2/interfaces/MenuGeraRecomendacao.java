@@ -125,8 +125,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private JScrollPane scrollNotRecomendacoes;
 	private JLabel labelRecomend;
 	private JLabel labelNotRecomend;
-	private JTableHeader header;
-
+	private JTableHeader headerTabelaBoasRecomendacoes;
+	private JTableHeader headerTabelaRuinsRecomendacoes;
 	/**
 	 * Metodo responsavel por inicializar a interface grafica 
 	 * para o usuario interagir com o sistema e receber recomendacoes.
@@ -144,10 +144,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		setPropriedadesInternalFrame();
 		addButtonGroup();
 
-		header = tabela.getTableHeader();
-		header.setUpdateTableInRealTime(true);
+		
 
-		eventoClickTitle();
+		eventClickTitleGoodRecomendations();
+		eventClickTitleBadRecomendations();
 		eventClickRowTable();
 
 		setVisibilidadeFiltros();
@@ -277,8 +277,72 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
 
 	}
-	private void eventoClickTitle(){
-		header.addMouseListener(new MouseAdapter() {
+	
+	private void eventClickTitleBadRecomendations(){
+		
+		headerTabelaRuinsRecomendacoes = tabelaNotRecomendacoes.getTableHeader();
+		headerTabelaRuinsRecomendacoes.setUpdateTableInRealTime(true);
+		
+		headerTabelaRuinsRecomendacoes.addMouseListener(new MouseAdapter() {
+		int contaclicked = 2;
+		public void mouseClicked(MouseEvent evt){
+			if(contaclicked % 2 == 0){
+				contaclicked ++;
+				//if(boolalgoritmoTipo1){
+				//	popularityRecomendationsOrderlyTable(recomendacao);
+			//	}
+			if(boolalgoritmoTipo2){
+					//popularityRecomendationsOrderlyTable(recomendacao);
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+				}if(boolalgoritmoTipo3){
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO);
+				}if(boolalgoritmoTipo4){
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO);
+				}if(boolalgoritmoTipo5){
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE);
+				}if(boolalgoritmoTipo6){
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD);
+				}if(boolalgoritmoTipo7){
+					AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP);
+				}
+
+			}else{
+				contaclicked ++;
+				//if(boolalgoritmoTipo1){
+				//	popularityRecomendations(recomendacao);
+					//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+			//	}
+			if(boolalgoritmoTipo2){
+					//popularityRecomendations(recomendacao);
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR,numUsuario ,recomendacao);
+				}
+				if(boolalgoritmoTipo3){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, numUsuario, recomendacao);
+				}
+				if(boolalgoritmoTipo4){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, numUsuario, recomendacao);
+				}
+				if(boolalgoritmoTipo5){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, numUsuario, recomendacao);
+				}
+				if(boolalgoritmoTipo6){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, numUsuario, recomendacao);
+				}
+				if(boolalgoritmoTipo7){
+					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, numUsuario, recomendacao);
+				}
+			}
+		}
+	});
+}
+		
+	
+	private void eventClickTitleGoodRecomendations(){
+		
+		headerTabelaBoasRecomendacoes = tabela.getTableHeader();
+		headerTabelaBoasRecomendacoes.setUpdateTableInRealTime(true);
+		
+		headerTabelaBoasRecomendacoes.addMouseListener(new MouseAdapter() {
 			int contaclicked = 2;
 			public void mouseClicked(MouseEvent evt){
 				if(contaclicked % 2 == 0){
@@ -347,7 +411,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(tabela);
 		scrollPane.setViewportView(tabela);
-		tabelaNotRecomendacoes.setEnabled(false);
+		//tabelaNotRecomendacoes.setEnabled(false);
 		scrollNotRecomendacoes.setViewportView(tabelaNotRecomendacoes);	
 	}
 
@@ -562,7 +626,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, tipo, ReadData.getUsuarios().get(numberUser-1));
 		preencheAnyTableOrderly(tabela, resultados.get(0), "Ordem Alfabetica");
 	}
-
+	private static void AnyAlgoritmBadRcomendationsOrderlyTable(int numberUser, int qtdRecomendacoes,TipoAlgoritmoPersonalizado tipo){
+		List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, tipo, ReadData.getUsuarios().get(numberUser-1));
+		preencheAnyTableOrderly(tabelaNotRecomendacoes, resultados.get(1), "Ordem Alfabetica");
+	}
 	private static void preencheAnyTableOrderly(JTable table,List<Estabelecimento> recomendacoes,String ordenacao) {
 		Object obj[][] = new Object[recomendacoes.size()][3];
 		if(ordenacao.equals("Ordem Alfabetica")){
