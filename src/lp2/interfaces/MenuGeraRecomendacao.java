@@ -68,6 +68,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private JComboBox listaOrdenacao;
 	private static String tipoDeComidaSelecionada;
 	private JButton botaoRemoveRecomendacao;
+	private String estabelecimentoSelecionado;
 
 
 	private static Algoritmos algoritmos;
@@ -403,7 +404,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		tabela.addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt){
-				estabelecimentosRemovidos += tabelaRecomendacaoEvento(evt) + " ";
+				estabelecimentoSelecionado = tabelaRecomendacaoEvento(evt);
+				//estabelecimentosRemovidos += tabelaRecomendacaoEvento(evt) + " ";
 			}
 		});	
 	}
@@ -697,6 +699,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 		//evento do botaoRemoverRecomendacao do InternalFrame
 		if(event.getSource()==botaoRemoveRecomendacao){
+			estabelecimentosRemovidos += estabelecimentoSelecionado + " ";
 			eventoBotaoRemoveRecomendacao();	
 		}
 		if(event.getSource() == tiposDeComida){
