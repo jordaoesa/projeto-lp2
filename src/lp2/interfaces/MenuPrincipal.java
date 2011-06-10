@@ -68,9 +68,9 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoCadastrar = new JButton("Novo Cadastro");
 		botaoVerTodosLugares = new JButton("Ver todos");	
 		botaoPopularidade = new JButton("Ver popularidade");		
-		botaoGerarRecomendacao = new JButton("Gerar Recomendacoes");		
+		botaoGerarRecomendacao = new JButton("Gerar Recomendações");		
 		botaoSair = new JButton("Sair");		
-		loadFileOpinioes = new JButton("Novas Opinioes");			
+		loadFileOpinioes = new JButton("Novas Opiniões");			
 		loadFileEstabelecimentos = new JButton("Novos Estabelecimentos");
 		botaoComparaAlgoritmos = new JButton("Comparar Algoritmos");
 		botaoMaisSimilares = new JButton("Mais Similares");
@@ -113,11 +113,11 @@ public class MenuPrincipal extends JPanel implements ActionListener{
 		botaoCadastrar.setToolTipText("Clique para cadastrar um novo usuario.");
 		botaoVerTodosLugares.setToolTipText("Clique para ver opinioes de todos os usuarios.");
 		botaoPopularidade.setToolTipText("Clique para ver popularidade dos estabelecimentos");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar recomendacoes para um usuario cadastrado.");
-		botaoComparaAlgoritmos.setToolTipText("Clique para comparar os algoritmos de recomendacao.");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar recomendações para um usuario cadastrado.");
+		botaoComparaAlgoritmos.setToolTipText("Clique para comparar os algoritmos de recomendação.");
 		botaoSair.setToolTipText("Clique para sair.");
 		loadFileOpinioes.setToolTipText("Clique para escolher um arquivo de opinioes sobre um estabalecimento.");
-		loadFileEstabelecimentos.setToolTipText("Clique para escolher um arquivo com informacoes de estabelecimentos.");
+		loadFileEstabelecimentos.setToolTipText("Clique para escolher um arquivo com informações de estabelecimentos.");
 	}
 
 	/**

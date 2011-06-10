@@ -95,15 +95,15 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 
 		botaoLocalizar = new JButton("Localizar");
 		botaoVoltar = new JButton("Voltar");
-		insiraLocal = new JLabel("Digite um endereco");
+		insiraLocal = new JLabel("Digite um endereço");
 		ondeDesejaIr = new JLabel("Onde deseja ir:");
 		iconNotificacao = new JLabel();
-		escolhaTipoVisao = new JLabel("Escolha um tipo de visao");
+		escolhaTipoVisao = new JLabel("Escolha um tipo de visão");
 		endereco = new JTextField();
-		tipoVisaoSatelite = new JRadioButton("Visao Satelite");
-		tipoVisaoHibrida = new JRadioButton("Visao Hibrida");
-		tipoVisaoTerreno = new JRadioButton("Visao Terrena");
-		tipoVisaoNormal = new JRadioButton("Visao Normal");
+		tipoVisaoSatelite = new JRadioButton("Visão Satelite");
+		tipoVisaoHibrida = new JRadioButton("Visão Hibrida");
+		tipoVisaoTerreno = new JRadioButton("Visão Terrena");
+		tipoVisaoNormal = new JRadioButton("Visão Normal");
 		selecionaVisao = new ButtonGroup();
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
 		imageErrado = new ImageIcon("./src/lp2/imagens/Stop.png");
@@ -269,9 +269,9 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 				urlFinal = setTipoImagem("Satelite", fonteDestino);
 				starThreads();
 			}else
-				JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visão", "Erro", JOptionPane.ERROR_MESSAGE);
 		}else{
-			JOptionPane.showMessageDialog(null, "Escolha enderecos/Tipo de Visao", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Escolha endereços/Tipo de Visão", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -283,7 +283,7 @@ public class VerLocalizacao extends JPanel implements ActionListener{
 		if(enderecoDestino.equals("Campus da UFCG")){
 			enderecoDestino = "Rua Aprígio Veloso";
 		}else if(enderecoDestino.equals("Shopping Boulevard")){
-			enderecoDestino = "Av. Pref Severino Bezerra Cabral";
+			enderecoDestino = "Av. Prof Severino Bezerra Cabral";
 		}
 	}
 	

@@ -179,7 +179,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		botaoVoltar = new JButton("Voltar");
 		selecioneUsuario = new JLabel("Selecione o Usuario:");
 		selecioneAlgoritmo = new JLabel("Selecione o Algoritmo:");
-		descricaoTabela = new JLabel("Tabela que mostra os 10 Usuario mais similare e 5 estabelecimentos recomendados por eles.");
+		descricaoTabela = new JLabel("Tabela que mostra os 10 Usuarios mais similares e 5 estabelecimentos recomendados por eles.");
 		labelBusca = new JLabel("Busca:");
 		campoBusca = new JTextField();
 		listaEncontrados = new JList();
@@ -187,7 +187,7 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		selectAlgorithm = new ButtonGroup();
 		selectScalarProductAlgorithm = new JRadioButton("Produto Escalar");
 		selectCosineAlgorithm = new JRadioButton("Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");

@@ -163,9 +163,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private void instanciaTodosComponentes(){
 		algoritmos = new Algoritmos();
 		usuariosCadastrados = new String[ReadData.getUsuarios().size()+1];
-		tipoDeOrdenacao = new String[]{"","Ordem Alfabetica","Tipo de Refeicao"};
+		tipoDeOrdenacao = new String[]{"","Ordem Alfabética","Tipo de Refeição"};
 		String[] tipoDeRefeicoes = {"","A la carte", "Prato feito", "Self-service"};
-		selecioneOrdenacao = new JLabel("Tipo de Ordenacao:");
+		selecioneOrdenacao = new JLabel("Tipo de Ordenação:");
 
 		//ComboBox
 		listaOrdenacao = new JComboBox(tipoDeOrdenacao);
@@ -178,7 +178,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		tipo = new JLabel("Tipo: ");
 		usuario = new JLabel("Escolha usuario:");
 		algoritmoEscolhido = new JLabel("Escolha algoritmo:");
-		numRecomendacoes = new JLabel("Qual o numero de recomendacoes?");
+		numRecomendacoes = new JLabel("Qual o numero de recomendações?");
 		iconNotificacaoRecomencadao = new JLabel();
 		labelBusca = new JLabel("Busca: ");
 		labelRecomend = new JLabel("Locais onde ir");
@@ -192,17 +192,17 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		//Button
 		botaoRemoveRecomendacao = new JButton("Remover");
-		enviaEmail = new JButton("Receber recomendacoes no email");
+		enviaEmail = new JButton("Receber recomendações no email");
 		selectAlgorithm = new ButtonGroup();		
 		selectScalarProductAlgorithm = new JRadioButton("Algoritmo Personalizado");
 		selectPopularityAlgorithm = new JRadioButton("Algoritmo Popularidade");
 		selectCosineAlgorithm = new JRadioButton("Algoritmo Cosseno");
-		selectCossenoIntersecao = new JRadioButton("Cosseno Intersecao");
+		selectCossenoIntersecao = new JRadioButton("Cosseno Interseção");
 		selectSimilaridadeDice = new JRadioButton("Similaridade Dice");
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
 		botaoVoltar = new JButton("Voltar");
-		botaoGerarRecomendacao = new JButton("Gerar recomendacao");
+		botaoGerarRecomendacao = new JButton("Gerar recomendação");
 
 		//Carrega as imagens
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
@@ -271,10 +271,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private void iniciaTabelas(){
 		//definindo um modelo para a tabela, para que ela nao inicie vazia
 		tabela.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 
 		tabelaNotRecomendacoes.setModel(new DefaultTableModel(new Object[][]{},
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" }));
 
 	}
 	
@@ -396,7 +396,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private void setPropriedadesInternalFrame(){
 		frameRecomendacoes.setLayout(new AbsoluteLayout());
 		frameRecomendacoes.setClosable(true);
-		frameRecomendacoes.setTitle("Recomendacoes");	
+		frameRecomendacoes.setTitle("Recomendações");	
 	}
 
 	private void eventClickRowTable(){
@@ -436,10 +436,11 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 					}else{	
 						iconNotificacaoRecomencadao.setVisible(true);
 						recomendacao = Integer.parseInt(campoTextoRecomendacoes.getText());
-						//						if(recomendacao <= 0 || recomendacao > 38)  ///**** Numero magico aqui eh pra ser a qtd d restaurantes maxima permitida =x
-						//							iconNotificacaoRecomencadao.setIcon(imageErrado);
-						//						else
-						iconNotificacaoRecomencadao.setIcon(imageOk);
+						//iconNotificacaoRecomencadao.setIcon(imageOk);
+						if(recomendacao <= 0)
+							iconNotificacaoRecomencadao.setIcon(imageErrado);
+						else
+							iconNotificacaoRecomencadao.setIcon(imageOk);
 					}
 				}catch(Exception ex){
 					recomendacao = 0;
@@ -641,9 +642,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 	private static void preencheAsTabelaOrdenadas(JTable table,List<Estabelecimento> recomendacoes,String ordenacao) {
 		Object obj[][] = new Object[recomendacoes.size()][3];
-		if(ordenacao.equals("Ordem Alfabetica")){
+		if(ordenacao.equals("Ordem Alfabética")){
 			obj = ordenaPorOrdemAlfabetica(obj, recomendacoes);
-		}if(ordenacao.equals("Tipo de Refeicao")){
+		}if(ordenacao.equals("Tipo de Refeição")){
 			obj = ordenaTipoDeComida(obj, recomendacoes);
 		}
 		setTableModel(table,obj);
@@ -654,7 +655,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	//seta a tabela para nao ser editada nenhuma celula.
 	private static void setTableModel(JTable table,Object[][] obj){
 		table.setModel(new DefaultTableModel(obj,
-				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" })
+				new String[] { "Restaurante", "Localização", "Tipo de Comida" })
 		{
 			public boolean isCellEditable(int rowIndex, int mColIndex){  
 				return false;  
@@ -941,7 +942,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 		listaSuspensaDeUsuarios.setToolTipText("Nome de todos os usuarios.");
 		botaoVoltar.setToolTipText("Clique para voltar ao menu anterior.");
-		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao.");
+		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendação.");
 		listaSuspensaDeFiltros.setToolTipText("Tipos de filtros de pesquisa.");
 		listaSuspensaDeTiposEstabelecimentos.setToolTipText("Tipos de estabelecimentos.");
 
@@ -1001,10 +1002,10 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 	private void eventoBotaoListaOrdenacao(){
 		ordenacaoSelecionada = listaOrdenacao.getSelectedItem().toString();
-		if(ordenacaoSelecionada.equals("Ordem Alfabetica")){
+		if(ordenacaoSelecionada.equals("Ordem Alfabética")){
 			algoritmOrdenadoAlfabetica();
 		}
-		if(ordenacaoSelecionada.equals("Tipo de Refeicao")){
+		if(ordenacaoSelecionada.equals("Tipo de Refeição")){
 			tiposDeComida.setVisible(true);
 
 			//pra voltar pro default	

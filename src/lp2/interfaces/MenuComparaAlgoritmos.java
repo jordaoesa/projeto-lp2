@@ -1,4 +1,3 @@
-//COMENTARIO
 package lp2.interfaces;
 
 import java.awt.Color;
@@ -110,9 +109,9 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 		//scrollPane2.setViewportView(tabelaComparacoesFinais);
 		tabelaComparacoesPorUsuario.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		tabelaComparacoesFinais.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		comparacoesPorUsuario = new JLabel("Comparacoes por Usuario");
-		comparacoesFinais = new JLabel("Comparacoes Finais");
-		numRecomendacoes = new JLabel("Numero de recomendacoes:");
+		comparacoesPorUsuario = new JLabel("Comparações por Usuario");
+		comparacoesFinais = new JLabel("Comparações Finais");
+		numRecomendacoes = new JLabel("Número de recomendações:");
 		iconNotificacao = new JLabel();
 		areaRecomendacoes = new JTextField();
 		imageOk = new ImageIcon("./src/lp2/imagens/Ok.png");
@@ -155,7 +154,7 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 				executaJanelaAguarde.start();
 				executaProcessaAlgoritmo.start();
 			}else{
-				JOptionPane.showMessageDialog(null, "Numero de recomendacoes invalido.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Número de recomendações inválido.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -190,10 +189,10 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 
 	private void iniciaTabelaUsuario(){
 		tabelaComparacoesPorUsuario.setModel(new DefaultTableModel(
-				new Object[][] {}, new String[] { "Nome", "Opinioes Positivas",
-						"Opinioes Cadastradas", "Porcentagem Popularidade",
-						"Porcentagem ProdutoEscalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
+				new Object[][] {}, new String[] { "Nome", "Opiniões Positivas",
+						"Opiniões Cadastradas", "Porcentagem Popularidade",
+						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
+						"Porcentagem Cosseno Interseção",
 						"Porcentagem Similaridade Dice",
 						"Porcentagem Similaridade Jaccard",
 				"Porcentagem Similaridade Overlap" }));	
@@ -204,11 +203,11 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 
 		tabelaComparacoesFinais.setModel(new DefaultTableModel(
 				new Object[][] {}, new String[] {
-						"Opinioes Positivas do Sistema",
-						"Opinioes Cadastradas no Sistema",
+						"Opiniões Positivas do Sistema",
+						"Opiniões Cadastradas no Sistema",
 						"Porcentagem Popularidade",
 						"Porcentagem Produto Escalar", "Porcentagem Cosseno",
-						"Porcentagem Cosseno Intersecao",
+						"Porcentagem Cosseno Interseção",
 						"Porcentagem Similaridade Dice",
 						"Porcentagem Similaridade Jaccard",
 				"Porcentagem Similaridade Overlap" }));
