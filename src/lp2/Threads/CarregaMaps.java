@@ -1,5 +1,7 @@
 package lp2.Threads;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -28,26 +30,66 @@ public class CarregaMaps implements Runnable {
 	private JLabel imgFundo = null;
 	private JSlider controlaZoom = new JSlider(SwingConstants.VERTICAL,0,19,14);
 	private JWindow window;
-	
+
 	public CarregaMaps(final String url,JWindow window){
 		this.url = url;
 		this.window = window;
-		controlaZoom.addChangeListener(new ChangeListener() {
-		@Override
-			public void stateChanged(ChangeEvent arg0) {
-			if(url.contains("terrain")){
-				if(controlaZoom.getValue() < 17){
-				     imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
-			       	 frame.validate();
-				}//fim do if
-			}else{ 
-				imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
-	       	    frame.validate();
-	       	    
-			}//fim do else
-	      }//fim do metodo
+
+		eventoControlaZoom();
+		eventoIconMaisZoom();
+		eventoIconMenosZoom();
+	}
+
+	private void eventoIconMenosZoom(){
+
+		iconMenosZoom.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt){
+				controlaZoom.setValue(controlaZoom.getValue() - 1);
+				if(url.contains("terrain")){
+					if(controlaZoom.getValue() < 17){
+						imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+						frame.validate();
+					}//fim do if
+				}else{ 
+					imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+					frame.validate();
+				}
+			}
 		});
-		
+	}
+	private void eventoIconMaisZoom(){
+		iconMaisZoom.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt){
+				controlaZoom.setValue(controlaZoom.getValue() + 1);
+				if(url.contains("terrain")){
+					if(controlaZoom.getValue() < 17){
+						imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+						frame.validate();
+					}//fim do if
+				}else{ 
+					imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+					frame.validate();
+				}
+			}
+		});	
+	}
+	private void eventoControlaZoom(){
+
+		controlaZoom.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				if(url.contains("terrain")){
+					if(controlaZoom.getValue() < 17){
+						imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+						frame.validate();
+					}//fim do if
+				}else{ 
+					imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+					frame.validate();
+
+				}//fim do else
+			}//fim do metodo
+		});	
 	}
 	public void run(){
 		imgCarregada = getImage(url);
@@ -65,7 +107,7 @@ public class CarregaMaps implements Runnable {
 		window.dispose();
 		frame.setVisible(true);
 	}
-	
+
 	private BufferedImage getImage(String caminho) {
 
 		URL url;
