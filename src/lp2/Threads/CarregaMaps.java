@@ -55,6 +55,12 @@ public class CarregaMaps implements Runnable {
 					frame.validate();
 				}
 			}
+			public void mouseEntered(MouseEvent evt){
+				iconMenosZoom.setIcon(new ImageIcon("./src/lp2/imagens/menosZoom2.png"));
+			}
+			public void mouseExited (MouseEvent e){
+				iconMenosZoom.setIcon(new ImageIcon("./src/lp2/imagens/menosZoom.png"));
+			}
 		});
 	}
 	private void eventoIconMaisZoom(){
@@ -70,6 +76,12 @@ public class CarregaMaps implements Runnable {
 					imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
 					frame.validate();
 				}
+			}
+			public void mouseEntered(MouseEvent evt){
+				iconMaisZoom.setIcon(new ImageIcon("./src/lp2/imagens/maisZoom2.png"));
+			}
+			public void mouseExited (MouseEvent e){
+				iconMaisZoom.setIcon(new ImageIcon("./src/lp2/imagens/maisZoom.png"));
 			}
 		});	
 	}
