@@ -1,7 +1,6 @@
 //COMENTARIO
 package lp2.interfaces;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,11 +25,11 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 @SuppressWarnings("serial")
 public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 
-	JanelaAguarde esperePorFavor = new JanelaAguarde();
-	Thread executaJanelaAguarde;
+	private JanelaAguarde esperePorFavor = new JanelaAguarde();
+	private Thread executaJanelaAguarde;
 
-	ComparaAlgoritmos comparaAlgoritmos;
-	Thread executaProcessaAlgoritmo;
+	private ComparaAlgoritmos comparaAlgoritmos;
+	private Thread executaProcessaAlgoritmo;
 
 	private JScrollPane scrollPane;
 	private JScrollPane scrollPane2;
@@ -79,7 +78,7 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 		areaRecomendacoes.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
 				try{
-					if(areaRecomendacoes == null ||  areaRecomendacoes.getText().equals("")){
+					if(areaRecomendacoes == null || areaRecomendacoes.getText().equals("")){
 						iconNotificacao.setVisible(false);
 						numRecomend = 0;
 					}else{	

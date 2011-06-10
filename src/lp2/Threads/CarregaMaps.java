@@ -20,23 +20,32 @@ import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 public class CarregaMaps implements Runnable {
-	String url;
-	BufferedImage imgCarregada = null;
-	final JFrame frame = new JFrame("Bom Conselho no Google Mapa");
-	JLabel iconMaisZoom = new JLabel(new ImageIcon("./src/lp2/imagens/maisZoom.png"));
-	JLabel iconMenosZoom = new JLabel(new ImageIcon("./src/lp2/imagens/menosZoom.png"));
-	JLabel imgFundo = null;
-	final JSlider controlaZoom = new JSlider(SwingConstants.VERTICAL,0,21,14);
-	JWindow window;
+	private String url;
+	private BufferedImage imgCarregada = null;
+	private JFrame frame = new JFrame("Bom Conselho no Google Mapa");
+	private JLabel iconMaisZoom = new JLabel(new ImageIcon("./src/lp2/imagens/maisZoom.png"));
+	private JLabel iconMenosZoom = new JLabel(new ImageIcon("./src/lp2/imagens/menosZoom.png"));
+	private JLabel imgFundo = null;
+	private JSlider controlaZoom = new JSlider(SwingConstants.VERTICAL,0,19,14);
+	private JWindow window;
+	
 	public CarregaMaps(final String url,JWindow window){
 		this.url = url;
 		this.window = window;
 		controlaZoom.addChangeListener(new ChangeListener() {
 		@Override
 			public void stateChanged(ChangeEvent arg0) {
+			if(url.contains("terrain")){
+				if(controlaZoom.getValue() < 17){
+				     imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
+			       	 frame.validate();
+				}//fim do if
+			}else{ 
 				imgFundo.setIcon(new ImageIcon(getImage(zoom(url, controlaZoom.getValue()))));
-				frame.validate();
-			}
+	       	    frame.validate();
+	       	    
+			}//fim do else
+	      }//fim do metodo
 		});
 		
 	}
@@ -46,6 +55,7 @@ public class CarregaMaps implements Runnable {
 		frame.setResizable(false);
 		frame.setLayout(new AbsoluteLayout());
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		controlaZoom.setMajorTickSpacing(1);
 		frame.getContentPane().add(iconMaisZoom, new AbsoluteConstraints(10, 10,-1, 30));
 		frame.getContentPane().add(iconMenosZoom, new AbsoluteConstraints(10, 160, -1, 30));
@@ -55,10 +65,6 @@ public class CarregaMaps implements Runnable {
 		window.dispose();
 		frame.setVisible(true);
 	}
-	
-//	public void setImagemLabel(){
-//		imgFundo.setIcon(arg0)
-//	}
 	
 	private BufferedImage getImage(String caminho) {
 

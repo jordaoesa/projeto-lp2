@@ -55,7 +55,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 	//Mudanca Localizacao
 	private JButton botaoComoChegar;
-	
+
 	private String nomeEstabelecimento;
 	private Algoritmos algoritmos;
 	private boolean boolalgoritmoTipo1 = false;
@@ -105,13 +105,13 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	private ImageIcon imageOk;
 	private ImageIcon imageErrado;
 	private int recomendacao = 0;
-	
+
 	private JLabel labelBusca;
 	private JTextField campoBusca;
 	private JList listaEncontrados;
 	private List<Integer> indicesEncontrados;
 
-	
+
 	/**
 	 * Metodo responsavel por cadastrar um usuario no sistema,
 	 * informando e recebendo do mesmo atraves de uma interface grafica
@@ -141,7 +141,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		iniciaComboBoxEstabelecimento();
 		iniciaArrayNotasENomes();
 		addNoContainer();
-		
+
 
 		//inicia tabelaResultado 
 		tabelaResultado.setModel(new DefaultTableModel(new Object[][]{},
@@ -149,17 +149,15 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 		todosToolTipText();
 		addNoContainer();
+		addButtonGroup();
 		trataEventoCampoTexto();
 		addEventosComponentes();
 		escondeFrameInterno();
 
 	}
-	
+
 	private void instanciaComponentes(){
-		
-		//##LOCALIZACAO
-		botaoComoChegar = new JButton("Como chegar?");
-		
+
 		//Algoritmos
 		algoritmos = new Algoritmos();
 
@@ -181,14 +179,8 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		selectSimilaridadeJaccard = new JRadioButton("Similaridade Jaccard");
 		selectSimilaridadeOverlap = new JRadioButton("Similaridade Overlap");
 		selectAlgorithm = new ButtonGroup();
-		selectAlgorithm.add(selectPopularityAlgorithm);
-		selectAlgorithm.add(selectScalarProductAlgorithm);
-		selectAlgorithm.add(selectCosineAlgorithm);
-		selectAlgorithm.add(selectCossenoIntersecao);
-		selectAlgorithm.add(selectSimilaridadeDice);
-		selectAlgorithm.add(selectSimilaridadeJaccard);
-		selectAlgorithm.add(selectSimilaridadeOverlap);
-
+		botaoComoChegar = new JButton("Como chegar?");	
+		
 		//JLabels
 		nomeUsuario = new JLabel("Nome:");
 		selecioneEstabelecimento = new JLabel("Selecione o Estabelecimento:");
@@ -227,12 +219,12 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 		//frameInterno
 		frameRecomendacoes = new JInternalFrame();
-		
+
 		//JLists
 		listaEncontrados = new JList();
 
 	}
-	
+
 	private void iniciaComboBoxEstabelecimento(){
 		int i = 1;
 		estabelecimentosCadastrados[0] = ""; // so pra deixar vazio o primeiro campo, pra nao ficar como se ja tivesse um usuarios selecionado
@@ -274,9 +266,21 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		add(botaoAdicionar, new AbsoluteConstraints(50,180,120,23));
 		add(botaoRemover, new AbsoluteConstraints(200,180,120,23));
 		add(botaoComoChegar, new AbsoluteConstraints(600,85,120,23));
-		
+
 
 	}
+
+	private void addButtonGroup(){
+		selectAlgorithm.add(selectPopularityAlgorithm);
+		selectAlgorithm.add(selectScalarProductAlgorithm);
+		selectAlgorithm.add(selectCosineAlgorithm);
+		selectAlgorithm.add(selectCossenoIntersecao);
+		selectAlgorithm.add(selectSimilaridadeDice);
+		selectAlgorithm.add(selectSimilaridadeJaccard);
+		selectAlgorithm.add(selectSimilaridadeOverlap);
+
+	}
+
 
 	private void iniciaArrayNotasENomes(){
 		for(int j=0; j<ReadData.getEstabelecimentos().size(); j++){
@@ -284,7 +288,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			notas.add("0 : Nao conheco");
 		}
 	}
-	
+
 	private void escondeFrameInterno(){
 
 		//so pra remover o frame interno quando clicar em outro local no panel
@@ -335,7 +339,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		listaSuspensaNotas.addActionListener(this);
 		botaoVoltar.addActionListener(this);
 		botaoRemover.addActionListener(this);
-		
+
 		//alteracao Localizacao
 		botaoComoChegar.addActionListener(this);
 
@@ -374,7 +378,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 				}
 			}
 		});
-		
+
 		campoBusca.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent evt) {
 				String nomeEstabelecimento = campoBusca.getText();
@@ -400,7 +404,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 				}
 				listaEncontrados.setSize(320, 27 * nomesEstabelecimentosEncontrados.size());
 				listaEncontrados.setModel(new AbstractListModel() {
-					
+
 					String nomes[] = nomesEstabelecimentos;
 					@Override
 					public int getSize() {
@@ -425,17 +429,11 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		});
 
 	}
-
-//	private void scalarProductRecomendations(Usuario usuario, int qtdRecomendacoes){
-//		List<Estabelecimento> recomendacoes = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario).get(0);
-//		preencheTabela(recomendacoes);
-//	}
-
 	private void popularityRecomendations(int numRecomendacao){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(numRecomendacao).get(0);
 		preencheTabela(recomendacoes);
 	}
-	
+
 	private void executaAlgoritmo(TipoAlgoritmoPersonalizado tipo, Usuario user, int qtdRecomendacoes){
 		List<Estabelecimento> recomendacoes = new ArrayList<Estabelecimento>();
 		//List<Estabelecimento> naoRecomendados = new ArrayList<Estabelecimento>();
@@ -477,7 +475,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		}
 		tabelaRecomendacoes.setModel(new DefaultTableModel(obj,
 				new String[] { "Restaurante", "Localizacao", "Tipo de Comida" }));
-		
+
 		//seta o tamanho das colunas
 		tabelaRecomendacoes.getColumnModel().getColumn(2).setPreferredWidth(20);	
 		tabelaRecomendacoes.getColumnModel().getColumn(1).setPreferredWidth(190);
@@ -491,10 +489,10 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		}
 		tabelaResultado.setModel(new DefaultTableModel(table,
 				new String[] { "Estabelecimento", "Nota" }));
-		
+
 	}
 
-	
+
 	/**
 	 * Metodo responsavel por verificar e capturar eventos na tela
 	 * da interface grafica.
@@ -502,58 +500,20 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		//LOCALIZACAO
 		if(event.getSource() == botaoComoChegar){
-			MenuInicial.panelCorpo.removeAll();
-			MenuInicial.panelCorpo.add(new VerLocalizacao());
-			MenuInicial.panelCorpo.updateUI();
+			eventoBotaoComoChegar();
 		}
-		//evento do botaoAdicionar
 		if(event.getSource() == botaoAdicionar){
-			frameRecomendacoes.setVisible(false);
-			if(indiceEstabelecimento == -1 || indiceNotas == 0){
-				JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nota","Error",JOptionPane.ERROR_MESSAGE);
-			} else {
-				nomeEstabelecimento = ReadData.getEstabelecimentos().get(indiceEstabelecimento).getNome();
-				if(!(estabelecimentosAdicionados.contains(nomeEstabelecimento))){
-					estabelecimentosAdicionados.add(nomeEstabelecimento);
-					notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
-				}else if(JOptionPane.showConfirmDialog(null, "Estabelecimento ja cadastrado. Deseja atualizar a nota?", "*_*", JOptionPane.YES_NO_OPTION) == 0){
-					notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
-				}
-				//atualiza tabela estabelecimento/nota
-				preencheTabelaNotas(estabelecimentosAdicionados, notas);
-			}
-			
-		//evento do botaoRemover	
+			eventoBotaoAdicionar();
 		}if(event.getSource() == botaoRemover){
-			frameRecomendacoes.setVisible(false);
-			if(indiceEstabelecimento == -1 || estabelecimentosAdicionados.size() == 0){
-				JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nao Adicionado","Error",JOptionPane.ERROR_MESSAGE);
-			}else{
-				nomeEstabelecimento = ReadData.getEstabelecimentos().get(indiceEstabelecimento).getNome();
-				if(!(estabelecimentosAdicionados.contains(nomeEstabelecimento))){
-					JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nao Adicionado","Error",JOptionPane.ERROR_MESSAGE);
-				}else{
-					estabelecimentosAdicionados.remove(nomeEstabelecimento);
-					//para o estabelecimento removido dar nota 0
-					notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), "0 : Nao conheco");
-					//atualiza tabela
-					preencheTabelaNotas(estabelecimentosAdicionados, notas);
-				}
-			}
-		//Evento listaSuspensaDeEstabeleecimentos
+			eventoBotaoRemover();
 		}if(event.getSource() == listaSuspensaDeEstabelecimentos){
-			frameRecomendacoes.setVisible(false);
-			indiceEstabelecimento = listaSuspensaDeEstabelecimentos.getSelectedIndex()-1;
-			campoBusca.setText("");
-
-		//evento da listaSuspensa de Notas
+			eventoListaSuspensaDeEstabelecimentos();
 		}if(event.getSource() == listaSuspensaNotas){
 			frameRecomendacoes.setVisible(false);
 			indiceNotas = listaSuspensaNotas.getSelectedIndex();
 
-		//evento do botao seleciona Algoritmo Popular
+			//evento do botao seleciona Algoritmo Popular
 		}if(event.getSource() == selectPopularityAlgorithm){
 			frameRecomendacoes.setVisible(false);
 			trocaAlgoritmo(1);
@@ -576,101 +536,12 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			frameRecomendacoes.setVisible(false);
 			trocaAlgoritmo(7);
 		}
-		
-		if(event.getSource() == botaoGravarUsuario){
-			frameRecomendacoes.setVisible(false);
-			String nome = areaNomeUsuario.getText();
-			if(nome.replace(" ", "").equals(""))
-				nome = "";
-			Date data = new Date();
-			String armazenaUser = "";
-			armazenaUser += data.toLocaleString() + ";";
-			armazenaUser += nome + ";";
-			
-			StringBuffer buf = new StringBuffer();
-			for(String nota : notas)
-				buf.append(nota + ";");
-			armazenaUser += buf.toString().substring(0, buf.toString().length()-1);
-			
-			armazenaUser = "\n"+armazenaUser;
-			BufferedWriter buffer = null;
-			try {
-				buffer = new BufferedWriter(new FileWriter(MenuInicial.pathOpinioes, true));
-				buffer.append(armazenaUser);
-				buffer.close();
-				JOptionPane.showMessageDialog(null, "Usuario gravado com sucesso", "Informacao", JOptionPane.INFORMATION_MESSAGE);
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null, "Erro ao gravar Usuario", "Erro", JOptionPane.ERROR_MESSAGE);
-				JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-			} finally {
-				try {
-					ReadData.initLists();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
 
-				areaNomeUsuario.setText("");
-				iconNotificacaoRecomencadao.setVisible(false);
-				iconNotificacaoNome.setVisible(false);
-				frameRecomendacoes.setVisible(false);
-				listaSuspensaDeEstabelecimentos.setSelectedIndex(0);
-				listaSuspensaNotas.setSelectedIndex(0);
-				selectAlgorithm.clearSelection();
-				areaNumRecomendacoes.setText("");
-				recomendacao = 0;
-				selectAlgorithm.setSelected(null, false);
-				estabelecimentosAdicionados.clear();
-				tabelaResultado.setModel(new DefaultTableModel(new Object[][]{},
-						new String[] { "Estabelecimento", "Nota" }));
-			}
+		if(event.getSource() == botaoGravarUsuario){
+			eventoBotaoGravarUsuario();
 
 		}if(event.getSource() == botaoGerarRecomendacao && !ReadData.getEstabelecimentos().isEmpty() && !ReadData.getUsuarios().isEmpty()){
-			List<Integer> opinioes = new ArrayList<Integer>();
-			for(String nota : notas){
-				if(nota.subSequence(0, 1).equals("-")){
-					opinioes.add(Integer.parseInt(nota.substring(0, 2)));
-				}else{
-					opinioes.add(Integer.parseInt(nota.substring(0, 1)));
-				}
-			}
-
-			Usuario usuario = null;
-			try {
-				String nome = areaNomeUsuario.getText();
-				if(nome == null || nome.equals(""))
-					nome = "anonimo";
-				usuario = new Usuario(nome, opinioes);
-
-				if (boolalgoritmoTipo1 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario, recomendacao);
-					//scalarProductRecomendations(usuario, recomendacao);
-				} else if (boolalgoritmoTipo2 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					popularityRecomendations(recomendacao);
-				}else if(boolalgoritmoTipo3 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, usuario, recomendacao);
-				}else if(boolalgoritmoTipo4 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, usuario, recomendacao);
-				}else if(boolalgoritmoTipo5 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, usuario, recomendacao);
-				}else if(boolalgoritmoTipo6 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, usuario, recomendacao);
-				}else if(boolalgoritmoTipo7 && recomendacao > 0){
-					frameRecomendacoes.setVisible(true);
-					executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, usuario, recomendacao);
-				} else {
-					JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-
+			eventoBotaoGerarRecomendacao();
 			//evento do botao gerar recomendacoes quando as lista de estabelecimentos ou opinioes estao vazias.
 		}if(event.getSource() == botaoGerarRecomendacao && (ReadData.getEstabelecimentos().isEmpty() || ReadData.getUsuarios().isEmpty())){
 			if (temAlgoritmoSelecionado() && recomendacao > 0){
@@ -680,7 +551,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			}
 
 
-		//evento do botao voltar.
+			//evento do botao voltar.
 		}if(event.getSource() == botaoVoltar){
 			frameRecomendacoes.setVisible(false);
 			MenuInicial.panelCorpo.removeAll();
@@ -698,8 +569,9 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		botaoGerarRecomendacao.setToolTipText("Clique para gerar uma recomendacao");
 		botaoGravarUsuario.setToolTipText("Grava um usuario no arquivo");
 		botaoRemover.setToolTipText("Remove opiniao da tabela");
+		botaoComoChegar.setToolTipText("Clique para ver onde fica o lugar");
 	}
-	
+
 	private void trocaAlgoritmo(int alg){
 		boolalgoritmoTipo1 = false;
 		boolalgoritmoTipo2 = false;
@@ -708,39 +580,194 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 		boolalgoritmoTipo5 = false;
 		boolalgoritmoTipo6 = false;
 		boolalgoritmoTipo7 = false;
-		
+
 		switch(alg){
-			case 1:
-				boolalgoritmoTipo1 = true;
-				break;
-			case 2:
-				boolalgoritmoTipo2 = true;
-				break;
-			case 3:
-				boolalgoritmoTipo3 = true;
-				break;
-			case 4:
-				boolalgoritmoTipo4 = true;
-				break;
-			case 5:
-				boolalgoritmoTipo5 = true;
-				break;
-			case 6:
-				boolalgoritmoTipo6 = true;
-				break;
-			case 7:
-				boolalgoritmoTipo7 = true;
-				break;
-			default:
-				//pass
-				break;
+		case 1:
+			boolalgoritmoTipo1 = true;
+			break;
+		case 2:
+			boolalgoritmoTipo2 = true;
+			break;
+		case 3:
+			boolalgoritmoTipo3 = true;
+			break;
+		case 4:
+			boolalgoritmoTipo4 = true;
+			break;
+		case 5:
+			boolalgoritmoTipo5 = true;
+			break;
+		case 6:
+			boolalgoritmoTipo6 = true;
+			break;
+		case 7:
+			boolalgoritmoTipo7 = true;
+			break;
+		default:
+			//pass
+			break;
 		}
 	}
-	
+
 	private boolean temAlgoritmoSelecionado(){
 		if(boolalgoritmoTipo1 || boolalgoritmoTipo2 || boolalgoritmoTipo3 || boolalgoritmoTipo4 || boolalgoritmoTipo5 || boolalgoritmoTipo6 || boolalgoritmoTipo7)
 			return true;
 		return false;
 	}
+
+	private void eventoBotaoGerarRecomendacao(){
+
+		List<Integer> opinioes = new ArrayList<Integer>();
+		for(String nota : notas){
+			if(nota.subSequence(0, 1).equals("-")){
+				opinioes.add(Integer.parseInt(nota.substring(0, 2)));
+			}else{
+				opinioes.add(Integer.parseInt(nota.substring(0, 1)));
+			}
+		}
+
+		Usuario usuario = null;
+		try {
+			String nome = areaNomeUsuario.getText();
+			if(nome == null || nome.equals(""))
+				nome = "anonimo";
+			usuario = new Usuario(nome, opinioes);
+
+			if (boolalgoritmoTipo1 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario, recomendacao);
+				//scalarProductRecomendations(usuario, recomendacao);
+			} else if (boolalgoritmoTipo2 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				popularityRecomendations(recomendacao);
+			}else if(boolalgoritmoTipo3 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO, usuario, recomendacao);
+			}else if(boolalgoritmoTipo4 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, usuario, recomendacao);
+			}else if(boolalgoritmoTipo5 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, usuario, recomendacao);
+			}else if(boolalgoritmoTipo6 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, usuario, recomendacao);
+			}else if(boolalgoritmoTipo7 && recomendacao > 0){
+				frameRecomendacoes.setVisible(true);
+				executaAlgoritmo(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, usuario, recomendacao);
+			} else {
+				JOptionPane.showMessageDialog(null, "Erro em recomendacoes/algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
+	}
+
+
+	private void eventoBotaoGravarUsuario(){
+
+		frameRecomendacoes.setVisible(false);
+		String nome = areaNomeUsuario.getText();
+		if(nome.replace(" ", "").equals(""))
+			nome = "";
+		Date data = new Date();
+		String armazenaUser = "";
+		armazenaUser += data.toLocaleString() + ";";
+		armazenaUser += nome + ";";
+
+		StringBuffer buf = new StringBuffer();
+		for(String nota : notas)
+			buf.append(nota + ";");
+		armazenaUser += buf.toString().substring(0, buf.toString().length()-1);
+
+		armazenaUser = "\n"+armazenaUser;
+		BufferedWriter buffer = null;
+		try {
+			buffer = new BufferedWriter(new FileWriter(MenuInicial.pathOpinioes, true));
+			buffer.append(armazenaUser);
+			buffer.close();
+			JOptionPane.showMessageDialog(null, "Usuario gravado com sucesso", "Informacao", JOptionPane.INFORMATION_MESSAGE);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao gravar Usuario", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		} finally {
+			try {
+				ReadData.initLists();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			limpaTodosComponentes();
+		}			
+	}
+	
+	private void limpaTodosComponentes(){
+
+		areaNomeUsuario.setText("");
+		iconNotificacaoRecomencadao.setVisible(false);
+		iconNotificacaoNome.setVisible(false);
+		frameRecomendacoes.setVisible(false);
+		listaSuspensaDeEstabelecimentos.setSelectedIndex(0);
+		listaSuspensaNotas.setSelectedIndex(0);
+		selectAlgorithm.clearSelection();
+		areaNumRecomendacoes.setText("");
+		recomendacao = 0;
+		selectAlgorithm.setSelected(null, false);
+		estabelecimentosAdicionados.clear();
+		tabelaResultado.setModel(new DefaultTableModel(new Object[][]{},
+				new String[] { "Estabelecimento", "Nota" }));
+
+	}
+
+	private void eventoBotaoRemover(){
+		frameRecomendacoes.setVisible(false);
+		if(indiceEstabelecimento == -1 || estabelecimentosAdicionados.size() == 0){
+			JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nao Adicionado","Error",JOptionPane.ERROR_MESSAGE);
+		}else{
+			nomeEstabelecimento = ReadData.getEstabelecimentos().get(indiceEstabelecimento).getNome();
+			if(!(estabelecimentosAdicionados.contains(nomeEstabelecimento))){
+				JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nao Adicionado","Error",JOptionPane.ERROR_MESSAGE);
+			}else{
+				estabelecimentosAdicionados.remove(nomeEstabelecimento);
+				//para o estabelecimento removido dar nota 0
+				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), "0 : Nao conheco");
+				//atualiza tabela
+				preencheTabelaNotas(estabelecimentosAdicionados, notas);
+			}
+		}
+	}
+
+	private void eventoBotaoAdicionar(){
+		frameRecomendacoes.setVisible(false);
+		if(indiceEstabelecimento == -1 || indiceNotas == 0){
+			JOptionPane.showMessageDialog(null, "Escolha Estabelecimento/Nota","Error",JOptionPane.ERROR_MESSAGE);
+		} else {
+			nomeEstabelecimento = ReadData.getEstabelecimentos().get(indiceEstabelecimento).getNome();
+			if(!(estabelecimentosAdicionados.contains(nomeEstabelecimento))){
+				estabelecimentosAdicionados.add(nomeEstabelecimento);
+				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
+			}else if(JOptionPane.showConfirmDialog(null, "Estabelecimento ja cadastrado. Deseja atualizar a nota?", "*_*", JOptionPane.YES_NO_OPTION) == 0){
+				notas.set(nomesEstabelecimentos.indexOf(nomeEstabelecimento), avaliacao[indiceNotas]);
+			}
+			//atualiza tabela estabelecimento/nota
+			preencheTabelaNotas(estabelecimentosAdicionados, notas);
+		}
+
+
+	}
+	private void eventoListaSuspensaDeEstabelecimentos(){
+		frameRecomendacoes.setVisible(false);
+		indiceEstabelecimento = listaSuspensaDeEstabelecimentos.getSelectedIndex()-1;
+		campoBusca.setText("");
+	}
+	private void eventoBotaoComoChegar(){
+
+		MenuInicial.panelCorpo.removeAll();
+		MenuInicial.panelCorpo.add(new VerLocalizacao());
+		MenuInicial.panelCorpo.updateUI();	
+	}
+
 
 }

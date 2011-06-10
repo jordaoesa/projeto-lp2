@@ -84,17 +84,21 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 		instanciaTodosComponentes();
 		iniciaComboBoxEstabelecimentos();
 		addNoContainer();
+		addButtonGroup();
+		addActionListener();
+		setLayoutDefaultTabela();
 		
+	}
+	
+	private void addButtonGroup(){
+
 		selectAlgorithm.add(selectScalarProductAlgorithm);
 		selectAlgorithm.add(selectCosineAlgorithm);
 		selectAlgorithm.add(selectCossenoIntersecao);
 		selectAlgorithm.add(selectSimilaridadeDice);
 		selectAlgorithm.add(selectSimilaridadeJaccard);
 		selectAlgorithm.add(selectSimilaridadeOverlap);
-		
-		addActionListener();
-		setLayoutDefaultTabela();
-		
+			
 	}
 	
 	private void addActionListener(){
