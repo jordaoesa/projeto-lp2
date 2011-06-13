@@ -21,6 +21,18 @@ import lp2.Threads.*;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
+
+/**
+ * Classe responsavel por comparar todos os algoritmos
+ * do sistema e mostrar suas poncentagens de erros e acertos na 
+ * interface grafica, baseando em suas
+ * recomendacoes para todos os usuarios.
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 @SuppressWarnings("serial")
 public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 
@@ -45,6 +57,13 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 	private ImageIcon imageErrado;
 	private int numRecomend = 0;
 
+	
+	
+	/**
+	*Metodo responsavel por fazer a comparacao entre
+	* os algoritmos baseando-se em suas taxas de erros e acertos 
+	* por usuario, e disponibilizar esses dados numa interface grafica.
+	*/
 	public MenuComparaAlgoritmos(){
 
 		setSize(800,600);
@@ -138,6 +157,11 @@ public class MenuComparaAlgoritmos extends JPanel implements ActionListener{
 		add(botaoComparar, new AbsoluteConstraints(400, 30, 100, 23));
 	}
 
+	
+	/**
+	*Metodo com a funcao de verificar e capturar eventos
+	* do usuario com a interface grafica do sistema.
+	*/
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		if(event.getSource() == botaoVoltar){

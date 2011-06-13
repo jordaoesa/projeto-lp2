@@ -3,6 +3,7 @@ package lp2.algoritmos;
 import lp2.lerDados.Usuario;
 
 /**
+ * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
  *         Jordao Ezequiel Serafim de Araujo<br>
@@ -32,7 +33,8 @@ public abstract class Algoritmo implements Comparable<Algoritmo> {
     
     
     /**
-     * 
+     * Metodo que calcula a similaridade entre quaisquer dois usuarios
+	 * baseando-se no calculo do algoritmo em questao.
      */
     public abstract void calculaSimilaridade();
 
@@ -81,11 +83,21 @@ public abstract class Algoritmo implements Comparable<Algoritmo> {
         this.user2 = user2;
     }
 
-    
+    /**
+     * Retorna o resultado atual.
+     * @return
+     * 			o resultado atual.
+     * 
+     */
     public double getResultado() {
 		return resultado;
 	}
     
+    /**
+     * Modifica o resultado atual.
+     * @param resultado
+     * 			o novo resultado.
+     */
 	public void setResultado(double resultado) {
 		this.resultado = resultado;
 	}

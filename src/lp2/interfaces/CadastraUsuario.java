@@ -436,7 +436,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 	private void executaAlgoritmo(TipoAlgoritmoPersonalizado tipo, Usuario user, int qtdRecomendacoes){
 		List<Estabelecimento> recomendacoes = new ArrayList<Estabelecimento>();
-		//List<Estabelecimento> naoRecomendados = new ArrayList<Estabelecimento>();
+		
 		if(tipo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
 			List<List<Estabelecimento>> resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user);
 			recomendacoes = resultados.get(0);
@@ -495,7 +495,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 
 	/**
 	 * Metodo responsavel por verificar e capturar eventos na tela
-	 * da interface grafica.
+	 * da interface grafica, do usuario com o sistema.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -635,7 +635,7 @@ public class CadastraUsuario extends JPanel implements ActionListener {
 			if (boolalgoritmoTipo1 && recomendacao > 0){
 				frameRecomendacoes.setVisible(true);
 				executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, usuario, recomendacao);
-				//scalarProductRecomendations(usuario, recomendacao);
+				
 			} else if (boolalgoritmoTipo2 && recomendacao > 0){
 				frameRecomendacoes.setVisible(true);
 				popularityRecomendations(recomendacao);

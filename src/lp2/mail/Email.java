@@ -6,6 +6,16 @@ import javax.mail.internet.*;
 import javax.naming.InvalidNameException;
 import javax.swing.JOptionPane;
 
+
+/**
+ * Classe responsavel por contactar a internet e enviar
+ * as recomendacoes ao usuario do sitema por email.
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 public class Email extends  Mensagem implements Runnable {
 
         private final String usuario = "bom.conselho.ufcg@gmail.com";
@@ -19,18 +29,49 @@ public class Email extends  Mensagem implements Runnable {
         private String to;
         private String from;
        
+        
+        
+        /**
+         * Metodo responsavel por receber o email do destinatario
+         * das recomendacoes junto com as mesmas.
+         * 
+         * @param to
+         * 			email do destinatario das recomencaoes.
+         * @param text
+         * 			texto a ser enviado, recomendacoes.
+         * @throws InvalidNameException
+         * @throws NullPointerException
+         * 
+         */
         public Email(String to, String text) throws InvalidNameException, NullPointerException {
                 super(text);
                 this.to = to;
                 this.from = "WebServicoes-BomConselho";
         }
+        
+        /**
+         * Retorna o email do destinatario das recoemendacoes.
+         * @return
+         * 			o email do destinatario das recoemendacoes.
+         */
         public String getTo() {
                 return to;
         }
+        
+        /**
+         * Retorna o email do remetente.
+         * @return
+         * 			o email do remetente.
+         */
         public String getFrom() {
                 return from;
         }
 
+
+        /**
+         * Metodo responsavel por logar no email do remetente 
+         * e enviar ao destinatario as recomendacoes.
+         */
         public void run() {
                 try {
                         Properties mailProps = new Properties();

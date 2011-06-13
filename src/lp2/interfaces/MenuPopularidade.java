@@ -114,7 +114,7 @@ public class MenuPopularidade extends JPanel implements ActionListener{
 	
 	/**
 	 * Metodo responsavel por verificar e capturar eventos do usuario
-	 * com a interface grafica.
+	 * com a interface grafica grafica.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {

@@ -8,6 +8,15 @@ import javax.swing.table.DefaultTableModel;
 import lp2.interfaces.*;
 import lp2.algoritmos.Algoritmos;
 
+
+
+/**
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 public class ComparaAlgoritmos implements Runnable{
 	Algoritmos algoritmos;
 	int numRecomendado; 

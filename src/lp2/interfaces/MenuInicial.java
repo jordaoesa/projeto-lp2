@@ -43,8 +43,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 	public MenuInicial(){
 		super("Bom Conselho");
 		
-		//setPathEstabelecimentos("./src/lp2/arquivos/lista_estabelecimentos_projeto_lp2-v2.data");
-		//setPathOpinioes("./src/lp2/arquivos/opinioes-dos-usuarios-v2.data");
+		
 		iniciaBarraFerramentas();
 		alteraTema();
 		
@@ -115,7 +114,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 	
 	//metodo que altera o tema da GUI
 	/**
-	 * Metodo que altera o tema da interface grafica com o usuario.
+	 * Metodo que altera o tema da interface grafica .
 	 */
 	
 	public void alteraTema(){ 
@@ -147,7 +146,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 	
 	/**
 	 * Metodo responsavel por verificar e capturar eventos do
-	 * usuario com a interface.
+	 * usuario com a interface grafica.
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event) {
@@ -172,7 +171,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 	
 	/**
 	 * Modifica o caminho do arquivo com os dados sobre os estabelecimetos
-	 * para leitura e utilizacao no sistema..
+	 * para leitura e utilizacao no sistema.
 	 * @param path
 	 * 			novo caminho do arquivo.
 	 */

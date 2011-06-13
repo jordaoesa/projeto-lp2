@@ -523,7 +523,17 @@ public class Algoritmos {
 
 		return returnList;
 	}
-	
+
+	/**
+	 * Metodo que retorna a lista de estabelecimentos recomendados de um usuario
+	 * para outro
+	 * 
+	 * @param similar
+	 *            O usuario similar que vai recomendar.
+	 * @param user
+	 *            O usuario que recebera as recomendacoes.
+	 * @return A lista com os nomes dos estabelecimentos recomendados.
+	 */
 	private List<String> estabelecimentosRecomendadosPor_Para(Usuario similar, Usuario user) {
 		List<String> returnList = new ArrayList<String>();
 		final int NUM_ESTAB_RECOMEND = 5;
@@ -573,7 +583,7 @@ public class Algoritmos {
 		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+		while (i < estabelecimentosRec.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 				if((estabelecimentosRec.get(i).getNome().toLowerCase().contains(palavraChave.trim().toLowerCase()))){
 					//continue;
 				}else{
@@ -608,7 +618,7 @@ public class Algoritmos {
 		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size()).get(0);
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+		while (i < Estabelecimentos.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 				if((Estabelecimentos.get(i).getNome().toLowerCase().contains(palavraChave.trim().toLowerCase()))){
 					//continue;
 				}else{
@@ -645,7 +655,7 @@ public class Algoritmos {
 		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size()).get(0);
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+		while (i < Estabelecimentos.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 				if(Estabelecimentos.get(i).getTipoDeComida().equalsIgnoreCase(type)){
 					estabelecimentosRecomendados.add(Estabelecimentos.get(i));
 				}
@@ -678,10 +688,10 @@ public class Algoritmos {
 	public List<Estabelecimento> executeScalarProductRecomendationsType(int numRecomendacoes, Usuario user, String type) {
 
 		List<Estabelecimento> estabelecimentosRecomendados = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> estabelecimentosRec =   executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
+		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
 		
 		int i = 0;
-		while (estabelecimentosRecomendados.size() < numRecomendacoes && i < estabelecimentos.size()){
+		while (i < estabelecimentosRec.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 				if(estabelecimentosRec.get(i).getTipoDeComida().equalsIgnoreCase(type)){
 					estabelecimentosRecomendados.add(estabelecimentosRec.get(i));
 				}
@@ -712,7 +722,7 @@ public class Algoritmos {
 		List<Estabelecimento> Estabelecimentos = executeGenericRecomendations(estabelecimentos.size()).get(0);
 		
 		int i = 0;
-		while(estabelecimentosRecomendados.size() < numRecomendacoes && i< estabelecimentos.size()){
+		while(i < Estabelecimentos.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 			if(Estabelecimentos.get(i).getLocalizacao().toLowerCase().contains(localizacao.toLowerCase())){
 				estabelecimentosRecomendados.add(Estabelecimentos.get(i));
 			}
@@ -746,7 +756,7 @@ public class Algoritmos {
 		List<Estabelecimento> estabelecimentosRec = executeAlgoritmo(estabelecimentos.size(), TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, user).get(0);
 		
 		int i = 0;
-		while(estabelecimentosRecomendados.size() < numRecomendacoes && i< estabelecimentos.size()){
+		while(i < estabelecimentosRec.size() && estabelecimentosRecomendados.size() < numRecomendacoes){
 			if(estabelecimentosRec.get(i).getLocalizacao().toLowerCase().contains(localizacao.toLowerCase())){
 				estabelecimentosRecomendados.add(estabelecimentosRec.get(i));
 			}
@@ -803,7 +813,26 @@ public class Algoritmos {
 	}
 	
 
+	//**OLHEM ESSE TBM MENINOS
+	/**
+	 * Metodo que tem a funcao de remover da lista de recomendacoes,
+	 * disponibilizada para o cliente, algum estabelecimento o qual ele
+	 * nao goste ou ja tenho ido.
+	 * 
+	 * @param numRecomendacoes
+	 * 			quantidade de recomendacoes desejadas.
+	 * @param listaRemovidos
+	 * 			lista dos estabelecimentos a serem removidos.
+	 * @param tipoDeAlgoritmo
+	 * 			tipo do algoritmo utilizado para gerar as recomendacoes.
+	 * @param numberUser
+	 * 			numero do usuario.
+	 * @return
+	 * 			um list de list com estabelecimentos recomendados,
+	 * sem os estabelecimentos que foram removidos.
+	 */
 	//Metodo que remove as recomendacoes Popularidade selecionadas
+	
 	public List<List<Estabelecimento>> executePersonalizeRecomendationsRemove(int numRecomendacoes,String listaRemovidos,TipoAlgoritmoPersonalizado tipoDeAlgoritmo,int numberUser) {
 		
 		List<Estabelecimento> estabelecimentosAlgoritmoRecomendados = new ArrayList<Estabelecimento>();
@@ -869,11 +898,20 @@ public class Algoritmos {
 		return returnList;
 	}
 
-	
+	/**
+	 * Modifica o list de usuarios do sistema.
+	 * @param lista
+	 * 			um novo list contendo os usuarios do sistema.
+	 */
 	private static void setUsuarios(List<Usuario> lista){
 		usuarios = lista;
 	}
 	
+	/**
+	 * Modifica o list de estabelecimentos do sistema.
+	 * @param lista
+	 * 			o novo list contendo os estabelecimentos do sistema.
+	 */
 	private static void setEstabelecimentos(List<Estabelecimento> lista){
 		estabelecimentos = lista;
 	}
