@@ -6,6 +6,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
 
+
+
+/**
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 public class JanelaAguarde implements Runnable{
 	
 	private JWindow janelaAguarde = new JWindow();

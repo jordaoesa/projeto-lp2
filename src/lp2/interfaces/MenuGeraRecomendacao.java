@@ -56,7 +56,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private int numUsuario;
 	private int recomendacao = 0;
 
-	//###
+	
 	private JButton enviaEmail;
 	private String nomeEmail = "";
 	private String emailUsuario = "";
@@ -102,7 +102,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private ImageIcon imageOk ;
 	private ImageIcon imageErrado ;
 
-	//****
+	
 	private JLabel filtro;
 	private JLabel palavraChave;
 	private JLabel local;
@@ -128,6 +128,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	private JLabel labelNotRecomend;
 	private JTableHeader headerTabelaBoasRecomendacoes;
 	private JTableHeader headerTabelaRuinsRecomendacoes;
+	
+	
 	/**
 	 * Metodo responsavel por inicializar a interface grafica 
 	 * para o usuario interagir com o sistema e receber recomendacoes.
@@ -289,11 +291,8 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 			public void mouseClicked(MouseEvent evt){
 				if(contaclicked % 2 == 0){
 					contaclicked ++;
-					//if(boolalgoritmoTipo1){
-					//	popularityRecomendationsOrderlyTable(recomendacao);
-					//	}
+					
 					if(boolalgoritmoTipo2){
-						//popularityRecomendationsOrderlyTable(recomendacao);
 						AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
 					}if(boolalgoritmoTipo3){
 						AnyAlgoritmBadRcomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.COSSENO);
@@ -309,12 +308,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 
 				}else{
 					contaclicked ++;
-					//if(boolalgoritmoTipo1){
-					//	popularityRecomendations(recomendacao);
-					//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
-					//	}
+					
 					if(boolalgoritmoTipo2){
-						//popularityRecomendations(recomendacao);
+						
 						List<List<Estabelecimento>> resultados = executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR,numUsuario ,recomendacao);
 						preencheTabela(tabelaNotRecomendacoes, resultados.get(1));
 					}
@@ -374,9 +370,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 					contaclicked ++;
 					if(boolalgoritmoTipo1){
 						popularityRecomendationsRemove(recomendacao, "Boa");
-						//AnyAlgoritmRecomendationsOrderlyTable(numUsuario, recomendacao, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR);
+						
 					}if(boolalgoritmoTipo2){
-						//popularityRecomendations(recomendacao);
+						
 						List<List<Estabelecimento>> resultados = executaAlgoritmo(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR,numUsuario ,recomendacao);
 						preencheTabela(tabela, resultados.get(0));
 					}
@@ -416,7 +412,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		tabela.addMouseListener( new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt){
 				estabelecimentoSelecionado = tabelaRecomendacaoEvento(evt);
-				//estabelecimentosRemovidos += tabelaRecomendacaoEvento(evt) + " ";
+				
 			}
 		});	
 	}
@@ -424,7 +420,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		tabela.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(tabela);
 		scrollPane.setViewportView(tabela);
-		//tabelaNotRecomendacoes.setEnabled(false);
+		
 		scrollNotRecomendacoes.setViewportView(tabelaNotRecomendacoes);	
 	}
 
@@ -449,7 +445,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 					}else{	
 						iconNotificacaoRecomencadao.setVisible(true);
 						recomendacao = Integer.parseInt(campoTextoRecomendacoes.getText());
-						//iconNotificacaoRecomencadao.setIcon(imageOk);
+						
 						if(recomendacao <= 0)
 							iconNotificacaoRecomencadao.setIcon(imageErrado);
 						else
@@ -544,37 +540,36 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		add(listaSuspensaDeTiposEstabelecimentos, new AbsoluteConstraints(180, 250, 250, 23));
 	}
 
-	//***
+	
 	private static void popularityRecomendationsFilter(int numRecomendacoes, String palavraChave){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsFilter(numRecomendacoes, palavraChave);
 		preencheTabela(tabela,recomendacoes);
 	}
 
-	//***
+	
 	private static void scalarProductRecomendationsFilter(int numberUser, int numRecomendacoes, String palavraChave){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsFilter(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), palavraChave);
 		preencheTabela(tabela,recomendacoes);
 	}
 
-	//***
+	
 	private static void popularityRecomendationsType(int numRecomendacoes, String type){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsType(numRecomendacoes, type);
 		preencheTabela(tabela,recomendacoes);
 	}
 
-	//***
+	
 	private static void scalarProductRecomendationsType(int numberUser, int numRecomendacoes, String type){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsType(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), type);
 		preencheTabela(tabela,recomendacoes);
 	}
 
-	//****
 	private static void scalarProductRecomendationsLocation(int numberUser, int numRecomendacoes, String local){
 		List<Estabelecimento> recomendacoes = algoritmos.executeScalarProductRecomendationsLocation(numRecomendacoes, ReadData.getUsuarios().get(numberUser-1), local);
 		preencheTabela(tabela,recomendacoes);
 	}
 
-	///****
+	
 	private static void popularityRecomendationsLocation(int numRecomendacoes, String local){
 		List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendationsLocation(numRecomendacoes, local);
 		preencheTabela(tabela,recomendacoes);
@@ -586,35 +581,28 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		List<List<Estabelecimento>> resultados = null;
 		if(tipo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 		}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 		}else if(tipo.equals(TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.COSSENO_INTERSECAO, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_DICE, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 
 		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_JACCARD, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 
 		}else if(tipo.equals(TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.SIMILARIDADE_OVERLAP, ReadData.getUsuarios().get(numberUser-1));
-			//recomendacoes = resultados.get(0);
-			//naoRecomendados = resultados.get(1);
+			
 
 		}
 		return resultados;
-		//preencheTabela(tabela,recomendacoes);
-		//preencheTabela(tabelaNotRecomendacoes, naoRecomendados);
+		
 	}
 
 
@@ -790,7 +778,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							scalarProductRecomendationsType(numUsuario, recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						scalarProductRecomendationsLocation(numUsuario, recomendacao, campoTextoLocalizacao.getText());
 					}else{
@@ -816,7 +804,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -841,7 +829,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -870,7 +858,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -898,7 +886,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -927,7 +915,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -954,7 +942,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 							frameRecomendacoes.setVisible(true);
 							popularityRecomendationsType(recomendacao, "Prato feito");
 						}
-					}if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
+					}else if(tipoFiltroLocalizacao && !(campoTextoLocalizacao.getText().trim().equals(""))){
 						frameRecomendacoes.setVisible(true);
 						popularityRecomendationsLocation(recomendacao, campoTextoLocalizacao.getText());
 
@@ -1251,11 +1239,41 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 		return obj;
 	}
+	
+	
+	private String configuraNome(String nome){
+		nome = nome.toLowerCase();
+		String nomeConfigurado = "";
+		if(nome.contains(" ")){
+			String[] nomeSobrenome = nome.split(" ");
+			for(int i = 0; i < nomeSobrenome.length; i++){
+				String n = nomeSobrenome[i].substring(0, 1).toUpperCase();
+				nomeConfigurado += n + nomeSobrenome[i].substring(1) + " ";
+				
+			}
+		}else{
+			String n = nome.substring(0, 1).toUpperCase();
+			nomeConfigurado += n + nome.substring(1);
+		}
+		return nomeConfigurado;
+	}
+	
 
+	/**
+	 * Metodo responsavel por configurar a mensagem de email
+	 * a ser enviada ao usuario do sistema.
+	 * @param nome
+	 * 			nome do usuario
+	 * @return
+	 * 			a mensagem configurada para ser enviada ao
+	 * usuario.
+	 */
 	private String textEmail(String nome){
 		List<List<Estabelecimento>> resultados = null;
 		String FIM_DE_LINHA = System.getProperty("line.separator");
 
+		nome = configuraNome(nome);
+		
 		if(boolalgoritmoTipo1){
 			List<Estabelecimento> recomendacoes = algoritmos.executeGenericRecomendations(39).get(0);
 			StringBuffer boasRecomendacoes = new StringBuffer();

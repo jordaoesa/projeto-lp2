@@ -20,7 +20,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *  Classe responsavel por mostrar a localizacao de um determinado
- *  estabeleimento para o usuario atraves de um mapa.
+ *  estabelecimento para o usuario atraves de um mapa.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
@@ -30,14 +30,6 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 @SuppressWarnings("serial")
 public class VerLocalizacao extends JPanel implements ActionListener{
 
-
-
-	//http://maps.google.com/maps/api/staticmap?&zoom=16&size=600x512&markers=size:m|color:red|Rua+Gilo+Guedes,Campina+Grande,BR|Rua+Santa+Cecilia,Campina+Grande+BR&mobile=true&maptype=hybrid&sensor=false
-
-
-	//http://maps.google.com/maps/api/staticmap?center=Rua+Gilo+Guedes,Campina+Grande,BR|Rua+Santa+Cecilia&zoom=12&size=400x400&maptype=roadmap&sensor=false
-	//http://maps.google.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&maptype=satellite&sensor=false
-	//http://maps.google.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=12&size=400x400&maptype=hybrid&sensor=false
 
 	private JanelaAguarde esperePorFavor = new JanelaAguarde();
 	private Thread executaJanelaAguarde;

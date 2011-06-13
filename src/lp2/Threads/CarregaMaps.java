@@ -21,6 +21,15 @@ import javax.swing.event.ChangeListener;
 import org.netbeans.lib.awtextra.AbsoluteConstraints;
 import org.netbeans.lib.awtextra.AbsoluteLayout;
 
+
+
+/**
+ * 
+ * @author Flavia Gangorra<br>
+ *         Irvile Rodrigues Lavor<br>
+ *         Jordao Ezequiel Serafim de Araujo<br>
+ *
+ */
 public class CarregaMaps implements Runnable {
 	private String url;
 	private BufferedImage imgCarregada = null;
