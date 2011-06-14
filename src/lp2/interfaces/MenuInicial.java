@@ -164,7 +164,7 @@ public class MenuInicial extends JFrame implements ActionListener{
 			JOptionPane.showMessageDialog(MenuInicial.this, "Programa desenvolvido por:" + "\n" + "	Irvile Rodrigues"+ "\n"
 					                              + "	Jordão Ezequiel" + "\n" + "	Flavia Gangorra","Sobre Integrantes",JOptionPane.PLAIN_MESSAGE);
 		}else if (event.getSource() == menuItensSobre[1]){
-			JOptionPane.showMessageDialog(MenuInicial.this,"Bom Conselho" + "\n" + "Versao: 2.5.5" + "\n" +
+			JOptionPane.showMessageDialog(MenuInicial.this,"Bom Conselho" + "\n" + "Versao: Final" + "\n" +
 					           "Programa que recomenda lugares para almocar","Sobre Programa",JOptionPane.PLAIN_MESSAGE);
 		}
 	}
