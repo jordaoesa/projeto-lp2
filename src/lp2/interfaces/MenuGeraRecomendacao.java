@@ -576,9 +576,9 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	}
 
 	private static List<List<Estabelecimento>> executaAlgoritmo(TipoAlgoritmoPersonalizado tipo, int numberUser, int qtdRecomendacoes){
-		List<Estabelecimento> recomendacoes = new ArrayList<Estabelecimento>();
-		List<Estabelecimento> naoRecomendados = new ArrayList<Estabelecimento>();
+		
 		List<List<Estabelecimento>> resultados = null;
+		
 		if(tipo.equals(TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR)){
 			resultados = algoritmos.executeAlgoritmo(qtdRecomendacoes, TipoAlgoritmoPersonalizado.PRODUTO_ESCALAR, ReadData.getUsuarios().get(numberUser-1));
 			
@@ -1243,19 +1243,21 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 	
 	private String configuraNome(String nome){
 		nome = nome.toLowerCase();
-		String nomeConfigurado = "";
+		StringBuffer nomeConfigurado = new StringBuffer();
 		if(nome.contains(" ")){
 			String[] nomeSobrenome = nome.split(" ");
+			//StringBuffer b = new StringBuffer();
 			for(int i = 0; i < nomeSobrenome.length; i++){
 				String n = nomeSobrenome[i].substring(0, 1).toUpperCase();
-				nomeConfigurado += n + nomeSobrenome[i].substring(1) + " ";
+				nomeConfigurado.append(n + nomeSobrenome[i].substring(1) + " ");
+				//nomeConfigurado  += n + nomeSobrenome[i].substring(1) + " ";
 				
 			}
 		}else{
 			String n = nome.substring(0, 1).toUpperCase();
-			nomeConfigurado += n + nome.substring(1);
+			nomeConfigurado.append(n + nome.substring(1));
 		}
-		return nomeConfigurado;
+		return nomeConfigurado.toString();
 	}
 	
 
