@@ -6,15 +6,16 @@ import javax.mail.internet.*;
 import javax.naming.InvalidNameException;
 import javax.swing.JOptionPane;
 
-
 /**
- * Classe responsavel por contactar a internet e enviar
- * as recomendacoes ao usuario do sitema por email.
+ * Classe responsavel por contactar a internet e enviar as recomendacoes ao
+ * usuario do sitema por email.
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
  *         Jordao Ezequiel Serafim de Araujo<br>
- *
+ * <br>
+ *         OBS: Auxiliado por Felipe De Sousa.
+ * 
  */
 public class Email extends  Mensagem implements Runnable {
 

@@ -1,16 +1,16 @@
 package lp2.mail;
 import javax.naming.InvalidNameException;
 
-
-
 /**
- * Classe responsavel por configurar a mensagem que sera 
- * enviada ao usuario do sistema por email
+ * Classe responsavel por configurar a mensagem que sera enviada ao usuario do
+ * sistema por email
  * 
  * @author Flavia Gangorra<br>
  *         Irvile Rodrigues Lavor<br>
  *         Jordao Ezequiel Serafim de Araujo<br>
- *
+ * 
+ * <br>
+ *         OBS: Auxiliado por Felipe De Sousa.
  */
 public class Mensagem { 
         private String subject; 
