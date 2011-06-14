@@ -319,9 +319,11 @@ public class MenuVerSimilares extends JPanel implements ActionListener{
 
 				setLayoutTabela();
 			}
-		}catch(Exception e){
+		} catch(RuntimeException e){
 			JOptionPane.showMessageDialog(null, "Selecione o Usuario/Algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
-		}
+		} catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Selecione o Usuario/Algoritmo", "Erro", JOptionPane.ERROR_MESSAGE);
+		} 
 		
 	}
 	

@@ -19,8 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class Email extends  Mensagem implements Runnable {
 
-        private final String usuario = "bom.conselho.ufcg@gmail.com";
-        private final String senha = "irvileflaviajordao2011";
+        private String usuario = "bom.conselho.ufcg@gmail.com";
+        private String senha = "irvileflaviajordao2011";
     
         private static final String SMTP_HOST_NAME = "smtp.gmail.com";
         private static final String SMTP_PORT = "465";
