@@ -62,7 +62,7 @@ public class Main {
 				while(progressBarra < 101){
 					barra.setValue(Math.min(progressBarra, 100));
 					try {
-						Thread.sleep(200);
+						Thread.sleep(500);
 					} catch (InterruptedException ignore) {
 					}
 					progressBarra += random.nextInt(30);
