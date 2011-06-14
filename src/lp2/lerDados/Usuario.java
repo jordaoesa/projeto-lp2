@@ -108,7 +108,7 @@ public class Usuario {
 	/**
 	 * Compara a precedencia de nosmes dos usuarios.
 	 * @param user
-	 * @return
+	 * @return Retorna um numero indicando o menor ou maior String.
 	 */
 	public int comparaPorNome(Usuario user){
 		return this.getNome().compareToIgnoreCase(user.getNome());

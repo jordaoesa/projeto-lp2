@@ -12,7 +12,7 @@ import javax.mail.PasswordAuthentication;
  * 
  * 
  * <br>
- *         OBS: Auxiliado por Felipe De Sousa. 
+ *         OBS: Auxiliado por Felipe De Sousa.
  */
 class Autenticacao extends Authenticator { 
         private String usuario; 
