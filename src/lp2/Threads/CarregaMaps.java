@@ -33,7 +33,7 @@ import org.netbeans.lib.awtextra.AbsoluteLayout;
 public class CarregaMaps implements Runnable {
 	private String url;
 	private BufferedImage imgCarregada = null;
-	private JFrame frame = new JFrame("Bom Conselho no Google Mapa");
+	private JFrame frame = new JFrame("Bom Conselho no Google Maps");
 	private JLabel iconMaisZoom = new JLabel(new ImageIcon("./src/lp2/imagens/maisZoom.png"));
 	private JLabel iconMenosZoom = new JLabel(new ImageIcon("./src/lp2/imagens/menosZoom.png"));
 	private JLabel imgFundo = null;
