@@ -185,7 +185,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		iconNotificacaoRecomencadao = new JLabel();
 		labelBusca = new JLabel("Busca: ");
 		labelRecomend = new JLabel("Locais onde ir");
-		labelNotRecomend = new JLabel("Locais onde nao ir");
+		labelNotRecomend = new JLabel("Locais menos recomendados");
 
 		//Campo texto
 		campoTextoRecomendacoes = new JTextField(20);
@@ -1311,7 +1311,7 @@ public class MenuGeraRecomendacao extends JPanel implements ActionListener{
 		}
 		return "Olá, " + nome + FIM_DE_LINHA + FIM_DE_LINHA +
 		"Estamos enviando as recomendações de restaurantes indicadas pelo programa Bom Conselho-UFCG" + FIM_DE_LINHA +"Boas recomedacoes" + FIM_DE_LINHA + 
-		boasRecomendacoes.toString() + FIM_DE_LINHA + "Corra desses lugares a seguir!!" + FIM_DE_LINHA +FIM_DE_LINHA + masRecomendacoes.toString() + FIM_DE_LINHA +
+		boasRecomendacoes.toString() + FIM_DE_LINHA + "Locais menos recomendados:" + FIM_DE_LINHA +FIM_DE_LINHA + masRecomendacoes.toString() + FIM_DE_LINHA +
 		"Obrigado por usar nossos serviços =]";
 	}
 }
