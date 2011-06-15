@@ -242,6 +242,18 @@ public class AlgoritmosTest {
 		estab = algoritmo.executeGenericRecomendations(10).get(0);
 		Assert.assertTrue(estab.size() == 10);
 		
+		//testando as recomendacoes
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Trailer do Marcus", estab.get(0).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Bonaparte", estab.get(1).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Bar do Cuscuz e Restaurante", estab.get(2).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Divino Fogão", estab.get(3).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Cabana do Possidônio", estab.get(4).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Giraffas", estab.get(5).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Manoel da Carne de Sol", estab.get(6).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Chinatown", estab.get(7).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Cantina de Dona Inês", estab.get(8).getNome());
+		Assert.assertEquals("Erro nas recomendacoes Genericas", "Bongustaio", estab.get(9).getNome());
+		
 		estab = algoritmo.executeGenericRecomendations(40).get(0);
 		// nao pode ser 40. nao ha estabelecimentos suficientes na soma total.
 		Assert.assertFalse(estab.size() == 40);
